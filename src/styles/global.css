@@ -133,6 +133,14 @@ a {
   text-transform: uppercase;
 }
 
+.portfolio-section__index {
+  margin: 0 0 0.75rem;
+  color: var(--accent);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+}
+
 .page-intro__title {
   max-width: 14ch;
   margin: 0;
@@ -266,10 +274,10 @@ a {
   margin: 0;
   font-family: var(--font-display);
   font-size: clamp(2.75rem, 7vw, 5.75rem);
-  font-weight: 800;
+  font-weight: 600;
   line-height: 0.9;
-  letter-spacing: -0.02em;
-  text-transform: uppercase;
+  letter-spacing: 0;
+  text-transform: none;
 }
 
 .portfolio-section__lede {

@@ -36,3 +36,17 @@ describe('evidence cells', () => {
     expect(ai).toMatch(/group\.key === 'competitions'\s*\?\s*localizedPath\(locale, 'project', 'competitions'\)/);
   });
 });
+
+describe('homepage numbered flow', () => {
+  it('wires the new sections and drops the retired ones', async () => {
+    const home = await read('src/components/pages/HomePage.astro');
+    for (const used of ['Hero', 'FieldCards', 'CareerAxis', 'AchievementIndex', 'ContactLinks']) {
+      expect(home, `missing ${used}`).toContain(used);
+    }
+    for (const gone of ['FieldIndexRail', 'ExperienceTimeline', 'ProjectGrid']) {
+      expect(home, `should not import ${gone}`).not.toContain(gone);
+    }
+    expect(home).toContain('id="current-practice"');
+    expect(home).toContain('portfolio-section__index');
+  });
+});

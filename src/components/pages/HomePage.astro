@@ -1,83 +1,64 @@
 ---
-import { getCollection } from 'astro:content';
 import { achievementGroups } from '../../data/achievements';
-import { experience } from '../../data/experience';
 import type { Locale } from '../../i18n/config';
 import { localizedPath } from '../../i18n/routes';
 import AchievementIndex from '../AchievementIndex.astro';
+import CareerAxis from '../CareerAxis.astro';
 import ContactLinks from '../ContactLinks.astro';
-import ExperienceTimeline from '../ExperienceTimeline.astro';
-import FieldIndexRail from '../FieldIndexRail.astro';
+import FieldCards from '../FieldCards.astro';
 import Hero from '../Hero.astro';
-import ProjectGrid from '../ProjectGrid.astro';
 
 interface Props {
   locale: Locale;
 }
 
 const { locale } = Astro.props;
-const projects = (await getCollection('projects', ({ data }) => (
-  data.locale === locale && data.featured && !data.draft
-))).sort((a, b) => a.data.order - b.data.order);
 const copy = locale === 'en'
   ? {
-      selectedWork: 'Selected field notes',
-      selectedWorkLede: 'Four representative fields, ordered by the work that best reflects my current practice.',
-      experience: 'Experience',
-      experienceLede: 'A compact view of recent roles across agent systems and applied AI products.',
-      fullExperience: 'View full experience',
-      record: 'Record',
-      recordLede: 'Publications, patents, open source, and competitions carry equal weight in this index.',
-      contact: 'Contact',
-      contactLede: 'For engineering roles, open-source collaboration, and research conversations.',
-      resume: 'View résumé',
+      practice: 'Current practice', practiceLede: 'Four fields, from bioinformatics to agent systems.',
+      axis: 'Career axis', axisLede: 'Eight years, condensed.', fullExperience: 'View full experience',
+      record: 'Evidence index', recordLede: 'Publications, patents, open source, and competitions as peers.',
+      contact: 'Contact', contactLede: 'For engineering roles, open-source collaboration, and research.', resume: 'View résumé',
     }
   : {
-      selectedWork: '精选现场笔记',
-      selectedWorkLede: '四个代表性领域，按最能体现当前实践的工作顺序呈现。',
-      experience: '经历',
-      experienceLede: '聚焦智能体系统与应用型 AI 产品的近期工作概览。',
-      fullExperience: '查看完整经历',
-      record: '成果索引',
-      recordLede: '论文、专利、开源与竞赛在这一索引中保持同等权重。',
-      contact: '联系',
-      contactLede: '欢迎就工程岗位、开源协作与研究交流联系我。',
-      resume: '查看简历',
+      practice: '当前实践', practiceLede: '四个领域，从生物信息到智能体系统。',
+      axis: '生涯轴', axisLede: '八年，浓缩于此。', fullExperience: '查看完整经历',
+      record: '证据索引', recordLede: '论文、专利、开源与竞赛，同等权重。',
+      contact: '联系', contactLede: '欢迎就工程岗位、开源协作与研究交流联系我。', resume: '查看简历',
     };
 ---
 
 <Hero {locale} />
-<FieldIndexRail {locale} />
 
-<section id="selected-work" class="portfolio-section shell" aria-labelledby="selected-work-title">
+<section id="current-practice" class="portfolio-section shell" aria-labelledby="practice-title">
   <header class="portfolio-section__header">
     <div>
-      <p class="portfolio-section__eyebrow">{locale === 'en' ? 'Current practice' : '当前实践'}</p>
-      <h2 id="selected-work-title" class="portfolio-section__title">{copy.selectedWork}</h2>
+      <p class="portfolio-section__index mono">01 /</p>
+      <h2 id="practice-title" class="portfolio-section__title">{copy.practice}</h2>
     </div>
-    <p class="portfolio-section__lede">{copy.selectedWorkLede}</p>
+    <p class="portfolio-section__lede">{copy.practiceLede}</p>
   </header>
-  <ProjectGrid {locale} {projects} />
+  <FieldCards {locale} />
 </section>
 
-<section class="portfolio-section shell" aria-labelledby="experience-title">
+<section class="portfolio-section shell" aria-labelledby="axis-title">
   <header class="portfolio-section__header">
     <div>
-      <p class="portfolio-section__eyebrow">{locale === 'en' ? 'Recent chapters' : '近期阶段'}</p>
-      <h2 id="experience-title" class="portfolio-section__title">{copy.experience}</h2>
+      <p class="portfolio-section__index mono">02 /</p>
+      <h2 id="axis-title" class="portfolio-section__title">{copy.axis}</h2>
     </div>
     <div>
-      <p class="portfolio-section__lede">{copy.experienceLede}</p>
+      <p class="portfolio-section__lede">{copy.axisLede}</p>
       <a class="portfolio-section__text-link" href={localizedPath(locale, 'work')}>{copy.fullExperience}</a>
     </div>
   </header>
-  <ExperienceTimeline {locale} mode="compact" entries={experience} />
+  <CareerAxis {locale} />
 </section>
 
 <section class="portfolio-section shell" aria-labelledby="record-title">
   <header class="portfolio-section__header">
     <div>
-      <p class="portfolio-section__eyebrow">{locale === 'en' ? 'Evidence index' : '证据索引'}</p>
+      <p class="portfolio-section__index mono">03 /</p>
       <h2 id="record-title" class="portfolio-section__title">{copy.record}</h2>
     </div>
     <p class="portfolio-section__lede">{copy.recordLede}</p>
@@ -88,7 +69,7 @@ const copy = locale === 'en'
 <section class="portfolio-section shell" aria-labelledby="contact-title">
   <header class="portfolio-section__header">
     <div>
-      <p class="portfolio-section__eyebrow">{locale === 'en' ? 'Public channels' : '公开渠道'}</p>
+      <p class="portfolio-section__index mono">04 /</p>
       <h2 id="contact-title" class="portfolio-section__title">{copy.contact}</h2>
     </div>
     <p class="portfolio-section__lede">{copy.contactLede}</p>
