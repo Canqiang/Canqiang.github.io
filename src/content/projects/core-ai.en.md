@@ -18,7 +18,7 @@ ogImage: /og/core-ai.png
 draft: false
 ---
 
-Core-AI is an open-source framework for building and operating AI agents across a Java SDK, terminal interface, self-hosted server, and web application.
+Core-AI is an open-source framework for building and operating AI agents across an SDK, terminal interface, self-hosted server, and web application.
 
 ## My contribution
 
@@ -28,7 +28,7 @@ The project is built by a team. This page documents only the areas where I contr
 
 ## Framework scope
 
-The public project brings together a Java SDK, a standalone terminal agent, a self-hosted server, and a React and TypeScript web UI. Its public surface covers agent and tool execution, MCP integration, multi-agent coordination, memory and knowledge, workflows, provider selection, and traces.
+The public project brings together an SDK, a standalone terminal agent, a self-hosted server, and a web UI. Its public surface covers agent and tool execution, MCP integration, multi-agent coordination, memory and knowledge, workflows, provider selection, and traces.
 
 ## Selected engineering work
 
@@ -46,4 +46,4 @@ I contributed to session recovery, trace inspection, sandbox snapshot and restor
 
 ### End-to-end delivery
 
-The contribution path often crosses the Java backend, CLI, React and TypeScript frontend, automated tests, and runtime validation. That breadth reflects my role as one contributor within the team that builds and maintains Core-AI.
+The contribution path often crosses the backend, CLI, frontend, automated tests, and runtime validation. That breadth reflects my role as one contributor within the team that builds and maintains Core-AI.
