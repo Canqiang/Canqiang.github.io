@@ -20,6 +20,8 @@ const label = locale === 'en' ? 'Toggle color theme' : '切换配色主题';
       const root = document.documentElement;
       const next = root.dataset.theme === 'light' ? 'dark' : 'light';
       root.dataset.theme = next;
+      const meta = document.getElementById('theme-color-meta');
+      if (meta) meta.setAttribute('content', next === 'light' ? '#F6F1E7' : '#0C0E12');
       try { localStorage.setItem('theme', next); } catch (e) { /* storage unavailable */ }
     });
   }

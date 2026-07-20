@@ -75,10 +75,8 @@ for (const path of htmlFiles) {
   assert(canonicals[0].href === expectedCanonical, `${route}: unexpected canonical ${canonicals[0].href}`);
   assert(canonicals[0].href.startsWith(`${siteOrigin}/`), `${route}: canonical must be absolute`);
 
-  const themeColorDark = tags(html, 'meta').find(
-    (t) => t.name === 'theme-color' && (t.media || '').includes('dark'),
-  );
-  assert(themeColorDark?.content === '#0C0E12', `${route}: missing dark theme-color meta`);
+  const themeColor = tags(html, 'meta').find((t) => t.name === 'theme-color');
+  assert(themeColor?.content === '#0C0E12', `${route}: missing dark-default theme-color meta`);
 
   if (route === '/404.html') {
     assert(alternates.length === 0, `${route}: must not emit hreflang alternates`);

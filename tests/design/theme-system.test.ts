@@ -30,18 +30,18 @@ describe('two-theme token system', () => {
 });
 
 describe('no-FOUC boot', () => {
-  it('sets data-theme from localStorage/OS before paint, dark fallback', async () => {
+  it('sets data-theme from localStorage before paint, unconditional dark fallback', async () => {
     const layout = await read('src/layouts/BaseLayout.astro');
     expect(layout).toContain('is:inline');
     expect(layout).toContain("localStorage.getItem('theme')");
-    expect(layout).toContain('prefers-color-scheme: light');
+    expect(layout).not.toContain('prefers-color-scheme');
     expect(layout).toContain('document.documentElement.dataset.theme');
   });
 
-  it('emits per-scheme theme-color metas with the approved canvases', async () => {
+  it('emits a theme-color meta matching the dark default and updates it via JS', async () => {
     const layout = await read('src/layouts/BaseLayout.astro');
-    expect(layout).toMatch(/theme-color"[^>]*prefers-color-scheme: dark[^>]*#0C0E12/i);
-    expect(layout).toMatch(/theme-color"[^>]*prefers-color-scheme: light[^>]*#F6F1E7/i);
+    expect(layout).toMatch(/<meta id="theme-color-meta" name="theme-color" content="#0C0E12"/i);
+    expect(layout).toContain("getElementById('theme-color-meta')");
   });
 });
 
@@ -54,6 +54,7 @@ describe('theme toggle + build stamp', () => {
     expect(toggle).toContain('data-theme-toggle');
     expect(toggle).toContain('aria-label');
     expect(toggle).toContain("localStorage.setItem('theme'");
+    expect(toggle).toContain("getElementById('theme-color-meta')");
     expect(header).toContain("import ThemeToggle from './ThemeToggle.astro'");
     expect(header).toContain('<ThemeToggle');
   });
