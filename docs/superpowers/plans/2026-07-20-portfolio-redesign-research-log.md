@@ -912,8 +912,10 @@ git commit -m "feat: horizontal career axis; retire vertical timeline"
 - Test: `tests/design/homepage-flow.test.ts` (extend)
 
 **Interfaces:**
-- Consumes: `achievementGroups` (unchanged data), `localizedPath(locale, 'about')` for the "full record" link.
-- Produces: four condensed count cells (papers / patents / open source / competitions) linking to the About evidence section.
+- Consumes: `achievementGroups` (unchanged data), `localizedPath(locale, 'about')` for publications/patents, `localizedPath(locale, 'project', slug)` for open-source/competitions.
+- Produces: four condensed count cells (papers / patents / open source / competitions), each linking to the destination that actually shows that category in full.
+
+**Routing note (why per-group, not one shared anchor):** The About page's evidence section (`about-profile__record`) only ever renders `publications` and `patents` — it does not list `openSource` or `competitions` items. Linking those two categories to `/about/#record` would land the visitor on a section that doesn't contain what they clicked. Both categories already have a dedicated, fully-detailed destination as an existing project entry — `src/content/projects/core-ai.en.md`/`.zh.md` (`translationKey: core-ai`) and `src/content/projects/competitions.en.md`/`.zh.md` (`translationKey: competitions`), both `draft: false` — so route to those instead of inventing new About content. This keeps the change inside `AchievementIndex.astro` and avoids touching About page copy (out of scope per spec §3).
 
 - [ ] **Step 1: Extend the test (failing)**
 
@@ -921,10 +923,12 @@ Append to `tests/design/homepage-flow.test.ts`:
 
 ```ts
 describe('evidence cells', () => {
-  it('shows condensed counts and links to the About record', async () => {
+  it('shows condensed counts, each linking to the destination that actually covers it', async () => {
     const ai = await read('src/components/AchievementIndex.astro');
     expect(ai).toContain('achievement-cell__count');
     expect(ai).toContain("localizedPath(locale, 'about')");
+    expect(ai).toContain("localizedPath(locale, 'project', 'core-ai')");
+    expect(ai).toContain("localizedPath(locale, 'project', 'competitions')");
   });
 });
 ```
@@ -952,6 +956,13 @@ const ordered = expectedOrder.map((key) => {
   return group;
 });
 const aboutPath = localizedPath(locale, 'about');
+// Each group routes to wherever it is actually shown in full — About's
+// record section covers publications/patents only; open source and
+// competitions have their own project detail pages.
+const destination = (group: AchievementGroup) =>
+  group.key === 'openSource' ? localizedPath(locale, 'project', 'core-ai')
+  : group.key === 'competitions' ? localizedPath(locale, 'project', 'competitions')
+  : `${aboutPath}#record`;
 // Headline figure per group: a count, or a signature value for singletons.
 const figure = (group: AchievementGroup) =>
   group.key === 'openSource' ? 'Core-AI'
@@ -963,7 +974,7 @@ const source = (group: AchievementGroup) => group.items[0].detail[locale];
 <ul class="achievement-grid">
   {ordered.map((group) => (
     <li class="achievement-cell">
-      <a class="achievement-cell__record" href={`${aboutPath}#record`}>
+      <a class="achievement-cell__record" href={destination(group)}>
         <span class="achievement-cell__label mono">{group.label[locale]}</span>
         <span class="achievement-cell__count">{figure(group)}</span>
         <span class="achievement-cell__source mono">{source(group)}</span>
@@ -987,7 +998,7 @@ Replace the `.achievement-cell__label`, `.achievement-cell__title`, `.achievemen
 .achievement-cell__source { color: var(--text-dim); font-size: 0.66rem; line-height: 1.5; }
 ```
 
-Confirm the About page has an anchor to receive `#record`: in `src/components/pages/AboutPage.astro`, ensure the record/evidence section element has `id="record"` (add it to the existing evidence section wrapper if absent).
+Confirm the About page has an anchor to receive `#record` for the publications/patents cells: in `src/components/pages/AboutPage.astro`, ensure the `about-profile__record` section element has `id="record"` (add it if absent). Do not add openSource/competitions content to the About page — that would touch editorial copy, which is out of scope (spec §3).
 
 - [ ] **Step 4: Run test + type check + commit**
 
@@ -995,7 +1006,7 @@ Run: `npx vitest run tests/design/homepage-flow.test.ts && npx astro check` → 
 
 ```bash
 git add src/components/AchievementIndex.astro src/components/pages/AboutPage.astro src/styles/global.css tests/design/homepage-flow.test.ts
-git commit -m "feat: condensed evidence cells linking to the About record"
+git commit -m "feat: condensed evidence cells linking to their real destinations"
 ```
 
 ---
