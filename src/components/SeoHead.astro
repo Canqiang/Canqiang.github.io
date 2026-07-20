@@ -1,0 +1,128 @@
+---
+import { identity, publicLinks } from '../data/site';
+import { alternateLocalePath } from '../i18n/routes';
+
+interface Props {
+  locale: 'en' | 'zh';
+  title: string;
+  description: string;
+  pathname: string;
+  image?: string;
+  imageAlt?: string;
+  hasLocalePair?: boolean;
+  pageKind?: 'home' | 'project' | 'page' | 'not-found';
+}
+
+const {
+  locale,
+  title,
+  description,
+  pathname,
+  image,
+  imageAlt,
+  hasLocalePair = true,
+  pageKind,
+} = Astro.props;
+
+if (!Astro.site) {
+  throw new Error('SeoHead requires Astro.site to build absolute metadata URLs');
+}
+
+const siteUrl = Astro.site;
+const normalizedPath = pathname.endsWith('/') || pathname.endsWith('.html') ? pathname : `${pathname}/`;
+const inferredPageKind = normalizedPath === '/' || normalizedPath === '/zh/'
+  ? 'home'
+  : /^\/(?:zh\/)?projects\/[a-z0-9]+(?:-[a-z0-9]+)*\/$/.test(normalizedPath)
+    ? 'project'
+    : 'page';
+const resolvedPageKind = pageKind ?? inferredPageKind;
+const resolvedImage = image ?? (resolvedPageKind === 'home' ? '/og/home.png' : undefined);
+const alternatePath = hasLocalePair ? alternateLocalePath(pathname) : undefined;
+const englishPath = hasLocalePair ? (locale === 'en' ? pathname : alternatePath) : undefined;
+const chinesePath = hasLocalePair ? (locale === 'zh' ? pathname : alternatePath) : undefined;
+const canonicalUrl = new URL(pathname, siteUrl);
+const englishUrl = englishPath ? new URL(englishPath, siteUrl) : undefined;
+const chineseUrl = chinesePath ? new URL(chinesePath, siteUrl) : undefined;
+const imageUrl = resolvedImage ? new URL(resolvedImage, siteUrl) : undefined;
+const profileLabels = new Set(['GitHub', 'Kaggle', 'LinkedIn']);
+const sameAs = publicLinks
+  .filter(({ label }) => profileLabels.has(label))
+  .map(({ href }) => href);
+const person = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  '@id': new URL('/#person', siteUrl).href,
+  name: identity.name,
+  alternateName: identity.chineseName,
+  url: new URL('/', siteUrl).href,
+  jobTitle: identity.role[locale],
+  description,
+  sameAs,
+};
+const jsonLd = resolvedPageKind === 'home'
+  ? person
+  : resolvedPageKind === 'project'
+    ? {
+        '@context': 'https://schema.org',
+        '@type': 'Article',
+        headline: title,
+        description,
+        url: canonicalUrl.href,
+        mainEntityOfPage: canonicalUrl.href,
+        inLanguage: locale === 'en' ? 'en' : 'zh-CN',
+        ...(imageUrl ? { image: imageUrl.href } : {}),
+        author: {
+          '@type': 'Person',
+          '@id': person['@id'],
+          name: person.name,
+          url: person.url,
+          sameAs,
+        },
+      }
+    : undefined;
+const serializedJsonLd = jsonLd
+  ? JSON.stringify(jsonLd).replaceAll('<', '\\u003c')
+  : undefined;
+const ogLocale = locale === 'en' ? 'en_US' : 'zh_CN';
+const alternateOgLocale = locale === 'en' ? 'zh_CN' : 'en_US';
+const resolvedImageAlt = imageAlt ?? (
+  resolvedPageKind === 'project'
+    ? locale === 'en' ? `${title} social preview` : `${title} 社交分享预览`
+    : locale === 'en' ? 'Xander Xu portfolio social preview' : '许灿强个人作品集社交分享预览'
+);
+const ogType = resolvedPageKind === 'home'
+  ? 'profile'
+  : resolvedPageKind === 'project'
+    ? 'article'
+    : 'website';
+---
+
+<title>{title}</title>
+<meta name="description" content={description} />
+<meta name="author" content={identity.name} />
+{resolvedPageKind === 'not-found' && <meta name="robots" content="noindex,follow" />}
+<link rel="canonical" href={canonicalUrl} />
+{englishUrl && <link rel="alternate" hreflang="en" href={englishUrl} />}
+{chineseUrl && <link rel="alternate" hreflang="zh-CN" href={chineseUrl} />}
+{englishUrl && <link rel="alternate" hreflang="x-default" href={englishUrl} />}
+
+<meta property="og:type" content={ogType} />
+<meta property="og:site_name" content="Xander Xu / 许灿强" />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonicalUrl} />
+<meta property="og:locale" content={ogLocale} />
+{hasLocalePair && <meta property="og:locale:alternate" content={alternateOgLocale} />}
+{imageUrl && <meta property="og:image" content={imageUrl} />}
+{imageUrl && <meta property="og:image:type" content="image/png" />}
+{imageUrl && <meta property="og:image:width" content="1200" />}
+{imageUrl && <meta property="og:image:height" content="630" />}
+{imageUrl && <meta property="og:image:alt" content={resolvedImageAlt} />}
+
+<meta name="twitter:card" content={imageUrl ? 'summary_large_image' : 'summary'} />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+{imageUrl && <meta name="twitter:image" content={imageUrl} />}
+{imageUrl && <meta name="twitter:image:alt" content={resolvedImageAlt} />}
+
+{serializedJsonLd && <script type="application/ld+json" set:html={serializedJsonLd} is:inline />}

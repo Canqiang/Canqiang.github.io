@@ -1,0 +1,38 @@
+---
+import { achievementGroups, type AchievementGroup } from '../data/achievements';
+import type { Locale } from '../i18n/config';
+
+interface Props {
+  locale: Locale;
+  groups?: AchievementGroup[];
+}
+
+const { locale, groups = achievementGroups } = Astro.props;
+const expectedOrder = ['publications', 'patents', 'openSource', 'competitions'];
+const orderedGroups = expectedOrder.map((key) => {
+  const group = groups.find((candidate) => candidate.key === key);
+  if (!group) throw new Error(`Missing achievement group: ${key}`);
+  return group;
+});
+---
+
+<div class="achievement-grid">
+  {orderedGroups.map((group) => (
+    <article class="achievement-cell">
+      <p class="achievement-cell__label" aria-hidden="true">{group.label[locale]}</p>
+      <h3 class="achievement-cell__title">{group.label[locale]}</h3>
+      <ul class="achievement-cell__list">
+        {group.items.map((item) => (
+          <li class="achievement-cell__item">
+            {item.href ? (
+              <a class="achievement-cell__link" href={item.href}>{item.title[locale]}</a>
+            ) : (
+              <span>{item.title[locale]}</span>
+            )}
+            <small class="achievement-cell__detail">{item.detail[locale]}</small>
+          </li>
+        ))}
+      </ul>
+    </article>
+  ))}
+</div>

@@ -1,0 +1,11 @@
+root_dir = "dist"
+index_files = ["index.html"]
+accept = ["200", "204", "301", "302", "307", "308"]
+max_retries = 2
+timeout = 20
+no_progress = true
+include_fragments = "anchor-only"
+exclude = [
+  '^mailto:',
+  '^https://www\.linkedin\.com/in/canqiang-xu-8510531b3/?$',
+]

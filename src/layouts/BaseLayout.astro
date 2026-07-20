@@ -1,0 +1,50 @@
+---
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import SeoHead from '../components/SeoHead.astro';
+import type { Locale } from '../i18n/config';
+import { localeMeta } from '../i18n/config';
+
+interface Props {
+  locale: Locale;
+  title: string;
+  description: string;
+  pathname: string;
+  image?: string;
+  imageAlt?: string;
+  hasLocalePair?: boolean;
+  pageKind?: 'home' | 'project' | 'page' | 'not-found';
+}
+
+const {
+  locale,
+  title,
+  description,
+  pathname,
+  image,
+  imageAlt,
+  hasLocalePair = true,
+  pageKind,
+} = Astro.props;
+const skipLabel = locale === 'en' ? 'Skip to main content' : '跳至主要内容';
+---
+
+<!doctype html>
+<html lang={localeMeta[locale].lang}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <SeoHead {locale} {title} {description} {pathname} {image} {imageAlt} {hasLocalePair} {pageKind} />
+    <link rel="icon" type="image/png" sizes="64x64" href="/favicon.png" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">{skipLabel}</a>
+    <Header {locale} {pathname} {hasLocalePair} />
+    <main id="main-content" class="page-main" tabindex="-1">
+      <slot />
+    </main>
+    <Footer {locale} />
+  </body>
+</html>

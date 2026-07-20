@@ -1,0 +1,15 @@
+---
+import ResumePage from '../components/pages/ResumePage.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const locale = 'en' as const;
+---
+
+<BaseLayout
+  {locale}
+  title="Résumé — Xander Xu"
+  description="The current printable web résumé of Xander Xu, AI Platform Engineer and Core-AI contributor."
+  pathname={Astro.url.pathname}
+>
+  <ResumePage {locale} />
+</BaseLayout>

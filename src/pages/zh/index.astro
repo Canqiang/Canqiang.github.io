@@ -1,0 +1,16 @@
+---
+import HomePage from '../../components/pages/HomePage.astro';
+import { identity } from '../../data/site';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const locale = 'zh' as const;
+---
+
+<BaseLayout
+  {locale}
+  title="许灿强 — AI 平台研发工程师"
+  description={identity.introduction.zh}
+  pathname={Astro.url.pathname}
+>
+  <HomePage {locale} />
+</BaseLayout>

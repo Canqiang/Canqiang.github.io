@@ -1,0 +1,15 @@
+---
+import ResumePage from '../../components/pages/ResumePage.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const locale = 'zh' as const;
+---
+
+<BaseLayout
+  {locale}
+  title="Web 简历 — 许灿强"
+  description="许灿强的最新可打印 Web 简历：AI 平台研发工程师、Core-AI 贡献者。"
+  pathname={Astro.url.pathname}
+>
+  <ResumePage {locale} />
+</BaseLayout>

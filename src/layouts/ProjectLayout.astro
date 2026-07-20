@@ -1,0 +1,102 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import type { Locale } from '../i18n/config';
+import { localizedPath } from '../i18n/routes';
+import BaseLayout from './BaseLayout.astro';
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+}
+
+const { project } = Astro.props;
+const { data } = project;
+const locale: Locale = data.locale;
+const otherLocale: Locale = locale === 'en' ? 'zh' : 'en';
+const pathname = localizedPath(locale, 'project', data.translationKey);
+const copy = locale === 'en'
+  ? {
+      titleSuffix: 'Xander Xu',
+      back: 'All projects',
+      switchLanguage: '阅读中文版',
+      switchAria: `Read ${data.title} in Chinese`,
+      status: 'Open source',
+      role: 'Role',
+      period: 'Period',
+      technology: 'Technology index',
+      links: 'Public links',
+      navigation: 'Project navigation',
+    }
+  : {
+      titleSuffix: '许灿强',
+      back: '全部项目',
+      switchLanguage: 'Read in English',
+      switchAria: `阅读 ${data.title} 的英文版`,
+      status: '开源',
+      role: '角色',
+      period: '时间',
+      technology: '技术索引',
+      links: '公开链接',
+      navigation: '项目导航',
+    };
+---
+
+<BaseLayout
+  {locale}
+  title={`${data.title} — ${copy.titleSuffix}`}
+  description={data.summary}
+  {pathname}
+  image={data.ogImage}
+>
+  <article class="project-detail shell">
+    <nav class="project-detail__navigation no-print" aria-label={copy.navigation}>
+      <a href={localizedPath(locale, 'projects')}>← {copy.back}</a>
+      <a
+        href={localizedPath(otherLocale, 'project', data.translationKey)}
+        hreflang={otherLocale === 'en' ? 'en' : 'zh-CN'}
+        aria-label={copy.switchAria}
+      >
+        <span lang={otherLocale === 'en' ? 'en' : 'zh-CN'}>{copy.switchLanguage}</span> →
+      </a>
+    </nav>
+
+    <header class="project-detail__header">
+      <div class="project-detail__heading">
+        {data.translationKey === 'core-ai' && <p class="project-detail__status">{copy.status}</p>}
+        <h1>{data.title}</h1>
+        <p class="project-detail__summary">{data.summary}</p>
+      </div>
+      <dl class="project-detail__facts">
+        <div>
+          <dt>{copy.role}</dt>
+          <dd>{data.role}</dd>
+        </div>
+        <div>
+          <dt>{copy.period}</dt>
+          <dd>{data.period}</dd>
+        </div>
+      </dl>
+    </header>
+
+    {data.technologies.length > 0 && (
+      <section class="project-detail__technology" aria-labelledby="project-technology-title">
+        <h2 id="project-technology-title">{copy.technology}</h2>
+        <ul>
+          {data.technologies.map((technology) => <li>{technology}</li>)}
+        </ul>
+      </section>
+    )}
+
+    {data.links.length > 0 && (
+      <nav class="project-detail__links" aria-labelledby="project-links-title">
+        <h2 id="project-links-title">{copy.links}</h2>
+        <ul>
+          {data.links.map((link) => <li><a href={link.href}>{link.label} ↗</a></li>)}
+        </ul>
+      </nav>
+    )}
+
+    <div class="project-detail__body">
+      <slot />
+    </div>
+  </article>
+</BaseLayout>

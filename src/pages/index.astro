@@ -1,0 +1,16 @@
+---
+import HomePage from '../components/pages/HomePage.astro';
+import { identity } from '../data/site';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const locale = 'en' as const;
+---
+
+<BaseLayout
+  {locale}
+  title="Xander Xu — AI Platform Engineer"
+  description={identity.introduction.en}
+  pathname={Astro.url.pathname}
+>
+  <HomePage {locale} />
+</BaseLayout>

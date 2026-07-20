@@ -1,0 +1,89 @@
+---
+import { experience } from '../../data/experience';
+import { fieldIndex } from '../../data/site';
+import type { Locale } from '../../i18n/config';
+import { localizedPath } from '../../i18n/routes';
+import FieldIndexRail from '../FieldIndexRail.astro';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const copy = locale === 'en'
+  ? {
+      label: 'Career field notes',
+      title: 'Work across four connected fields.',
+      summary: 'A continuous path from computational biology research to the engineering systems that make AI products dependable.',
+      fields: {
+        bioinformatics: 'Research foundations in biological data, heterogeneous networks, genomics, and scientific imaging.',
+        'medical-ai': 'Machine-learning systems for pathology, spatial omics, clinical research, and biomedical discovery.',
+        'llm-products': 'Language and multimodal models shaped into useful, safe, and understandable product experiences.',
+        'agent-systems': 'Open-source agent infrastructure built for durable execution, observable operation, and end-to-end delivery.',
+      },
+      coreAi: 'Read the Core-AI case study',
+    }
+  : {
+      label: '职业现场笔记',
+      title: '贯穿四个相连领域的工作。',
+      summary: '从计算生物学研究持续走向工程系统建设，让 AI 产品能够可靠地落地与运行。',
+      fields: {
+        bioinformatics: '以生物数据、异构网络、基因组学与科学图像为起点的研究基础。',
+        'medical-ai': '面向病理、空间组学、临床研究与生物医学发现的机器学习系统。',
+        'llm-products': '将语言与多模态模型转化为实用、安全且易于理解的产品体验。',
+        'agent-systems': '围绕持久化执行、可观测运行与端到端交付建设开源智能体基础设施。',
+      },
+      coreAi: '阅读 Core-AI 案例',
+    };
+
+const fieldGroups = fieldIndex.map((field) => ({
+  ...field,
+  entries: experience.filter((entry) => entry.field === field.key),
+}));
+---
+
+<header class="page-intro shell">
+  <p class="page-intro__label">{copy.label}</p>
+  <h1 class="page-intro__title display">{copy.title}</h1>
+  <p class="page-intro__summary">{copy.summary}</p>
+</header>
+
+<FieldIndexRail {locale} />
+
+<div class="work-ledger shell">
+  {fieldGroups.map((field) => (
+    <section id={field.key} class="work-field" aria-labelledby={`${field.key}-title`}>
+      <header class="work-field__header">
+        <p class="work-field__marker" aria-hidden="true"></p>
+        <div>
+          <h2 id={`${field.key}-title`} class="work-field__title">{field[locale]}</h2>
+          <p class="work-field__summary">{copy.fields[field.key]}</p>
+        </div>
+      </header>
+
+      <div class="work-field__roles">
+        {field.entries.map((entry) => (
+          <article class="work-role">
+            <div class="work-role__meta">
+              <p>{entry.period[locale]}</p>
+              <p>{entry.location[locale]}</p>
+            </div>
+            <div class="work-role__body">
+              <h3>{entry.company[locale]}</h3>
+              <p class="work-role__title">{entry.role[locale]}</p>
+              <p class="work-role__summary">{entry.summary[locale]}</p>
+              <ul class="work-role__highlights">
+                {entry.highlights[locale].map((highlight) => <li>{highlight}</li>)}
+              </ul>
+              {field.key === 'agent-systems' && (
+                <a class="work-role__case-study" href={localizedPath(locale, 'project', 'core-ai')}>
+                  {copy.coreAi}
+                </a>
+              )}
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+  ))}
+</div>

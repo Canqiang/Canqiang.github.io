@@ -1,0 +1,22 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+  categoryLabel: string;
+  url: string;
+}
+
+const { project, categoryLabel, url } = Astro.props;
+---
+
+<article class="project-card">
+  <div class="project-card__meta">
+    <span>{categoryLabel}</span>
+    <span>{project.data.period}</span>
+  </div>
+  <h3 class="project-card__title">
+    <a class="project-card__link" href={url}>{project.data.title}</a>
+  </h3>
+  <p class="project-card__summary">{project.data.summary}</p>
+</article>

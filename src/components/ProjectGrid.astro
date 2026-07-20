@@ -1,0 +1,40 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import type { Locale } from '../i18n/config';
+import { localizedPath } from '../i18n/routes';
+import ProjectCard from './ProjectCard.astro';
+
+interface Props {
+  locale: Locale;
+  projects: CollectionEntry<'projects'>[];
+}
+
+const { locale, projects } = Astro.props;
+const categoryLabels = {
+  en: {
+    'open-source': 'Open source',
+    'applied-ai': 'Applied AI products',
+    'medical-ai': 'Medical AI',
+    research: 'Research',
+    competitions: 'Competitions',
+  },
+  zh: {
+    'open-source': '开源',
+    'applied-ai': '应用型 AI 产品',
+    'medical-ai': '医疗 AI',
+    research: '研究',
+    competitions: '竞赛',
+  },
+} as const;
+const selectedProjects = projects.slice(0, 4);
+---
+
+<div class="project-grid">
+  {selectedProjects.map((project) => (
+    <ProjectCard
+      {project}
+      categoryLabel={categoryLabels[locale][project.data.category]}
+      url={localizedPath(locale, 'project', project.data.translationKey)}
+    />
+  ))}
+</div>

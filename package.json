@@ -1,0 +1,35 @@
+{
+  "name": "canqiang-github-io",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=24.18.0"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "check": "npm run validate:translations && astro check",
+    "test": "vitest run",
+    "validate:translations": "node scripts/validate-translations.mjs",
+    "validate:build-output": "node scripts/validate-build-output.mjs",
+    "scan:public-safety": "node scripts/scan-public-safety.mjs",
+    "generate:og": "node scripts/generate-og.mjs",
+    "build": "npm run validate:translations && astro build && npm run validate:build-output && npm run scan:public-safety",
+    "preview": "astro preview"
+  },
+  "dependencies": {
+    "@astrojs/check": "0.9.9",
+    "@astrojs/sitemap": "3.7.3",
+    "@fontsource-variable/ibm-plex-sans": "5.3.0",
+    "@fontsource/barlow-condensed": "5.3.0",
+    "@fontsource/ibm-plex-mono": "5.3.0",
+    "astro": "7.1.1",
+    "sharp": "0.35.3",
+    "typescript": "6.0.3"
+  },
+  "devDependencies": {
+    "@lhci/cli": "0.15.1",
+    "vitest": "4.1.10",
+    "yaml": "2.9.0"
+  }
+}

@@ -1,0 +1,94 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  locale="en"
+  title="Page not found / 页面未找到 — Xander Xu"
+  description="The requested page could not be found. 请求的页面不存在。"
+  pathname="/404.html"
+  hasLocalePair={false}
+  pageKind="not-found"
+>
+  <div class="not-found shell" aria-labelledby="not-found-title">
+    <header class="not-found__header">
+      <p class="page-intro__label">404 / Missing field note</p>
+      <h1 id="not-found-title" class="display">Page not found.</h1>
+      <p>The requested page may have moved, or the address may be incomplete.</p>
+      <nav aria-label="English recovery links">
+        <a href="/">Return home</a>
+        <a href="/projects/">View projects</a>
+      </nav>
+    </header>
+
+    <section class="not-found__secondary" lang="zh-CN" aria-labelledby="not-found-title-zh">
+      <p class="page-intro__label">404 / 现场笔记缺失</p>
+      <h2 id="not-found-title-zh">页面未找到。</h2>
+      <p>请求的页面可能已经移动，或当前地址不完整。</p>
+      <nav aria-label="中文返回链接">
+        <a href="/zh/">返回首页</a>
+        <a href="/zh/projects/">查看项目</a>
+      </nav>
+    </section>
+  </div>
+</BaseLayout>
+
+<style>
+  .not-found {
+    display: grid;
+    gap: 1px;
+    margin-block: clamp(3rem, 9vw, 8rem);
+    border: 1px solid var(--carbon);
+    background: var(--carbon);
+  }
+
+  .not-found__header,
+  .not-found__secondary {
+    min-width: 0;
+    padding: clamp(2rem, 6vw, 4.5rem);
+    background: var(--paper-cool);
+  }
+
+  .not-found h1,
+  .not-found h2 {
+    max-width: 10ch;
+    margin: 0;
+    font-size: clamp(3.5rem, 10vw, 7.5rem);
+    line-height: 0.86;
+    overflow-wrap: anywhere;
+  }
+
+  .not-found h2 {
+    font-family: var(--font-display);
+    font-weight: 800;
+  }
+
+  .not-found p:not(.page-intro__label) {
+    max-width: 32rem;
+    margin: 1.5rem 0 0;
+  }
+
+  .not-found nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 2rem;
+  }
+
+  .not-found nav a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.75rem;
+    padding: 0.6rem 0.8rem;
+    color: white;
+    background: var(--signal-blue);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  @media (min-width: 48rem) {
+    .not-found { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+</style>

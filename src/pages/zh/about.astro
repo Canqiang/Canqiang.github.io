@@ -1,0 +1,15 @@
+---
+import AboutPage from '../../components/pages/AboutPage.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const locale = 'zh' as const;
+---
+
+<BaseLayout
+  {locale}
+  title="关于 — 许灿强"
+  description="许灿强的生物信息学教育、AI 工程实践、论文、专利、兴趣与公开联系方式。"
+  pathname={Astro.url.pathname}
+>
+  <AboutPage {locale} />
+</BaseLayout>

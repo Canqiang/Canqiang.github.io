@@ -1,0 +1,15 @@
+---
+import ProjectsPage from '../../../components/pages/ProjectsPage.astro';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+
+const locale = 'zh' as const;
+---
+
+<BaseLayout
+  {locale}
+  title="项目 — 许灿强"
+  description="许灿强在开源、应用型 AI、医疗 AI、研究与竞赛方向的精选项目。"
+  pathname={Astro.url.pathname}
+>
+  <ProjectsPage {locale} />
+</BaseLayout>

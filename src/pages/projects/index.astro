@@ -1,0 +1,15 @@
+---
+import ProjectsPage from '../../components/pages/ProjectsPage.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const locale = 'en' as const;
+---
+
+<BaseLayout
+  {locale}
+  title="Projects — Xander Xu"
+  description="Selected open-source, applied AI, medical AI, research, and competition work by Xander Xu."
+  pathname={Astro.url.pathname}
+>
+  <ProjectsPage {locale} />
+</BaseLayout>

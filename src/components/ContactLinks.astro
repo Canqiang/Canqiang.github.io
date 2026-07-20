@@ -1,0 +1,29 @@
+---
+import { publicLinks } from '../data/site';
+import type { Locale } from '../i18n/config';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const linkOrder = ['Email', 'GitHub', 'Core-AI', 'LinkedIn', 'Kaggle'];
+const links = linkOrder.map((label) => {
+  const link = publicLinks.find((candidate) => candidate.label === label);
+  if (!link) throw new Error(`Missing public link: ${label}`);
+  return link;
+});
+const accessibleLabel = locale === 'en' ? 'Public contact links' : '公开联系方式';
+---
+
+<nav class="contact-links" aria-label={accessibleLabel}>
+  <ul class="contact-links__list">
+    {links.map(({ label, href }) => (
+      <li>
+        <a class="contact-links__link" href={href} rel={href.startsWith('http') ? 'me' : undefined}>
+          {label}
+        </a>
+      </li>
+    ))}
+  </ul>
+</nav>

@@ -1,0 +1,141 @@
+---
+import { patents, publications } from '../../data/achievements';
+import { experience } from '../../data/experience';
+import { education, interests } from '../../data/profile';
+import { identity, publicLinks } from '../../data/site';
+import type { Locale } from '../../i18n/config';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const copy = locale === 'en'
+  ? {
+      documentLabel: 'Current web résumé · Jul 2026',
+      print: 'Print résumé',
+      printHint: 'Opens the browser print dialog',
+      experience: 'Experience',
+      education: 'Education',
+      publications: 'Selected publications',
+      patents: 'Patents',
+      interests: 'Interests',
+      publicProfiles: 'Public profiles',
+    }
+  : {
+      documentLabel: '最新 Web 简历 · 2026 年 7 月',
+      print: '打印简历',
+      printHint: '打开浏览器打印对话框',
+      experience: '工作经历',
+      education: '教育经历',
+      publications: '代表论文',
+      patents: '专利',
+      interests: '兴趣爱好',
+      publicProfiles: '公开主页',
+    };
+const resumeLinks = ['Email', 'GitHub', 'Core-AI', 'LinkedIn', 'Kaggle'].map((label) => {
+  const link = publicLinks.find((candidate) => candidate.label === label);
+  if (!link) throw new Error(`Missing résumé link: ${label}`);
+  return link;
+});
+const printDestination = (href: string) => href.startsWith('mailto:') ? href.slice('mailto:'.length) : href;
+---
+
+<div class="resume-page shell">
+  <div class="resume-toolbar no-print">
+    <p>{copy.documentLabel}</p>
+    <button
+      class="resume-print-button"
+      type="button"
+      data-print-resume
+      aria-describedby="resume-print-hint"
+    >
+      {copy.print}
+    </button>
+    <span id="resume-print-hint" class="visually-hidden">{copy.printHint}</span>
+  </div>
+
+  <article class="resume-document">
+    <header class="resume-header">
+      <div>
+        <p class="resume-header__label">{identity.role[locale]}</p>
+        <h1>{locale === 'en' ? identity.name : `${identity.chineseName} / ${identity.name}`}</h1>
+        <p class="resume-header__summary">{identity.introduction[locale]}</p>
+      </div>
+      <nav class="resume-links" aria-label={copy.publicProfiles}>
+        <ul>
+          {resumeLinks.map(({ label, href }) => (
+            <li>
+              <a href={href}>
+                <span>{label}</span>
+                <span class="resume-link__destination print-only" aria-hidden="true">
+                  {' — '}{printDestination(href)}
+                </span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </header>
+
+    <section class="resume-section" aria-labelledby="resume-experience-title">
+      <h2 id="resume-experience-title">{copy.experience}</h2>
+      <div class="resume-experience">
+        {[...experience].reverse().map((entry) => (
+          <article class="resume-role">
+            <div class="resume-role__meta">
+              <p>{entry.period[locale]}</p>
+              <p>{entry.location[locale]}</p>
+            </div>
+            <div>
+              <h3>{entry.company[locale]}</h3>
+              <p class="resume-role__title">{entry.role[locale]}</p>
+              <p class="resume-role__summary">{entry.summary[locale]}</p>
+              <ul>
+                {entry.highlights[locale].map((highlight) => <li>{highlight}</li>)}
+              </ul>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <div class="resume-support-grid">
+      <section class="resume-section" aria-labelledby="resume-education-title">
+        <h2 id="resume-education-title">{copy.education}</h2>
+        <h3>{education.institution[locale]}</h3>
+        <p>{education.degree[locale]}</p>
+        <p class="resume-support-meta">{education.period}</p>
+      </section>
+
+      <section class="resume-section" aria-labelledby="resume-interests-title">
+        <h2 id="resume-interests-title">{copy.interests}</h2>
+        <ul class="resume-inline-list">
+          {interests.map((interest) => <li>{interest[locale]}</li>)}
+        </ul>
+      </section>
+    </div>
+
+    <div class="resume-achievement-grid">
+      {[{ ...publications, heading: copy.publications }, { ...patents, heading: copy.patents }].map((group) => (
+        <section class="resume-section" aria-labelledby={`resume-${group.key}-title`}>
+          <h2 id={`resume-${group.key}-title`}>{group.heading}</h2>
+          <ol class="resume-record-list">
+            {group.items.map((item) => (
+              <li>
+                {item.href ? <a href={item.href}>{item.title[locale]}</a> : <span>{item.title[locale]}</span>}
+                <small>{item.detail[locale]}</small>
+              </li>
+            ))}
+          </ol>
+        </section>
+      ))}
+    </div>
+  </article>
+</div>
+
+<script is:inline>
+  document.querySelectorAll('[data-print-resume]').forEach((button) => {
+    button.addEventListener('click', () => window.print());
+  });
+</script>

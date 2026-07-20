@@ -1,0 +1,75 @@
+---
+import { getCollection, type CollectionEntry } from 'astro:content';
+import type { Locale } from '../../i18n/config';
+import { localizedPath } from '../../i18n/routes';
+import ProjectCard from '../ProjectCard.astro';
+
+interface Props {
+  locale: Locale;
+}
+
+type Project = CollectionEntry<'projects'>;
+type ProjectCategory = Project['data']['category'];
+
+const { locale } = Astro.props;
+const taxonomy: Array<{ key: ProjectCategory; en: string; zh: string; marker: string }> = [
+  { key: 'open-source', en: 'Open Source', zh: '开源', marker: '01' },
+  { key: 'applied-ai', en: 'Applied AI Products', zh: '应用型 AI 产品', marker: '02' },
+  { key: 'medical-ai', en: 'Medical AI', zh: '医疗 AI', marker: '03' },
+  { key: 'research', en: 'Research', zh: '研究', marker: '04' },
+  { key: 'competitions', en: 'Competitions', zh: '竞赛', marker: '05' },
+];
+const projects = (await getCollection('projects', ({ data }) => data.locale === locale && !data.draft))
+  .sort((left, right) => (
+    left.data.order - right.data.order ||
+    left.data.translationKey.localeCompare(right.data.translationKey)
+  ));
+const copy = locale === 'en'
+  ? {
+      label: 'Project field notes',
+      title: 'Selected systems, products, and evidence.',
+      summary: 'A structured index of open-source infrastructure, applied AI products, medical AI, research, and competition work.',
+      count: (value: number) => `${value.toString().padStart(2, '0')} ${value === 1 ? 'entry' : 'entries'}`,
+    }
+  : {
+      label: '项目现场笔记',
+      title: '系统、产品与证据的精选记录。',
+      summary: '按开源基础设施、应用型 AI 产品、医疗 AI、研究与竞赛整理的项目索引。',
+      count: (value: number) => `${value.toString().padStart(2, '0')} 项记录`,
+    };
+---
+
+<header class="page-intro shell">
+  <p class="page-intro__label">{copy.label}</p>
+  <h1 class="page-intro__title display">{copy.title}</h1>
+  <p class="page-intro__summary">{copy.summary}</p>
+</header>
+
+<div class="project-index shell">
+  {taxonomy.map((category) => {
+    const entries = projects.filter((project) => project.data.category === category.key);
+    if (entries.length === 0) return null;
+    const headingId = `project-category-${category.key}`;
+
+    return (
+      <section class="project-index__category" aria-labelledby={headingId}>
+        <header class="project-index__category-header">
+          <p class="project-index__marker" aria-hidden="true">{category.marker}</p>
+          <div>
+            <h2 id={headingId}>{category[locale]}</h2>
+            <p>{copy.count(entries.length)}</p>
+          </div>
+        </header>
+        <div class="project-index__cards">
+          {entries.map((project) => (
+            <ProjectCard
+              {project}
+              categoryLabel={category[locale]}
+              url={localizedPath(locale, 'project', project.data.translationKey)}
+            />
+          ))}
+        </div>
+      </section>
+    );
+  })}
+</div>

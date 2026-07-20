@@ -1,0 +1,15 @@
+---
+import WorkPage from '../components/pages/WorkPage.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const locale = 'en' as const;
+---
+
+<BaseLayout
+  {locale}
+  title="Work — Xander Xu"
+  description="Xander Xu's experience across bioinformatics, medical AI, LLM products, and open-source agent systems."
+  pathname={Astro.url.pathname}
+>
+  <WorkPage {locale} />
+</BaseLayout>

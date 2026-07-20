@@ -1,0 +1,25 @@
+---
+import type { Locale } from '../i18n/config';
+import ContactLinks from './ContactLinks.astro';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const currentYear = new Date().getFullYear();
+const copyright = locale === 'en'
+  ? `© ${currentYear} Xander Xu. Personal content reserved.`
+  : `© ${currentYear} 许灿强。个人内容保留所有权利。`;
+const sourceLabel = locale === 'en' ? 'Site source on GitHub' : '网站源码发布于 GitHub';
+---
+
+<footer class="site-footer">
+  <div class="site-footer__inner shell">
+    <ContactLinks {locale} />
+    <p class="site-footer__meta">
+      <span>{copyright}</span>
+      <a class="site-footer__source" href="https://github.com/Canqiang/Canqiang.github.io">{sourceLabel}</a>
+    </p>
+  </div>
+</footer>

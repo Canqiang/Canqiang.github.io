@@ -1,0 +1,55 @@
+---
+import { Picture } from 'astro:assets';
+import speakingPhoto from '../assets/xander-speaking.jpg';
+import { identity } from '../data/site';
+import type { Locale } from '../i18n/config';
+import { localizedPath } from '../i18n/routes';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const copy = locale === 'en'
+  ? {
+      work: 'View selected work',
+      resume: 'View résumé',
+      event: 'AI hackathon / presentation',
+    }
+  : {
+      work: '查看精选工作',
+      resume: '查看简历',
+      event: 'AI 黑客松 / 现场分享',
+    };
+---
+
+<section class="portfolio-hero shell" aria-labelledby="hero-title">
+  <div class="portfolio-hero__copy">
+    <p class="portfolio-hero__role">{identity.role[locale]}</p>
+    <h1 id="hero-title" class="portfolio-hero__title">{identity.headline[locale]}</h1>
+    <p class="portfolio-hero__summary">{identity.introduction[locale]}</p>
+    <div class="portfolio-hero__actions no-print">
+      <a class="portfolio-hero__action portfolio-hero__action--primary" href="#selected-work">
+        {copy.work}
+      </a>
+      <a class="portfolio-hero__action" href={localizedPath(locale, 'resume')}>
+        {copy.resume}
+      </a>
+    </div>
+  </div>
+
+  <figure class="portfolio-hero__visual">
+    <Picture
+      src={speakingPhoto}
+      alt={identity.photoAlt[locale]}
+      widths={[480, 720, 960]}
+      formats={['avif', 'webp']}
+      sizes="(min-width: 56rem) 38vw, 100vw"
+      layout="constrained"
+      fit="cover"
+      position="center"
+      priority
+    />
+    <figcaption class="portfolio-hero__event-label">{copy.event}</figcaption>
+  </figure>
+</section>
