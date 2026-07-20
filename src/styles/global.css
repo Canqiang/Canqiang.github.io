@@ -273,9 +273,9 @@ a {
   max-width: 18ch;
   margin: 0;
   font-family: var(--font-display);
-  font-size: clamp(2.75rem, 7vw, 5.75rem);
+  font-size: 1.375rem;
   font-weight: 600;
-  line-height: 1.05;
+  line-height: 1.3;
   letter-spacing: 0;
   text-transform: none;
 }
@@ -284,6 +284,7 @@ a {
   max-width: 40rem;
   margin: 0;
   color: var(--text-muted);
+  font-size: 0.9rem;
 }
 
 .portfolio-hero {
@@ -838,7 +839,16 @@ a {
   border-bottom: 0;
 }
 
-.work-role__meta,
+.work-role__meta {
+  color: var(--text-dim);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  line-height: 1.5;
+}
+
 .resume-role__meta {
   color: var(--accent);
   font-family: var(--font-mono);
@@ -854,11 +864,19 @@ a {
 
 .work-role__body h3 {
   margin: 0;
-  font-size: clamp(1.35rem, 3vw, 1.9rem);
-  line-height: 1.15;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.4;
 }
 
-.work-role__title,
+.work-role__title {
+  margin: 0.2rem 0 0;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
 .resume-role__title {
   margin: 0.35rem 0 0;
   color: var(--accent);
@@ -869,16 +887,32 @@ a {
 
 .work-role__summary {
   max-width: 48rem;
-  margin: 1rem 0 0;
+  margin: 0.75rem 0 0;
   color: var(--text-muted);
+  font-size: 0.875rem;
 }
 
 .work-role__highlights {
   display: grid;
-  gap: 0.45rem;
+  gap: 0.4rem;
   max-width: 48rem;
-  margin: 1rem 0 0;
-  padding-inline-start: 1.2rem;
+  margin: 0.75rem 0 0;
+  padding-inline-start: 0;
+  list-style: none;
+  font-size: 0.875rem;
+  color: var(--text-muted);
+}
+
+.work-role__highlights li {
+  position: relative;
+  padding-inline-start: 1.15rem;
+}
+
+.work-role__highlights li::before {
+  content: '▹';
+  position: absolute;
+  inset-inline-start: 0;
+  color: var(--accent);
 }
 
 .work-role__case-study {
@@ -1439,8 +1473,7 @@ a {
   }
 
   .portfolio-hero__title,
-  .page-intro__title,
-  .portfolio-section__title {
+  .page-intro__title {
     font-size: 28pt;
   }
 
