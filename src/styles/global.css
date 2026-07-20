@@ -717,72 +717,20 @@ a {
 .achievement-grid {
   display: grid;
   gap: 1px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
   border: 1px solid var(--rule);
   background: var(--rule);
 }
 
-.achievement-cell {
-  min-width: 0;
-  min-height: 15rem;
-  padding: clamp(1.25rem, 3vw, 1.75rem);
-  color: var(--text);
-  background: var(--bg-raised);
-}
-
-.achievement-cell__label {
-  margin: 0;
-  color: var(--accent);
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
-
-.achievement-cell__title {
-  margin: clamp(2.5rem, 6vw, 5rem) 0 0;
-  font-family: var(--font-display);
-  font-size: clamp(1.9rem, 4vw, 2.8rem);
-  font-weight: 800;
-  line-height: 0.95;
-  text-transform: uppercase;
-}
-
-.achievement-cell__list {
-  display: grid;
-  gap: 0.7rem;
-  margin: 1.25rem 0 0;
-  padding: 0;
-  list-style: none;
-}
-
-.achievement-cell__item {
-  padding-top: 0.7rem;
-  border-top: 1px solid var(--rule);
-  font-size: 0.9rem;
-  line-height: 1.4;
-}
-
-.achievement-cell__link {
-  position: relative;
-  z-index: 1;
-  font-weight: 600;
-  text-decoration-color: var(--rule);
-}
-
-.achievement-cell__link:hover {
-  color: var(--accent);
-  text-decoration-color: currentColor;
-}
-
-.achievement-cell__detail {
-  display: block;
-  margin-top: 0.3rem;
-  color: var(--text-dim);
-  font-family: var(--font-mono);
-  font-size: 0.66rem;
-  line-height: 1.45;
-}
+.achievement-cell { min-width: 0; min-height: 11rem; background: var(--bg-raised); }
+.achievement-cell__record { display: grid; gap: 0.5rem; min-height: 100%; padding: clamp(1.1rem, 3vw, 1.6rem); text-decoration: none; transition: box-shadow 160ms ease; }
+.achievement-cell__record:hover,
+.achievement-cell__record:focus-visible { box-shadow: inset 0 0 0 1px var(--accent); }
+.achievement-cell__label { color: var(--accent); font-size: 0.62rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; }
+.achievement-cell__count { margin-top: 1.1rem; font-family: var(--font-display); font-size: clamp(1.7rem, 4vw, 2.4rem); font-weight: 600; color: var(--text); }
+.achievement-cell__source { color: var(--text-dim); font-size: 0.66rem; line-height: 1.5; }
 
 .portfolio-contact {
   display: flex;

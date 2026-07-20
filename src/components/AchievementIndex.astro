@@ -1,6 +1,7 @@
 ---
 import { achievementGroups, type AchievementGroup } from '../data/achievements';
 import type { Locale } from '../i18n/config';
+import { localizedPath } from '../i18n/routes';
 
 interface Props {
   locale: Locale;
@@ -9,30 +10,35 @@ interface Props {
 
 const { locale, groups = achievementGroups } = Astro.props;
 const expectedOrder = ['publications', 'patents', 'openSource', 'competitions'];
-const orderedGroups = expectedOrder.map((key) => {
-  const group = groups.find((candidate) => candidate.key === key);
+const ordered = expectedOrder.map((key) => {
+  const group = groups.find((g) => g.key === key);
   if (!group) throw new Error(`Missing achievement group: ${key}`);
   return group;
 });
+const aboutPath = localizedPath(locale, 'about');
+// Each group routes to wherever it is actually shown in full — About's
+// record section covers publications/patents only; open source and
+// competitions have their own project detail pages.
+const destination = (group: AchievementGroup) =>
+  group.key === 'openSource' ? localizedPath(locale, 'project', 'core-ai')
+  : group.key === 'competitions' ? localizedPath(locale, 'project', 'competitions')
+  : `${aboutPath}#record`;
+// Headline figure per group: a count, or a signature value for singletons.
+const figure = (group: AchievementGroup) =>
+  group.key === 'openSource' ? 'Core-AI'
+  : group.key === 'competitions' ? '62 / 1,010'
+  : String(group.items.length).padStart(2, '0');
+const source = (group: AchievementGroup) => group.items[0].detail[locale];
 ---
 
-<div class="achievement-grid">
-  {orderedGroups.map((group) => (
-    <article class="achievement-cell">
-      <p class="achievement-cell__label" aria-hidden="true">{group.label[locale]}</p>
-      <h3 class="achievement-cell__title">{group.label[locale]}</h3>
-      <ul class="achievement-cell__list">
-        {group.items.map((item) => (
-          <li class="achievement-cell__item">
-            {item.href ? (
-              <a class="achievement-cell__link" href={item.href}>{item.title[locale]}</a>
-            ) : (
-              <span>{item.title[locale]}</span>
-            )}
-            <small class="achievement-cell__detail">{item.detail[locale]}</small>
-          </li>
-        ))}
-      </ul>
-    </article>
+<ul class="achievement-grid">
+  {ordered.map((group) => (
+    <li class="achievement-cell">
+      <a class="achievement-cell__record" href={destination(group)}>
+        <span class="achievement-cell__label mono">{group.label[locale]}</span>
+        <span class="achievement-cell__count">{figure(group)}</span>
+        <span class="achievement-cell__source mono">{source(group)}</span>
+      </a>
+    </li>
   ))}
-</div>
+</ul>

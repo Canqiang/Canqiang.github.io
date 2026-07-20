@@ -23,3 +23,13 @@ describe('career axis', () => {
     expect(axis).toContain('career-axis__stop');
   });
 });
+
+describe('evidence cells', () => {
+  it('shows condensed counts, each linking to the destination that actually covers it', async () => {
+    const ai = await read('src/components/AchievementIndex.astro');
+    expect(ai).toContain('achievement-cell__count');
+    expect(ai).toContain("localizedPath(locale, 'about')");
+    expect(ai).toContain("localizedPath(locale, 'project', 'core-ai')");
+    expect(ai).toContain("localizedPath(locale, 'project', 'competitions')");
+  });
+});
