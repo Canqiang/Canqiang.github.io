@@ -6,7 +6,7 @@ export type PublicLink = { label: string; href: string };
 export const identity = {
   name: 'Xander Xu',
   chineseName: '许灿强',
-  role: { en: 'AI Platform Engineer', zh: 'AI 平台研发工程师' },
+  role: { en: 'AI Engineer', zh: 'AI 研发工程师' },
   headline: {
     en: 'Models are only useful when they ship.',
     zh: '模型只有真正落地，才有价值。',
@@ -89,5 +89,5 @@ export const careerAxis: CareerStop[] = [
   { year: { en: '2017', zh: '2017' }, org: { en: 'Tsinghua IIIS', zh: '清华 IIIS' }, role: { en: 'Research Assistant', zh: '科研助理' }, field: 'bioinformatics' },
   { year: { en: '2021', zh: '2021' }, org: { en: 'BGI Research', zh: '华大研究院' }, role: { en: 'Algorithm Lead', zh: '算法负责人' }, field: 'medical-ai' },
   { year: { en: '2023', zh: '2023' }, org: { en: 'Jiyuan Technology', zh: '极元科技' }, role: { en: 'Medical LLM Lead', zh: '医疗大模型技术负责人' }, field: 'llm-products' },
-  { year: { en: 'Now', zh: '现在' }, org: { en: 'ChanceTop', zh: '畅拓科技' }, role: { en: 'AI Platform Engineer', zh: 'AI 平台研发工程师' }, field: 'agent-systems' },
+  { year: { en: 'Now', zh: '现在' }, org: { en: 'ChanceTop', zh: '畅拓科技' }, role: { en: 'AI Engineer', zh: 'AI 研发工程师' }, field: 'agent-systems' },
 ];

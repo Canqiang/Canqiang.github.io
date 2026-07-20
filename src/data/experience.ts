@@ -158,7 +158,7 @@ export const experience: ExperienceEntry[] = [
   {
     field: 'agent-systems',
     company: { en: 'ChanceTop', zh: '畅拓科技' },
-    role: { en: 'AI Platform Engineer', zh: 'AI 平台研发工程师' },
+    role: { en: 'AI Engineer', zh: 'AI 研发工程师' },
     period: { en: 'Jul 15, 2025 — Present', zh: '2025 年 7 月 15 日 — 至今' },
     location: { en: 'China', zh: '中国' },
     summary: {
