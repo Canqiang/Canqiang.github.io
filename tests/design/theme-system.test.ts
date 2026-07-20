@@ -44,3 +44,23 @@ describe('no-FOUC boot', () => {
     expect(layout).toMatch(/theme-color"[^>]*prefers-color-scheme: light[^>]*#F6F1E7/i);
   });
 });
+
+describe('theme toggle + build stamp', () => {
+  it('ships an accessible, persisting toggle mounted in the header', async () => {
+    const [toggle, header] = await Promise.all([
+      read('src/components/ThemeToggle.astro'),
+      read('src/components/Header.astro'),
+    ]);
+    expect(toggle).toContain('data-theme-toggle');
+    expect(toggle).toContain('aria-label');
+    expect(toggle).toContain("localStorage.setItem('theme'");
+    expect(header).toContain("import ThemeToggle from './ThemeToggle.astro'");
+    expect(header).toContain('<ThemeToggle');
+  });
+
+  it('shows a build stamp in the footer', async () => {
+    const footer = await read('src/components/Footer.astro');
+    expect(footer).toContain('site-footer__build');
+    expect(footer).toContain('GITHUB_SHA');
+  });
+});

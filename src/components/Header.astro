@@ -2,6 +2,7 @@
 import type { Locale } from '../i18n/config';
 import { localeMeta } from '../i18n/config';
 import { alternateLocalePath, localizedPath, type RouteKey } from '../i18n/routes';
+import ThemeToggle from './ThemeToggle.astro';
 
 interface Props {
   locale: Locale;
@@ -67,6 +68,7 @@ const destinationLocale: Locale = locale === 'en' ? 'zh' : 'en';
             </a>
           </li>
         )}
+        <li class="site-header__nav-toggle"><ThemeToggle {locale} /></li>
       </ul>
     </nav>
   </div>

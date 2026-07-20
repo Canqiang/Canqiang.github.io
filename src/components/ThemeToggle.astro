@@ -1,0 +1,45 @@
+---
+import type { Locale } from '../i18n/config';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const label = locale === 'en' ? 'Toggle color theme' : '切换配色主题';
+---
+
+<button class="theme-toggle no-print" type="button" data-theme-toggle aria-label={label}>
+  <span class="theme-toggle__glyph" aria-hidden="true">◐</span>
+</button>
+
+<script>
+  const button = document.querySelector('[data-theme-toggle]');
+  if (button instanceof HTMLButtonElement) {
+    button.addEventListener('click', () => {
+      const root = document.documentElement;
+      const next = root.dataset.theme === 'light' ? 'dark' : 'light';
+      root.dataset.theme = next;
+      try { localStorage.setItem('theme', next); } catch (e) { /* storage unavailable */ }
+    });
+  }
+</script>
+
+<style>
+  .theme-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 2.75rem;
+    min-height: 2.75rem;
+    padding: 0;
+    border: 1px solid var(--rule);
+    border-radius: 0;
+    color: var(--text-muted);
+    background: transparent;
+    font-size: 1rem;
+    line-height: 1;
+    cursor: pointer;
+  }
+  .theme-toggle:hover { color: var(--accent); border-color: var(--accent); }
+</style>
