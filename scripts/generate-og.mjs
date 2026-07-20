@@ -22,7 +22,7 @@ const colors = {
   paper: '#0C0E12',
   carbon: '#E7E3DA',
   blue: '#D6A350',
-  graphite: '#6F6A60',
+  graphite: '#8A857A',
 };
 
 function cardSvg({ label, lines, index }) {
@@ -69,9 +69,8 @@ async function writeCard(filename, config) {
 
 const faviconSvg = Buffer.from(`
   <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
-    <rect width="64" height="64" fill="${colors.blue}"/>
-    <path d="M13 14 L36 50 M36 14 L13 50" stroke="${colors.carbon}" stroke-width="7" stroke-linecap="square"/>
-    <path d="M50 11 L38 53" stroke="${colors.carbon}" stroke-width="6" stroke-linecap="square"/>
+    <rect width="64" height="64" fill="${colors.paper}"/>
+    <path d="M16 14 L48 50 M48 14 L16 50" stroke="${colors.blue}" stroke-width="10" stroke-linecap="round"/>
   </svg>
 `);
 
