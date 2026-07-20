@@ -145,8 +145,8 @@ a {
   max-width: 14ch;
   margin: 0;
   font-size: clamp(3.6rem, 11vw, 8.75rem);
-  line-height: 0.86;
-  letter-spacing: -0.035em;
+  line-height: 1.08;
+  letter-spacing: -0.01em;
 }
 
 .page-intro__summary {
@@ -275,7 +275,7 @@ a {
   font-family: var(--font-display);
   font-size: clamp(2.75rem, 7vw, 5.75rem);
   font-weight: 600;
-  line-height: 0.9;
+  line-height: 1.05;
   letter-spacing: 0;
   text-transform: none;
 }
@@ -290,11 +290,6 @@ a {
   display: grid;
   gap: 0;
   padding-block: clamp(3.5rem, 8vw, 7.5rem);
-  min-height: calc(100vh - 4.5rem);
-}
-
-.portfolio-hero__copy {
-  align-self: end;
 }
 
 .portfolio-hero__role {
@@ -485,9 +480,8 @@ a {
   margin: 0;
   font-family: var(--font-display);
   font-size: clamp(2rem, 4vw, 3.25rem);
-  font-weight: 800;
-  line-height: 0.95;
-  text-transform: uppercase;
+  font-weight: 600;
+  line-height: 1.05;
 }
 
 .project-card__summary {
@@ -535,8 +529,8 @@ a {
   margin: 0;
   font-family: var(--font-display);
   font-size: clamp(2.25rem, 5vw, 4.5rem);
-  line-height: 0.95;
-  text-transform: uppercase;
+  font-weight: 600;
+  line-height: 1.05;
 }
 
 .project-index__category-header p:last-child {
@@ -602,9 +596,9 @@ a {
   margin: 0;
   font-family: var(--font-display);
   font-size: clamp(4rem, 11vw, 8.5rem);
-  line-height: 0.84;
-  letter-spacing: -0.035em;
-  text-transform: uppercase;
+  font-weight: 600;
+  line-height: 1.08;
+  letter-spacing: -0.01em;
   overflow-wrap: anywhere;
 }
 
@@ -703,8 +697,8 @@ a {
   margin: clamp(3rem, 7vw, 5rem) 0 1rem;
   font-family: var(--font-display);
   font-size: clamp(2.3rem, 6vw, 4rem);
-  line-height: 0.95;
-  text-transform: uppercase;
+  font-weight: 600;
+  line-height: 1.1;
 }
 
 .project-detail__body h3 {
@@ -814,13 +808,13 @@ a {
 .resume-section > h2 {
   margin: 0;
   font-family: var(--font-display);
-  font-weight: 800;
-  line-height: 0.95;
-  text-transform: uppercase;
+  font-weight: 600;
+  line-height: 1.05;
+  text-transform: none;
 }
 
 .work-field__title {
-  font-size: clamp(2.4rem, 6vw, 5rem);
+  font-size: clamp(1.75rem, 4vw, 2.75rem);
 }
 
 .work-field__summary {
@@ -1110,9 +1104,8 @@ a {
   margin: 0;
   font-family: var(--font-display);
   font-size: clamp(3.5rem, 9vw, 7rem);
-  font-weight: 800;
-  line-height: 0.85;
-  text-transform: uppercase;
+  font-weight: 600;
+  line-height: 1.05;
 }
 
 .resume-header__summary {
@@ -1434,8 +1427,7 @@ a {
     width: 100%;
   }
 
-  .page-main,
-  .portfolio-hero {
+  .page-main {
     min-height: 0;
   }
 
