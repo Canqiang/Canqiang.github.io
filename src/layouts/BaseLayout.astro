@@ -34,6 +34,21 @@ const skipLabel = locale === 'en' ? 'Skip to main content' : '跳至主要内容
 <html lang={localeMeta[locale].lang}>
   <head>
     <meta charset="UTF-8" />
+    <script is:inline>
+      (function () {
+        try {
+          var stored = localStorage.getItem('theme');
+          var theme = stored === 'light' || stored === 'dark'
+            ? stored
+            : (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+          document.documentElement.dataset.theme = theme;
+        } catch (e) {
+          document.documentElement.dataset.theme = 'dark';
+        }
+      })();
+    </script>
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0C0E12" />
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#F6F1E7" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
     <SeoHead {locale} {title} {description} {pathname} {image} {imageAlt} {hasLocalePair} {pageKind} />

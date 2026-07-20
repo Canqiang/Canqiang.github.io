@@ -28,3 +28,19 @@ describe('two-theme token system', () => {
     expect(printBlock).toMatch(/--text:\s*#000/i);
   });
 });
+
+describe('no-FOUC boot', () => {
+  it('sets data-theme from localStorage/OS before paint, dark fallback', async () => {
+    const layout = await read('src/layouts/BaseLayout.astro');
+    expect(layout).toContain('is:inline');
+    expect(layout).toContain("localStorage.getItem('theme')");
+    expect(layout).toContain('prefers-color-scheme: light');
+    expect(layout).toContain('document.documentElement.dataset.theme');
+  });
+
+  it('emits per-scheme theme-color metas with the approved canvases', async () => {
+    const layout = await read('src/layouts/BaseLayout.astro');
+    expect(layout).toMatch(/theme-color"[^>]*prefers-color-scheme: dark[^>]*#0C0E12/i);
+    expect(layout).toMatch(/theme-color"[^>]*prefers-color-scheme: light[^>]*#F6F1E7/i);
+  });
+});
