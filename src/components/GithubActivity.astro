@@ -15,7 +15,7 @@ interface ContributionDay {
 }
 
 let contributions: ContributionDay[] = [];
-let totalLastYear = 0;
+let total = 0;
 let fetchFailed = false;
 
 try {
@@ -25,7 +25,7 @@ try {
   if (res.ok) {
     const data = await res.json();
     contributions = Array.isArray(data.contributions) ? data.contributions : [];
-    totalLastYear = typeof data.total?.lastYear === 'number' ? data.total.lastYear : 0;
+    total = typeof data.total?.lastYear === 'number' ? data.total.lastYear : 0;
   } else {
     fetchFailed = true;
   }
@@ -68,18 +68,17 @@ weeks.forEach((week, weekIndex) => {
 });
 
 const copy = locale === 'en'
-  ? { captionSuffix: 'contributions in the last year', less: 'Less', more: 'More' }
-  : { captionSuffix: '过去一年的贡献', less: '少', more: '多' };
+  ? { captionPrefix: '', captionSuffix: ' contributions in the last year', less: 'Less', more: 'More' }
+  : { captionPrefix: '近一年共 ', captionSuffix: ' 次代码贡献', less: '低', more: '高' };
 ---
 
 {!fetchFailed && contributions.length > 0 && (
   <div class="github-activity">
     <p class="github-activity__caption mono">
-      <span class="github-activity__count">{totalLastYear.toLocaleString(monthLocale)}</span>
-      {' '}{copy.captionSuffix}
+      {copy.captionPrefix}<span class="github-activity__count">{total.toLocaleString(monthLocale)}</span>{copy.captionSuffix}
     </p>
     <div class="github-activity__scroll">
-      <div class="github-activity__months mono" style={`grid-template-columns: repeat(${weeks.length}, 1fr)`}>
+      <div class="github-activity__months mono" style={`grid-template-columns: repeat(${weeks.length}, 11px); column-gap: 3px;`}>
         {monthLabels.map(({ label, weekIndex }) => (
           <span style={`grid-column-start: ${weekIndex + 1}`}>{label}</span>
         ))}
