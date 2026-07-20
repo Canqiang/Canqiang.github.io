@@ -38,3 +38,56 @@ export const publicLinks: PublicLink[] = [
   { label: 'LinkedIn', href: 'https://www.linkedin.com/in/canqiang-xu-8510531b3/' },
   { label: 'Email', href: 'mailto:canqiangxu@yeah.net' },
 ];
+
+export interface FieldCard {
+  key: string;
+  name: Localized;
+  scope: Localized;
+  span: string;
+  orgs: Localized;
+}
+
+export const fieldCards: FieldCard[] = [
+  {
+    key: 'bioinformatics',
+    name: { en: 'Bioinformatics', zh: '生物信息' },
+    scope: { en: 'Drug-target prediction, multi-omics data systems, cryo-EM detection.', zh: '药物靶点、多组学数据系统、冷冻电镜识别。' },
+    span: '2017 — 2018',
+    orgs: { en: 'Tsinghua IIIS', zh: '清华交叉信息院' },
+  },
+  {
+    key: 'medical-ai',
+    name: { en: 'Medical AI', zh: '医疗 AI' },
+    scope: { en: 'Pathology imaging, spatial omics, prognostic risk stratification.', zh: '病理图像、时空组学、预后风险分层。' },
+    span: '2018 — 2023',
+    orgs: { en: 'Jiyuan · BGI · Fapon', zh: '极元 / 华大 / 菲鹏' },
+  },
+  {
+    key: 'llm-products',
+    name: { en: 'LLM Products', zh: '大模型产品' },
+    scope: { en: 'Medical RAG, multimodal agents, child-content safety.', zh: '医疗 RAG、多模态智能体、儿童内容安全。' },
+    span: '2023 — 2025',
+    orgs: { en: 'Jiyuan · Qudian', zh: '极元 / 趣店' },
+  },
+  {
+    key: 'agent-systems',
+    name: { en: 'Agent Systems', zh: '智能体系统' },
+    scope: { en: 'Core-AI durable workflows and platform delivery.', zh: 'Core-AI 持久化工作流与平台交付。' },
+    span: '2025 — Now',
+    orgs: { en: 'ChanceTop · Core-AI', zh: '畅拓 / Core-AI' },
+  },
+];
+
+export interface CareerStop {
+  year: Localized;
+  org: Localized;
+  role: Localized;
+  field: string;
+}
+
+export const careerAxis: CareerStop[] = [
+  { year: { en: '2017', zh: '2017' }, org: { en: 'Tsinghua IIIS', zh: '清华 IIIS' }, role: { en: 'Research Assistant', zh: '科研助理' }, field: 'bioinformatics' },
+  { year: { en: '2021', zh: '2021' }, org: { en: 'BGI Research', zh: '华大研究院' }, role: { en: 'Algorithm Lead', zh: '算法负责人' }, field: 'medical-ai' },
+  { year: { en: '2023', zh: '2023' }, org: { en: 'Jiyuan Technology', zh: '极元科技' }, role: { en: 'Medical LLM Lead', zh: '医疗大模型技术负责人' }, field: 'llm-products' },
+  { year: { en: 'Now', zh: '现在' }, org: { en: 'ChanceTop', zh: '畅拓科技' }, role: { en: 'AI Platform Engineer', zh: 'AI 平台研发工程师' }, field: 'agent-systems' },
+];

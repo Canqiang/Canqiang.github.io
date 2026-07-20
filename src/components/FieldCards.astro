@@ -1,0 +1,55 @@
+---
+import { fieldCards } from '../data/site';
+import type { Locale } from '../i18n/config';
+import { localizedPath } from '../i18n/routes';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const workPath = localizedPath(locale, 'work');
+---
+
+<ol class="field-cards">
+  {fieldCards.map((card, i) => (
+    <li class="field-card">
+      <a class="field-card__link" href={`${workPath}#${card.key}`}>
+        <span class="field-card__tag mono">[{String(i + 1).padStart(2, '0')}]</span>
+        <span class="field-card__name">{card.name[locale]}</span>
+        <span class="field-card__scope">{card.scope[locale]}</span>
+        <span class="field-card__meta mono">{card.span} · {card.orgs[locale]}</span>
+      </a>
+    </li>
+  ))}
+</ol>
+
+<style>
+  .field-cards {
+    display: grid;
+    gap: 1px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border: 1px solid var(--rule);
+    background: var(--rule);
+  }
+  .field-card { min-width: 0; }
+  .field-card__link {
+    display: grid;
+    gap: 0.4rem;
+    min-height: 100%;
+    padding: clamp(1.1rem, 3vw, 1.6rem);
+    background: var(--bg-raised);
+    text-decoration: none;
+    transition: box-shadow 160ms ease;
+  }
+  .field-card__link:hover,
+  .field-card__link:focus-visible { box-shadow: inset 0 0 0 1px var(--accent); }
+  .field-card__tag { color: var(--accent); font-size: 0.64rem; letter-spacing: 0.1em; }
+  .field-card__name { font-family: var(--font-display); font-size: 1.15rem; font-weight: 600; color: var(--text); }
+  .field-card__scope { color: var(--text-muted); font-size: 0.9rem; }
+  .field-card__meta { margin-top: 0.35rem; color: var(--text-dim); font-size: 0.66rem; }
+  @media (min-width: 38rem) { .field-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (min-width: 56rem) { .field-cards { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+</style>
