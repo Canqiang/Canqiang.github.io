@@ -1374,13 +1374,14 @@ a {
 
   .field-index__link {
     justify-content: center;
+    align-items: flex-end;
     min-height: 5rem;
-    padding: 2rem 0.75rem 0.65rem;
+    padding: 0 0.75rem 0.9rem;
     text-align: center;
   }
 
   .field-index__link::before {
-    inset-block-start: calc(50% - 0.275rem);
+    inset-block-start: 1.1rem;
     inset-inline-start: calc(50% - 0.275rem);
   }
 }
