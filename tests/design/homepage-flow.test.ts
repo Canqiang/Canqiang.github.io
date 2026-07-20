@@ -14,3 +14,12 @@ describe('LOG 00 hero', () => {
     expect(hero).toContain('portfolio-hero__stamp');
   });
 });
+
+describe('career axis', () => {
+  it('renders the axis from careerAxis and links to full work', async () => {
+    const axis = await read('src/components/CareerAxis.astro');
+    expect(axis).toContain("from '../data/site'");
+    expect(axis).toContain('careerAxis');
+    expect(axis).toContain('career-axis__stop');
+  });
+});

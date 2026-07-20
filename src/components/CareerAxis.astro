@@ -1,0 +1,55 @@
+---
+import { careerAxis } from '../data/site';
+import type { Locale } from '../i18n/config';
+import { localizedPath } from '../i18n/routes';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const workPath = localizedPath(locale, 'work');
+---
+
+<div class="career-axis">
+  <ol class="career-axis__track">
+    {careerAxis.map((stop) => (
+      <li class="career-axis__stop">
+        <a class="career-axis__link" href={`${workPath}#${stop.field}`}>
+          <span class="career-axis__year mono">{stop.year[locale]}</span>
+          <span class="career-axis__org">{stop.org[locale]}</span>
+          <span class="career-axis__role mono">{stop.role[locale]}</span>
+        </a>
+      </li>
+    ))}
+  </ol>
+</div>
+
+<style>
+  .career-axis__track {
+    display: grid;
+    gap: 1.5rem 0;
+    margin: 0;
+    padding: 1.2rem 0 0;
+    list-style: none;
+    border-top: 1px solid var(--rule);
+  }
+  .career-axis__stop { position: relative; }
+  .career-axis__stop::before {
+    content: '';
+    position: absolute;
+    inset-block-start: -1.2rem;
+    inset-inline-start: 0;
+    width: 1px;
+    height: 8px;
+    background: var(--accent);
+  }
+  .career-axis__link { display: grid; gap: 0.15rem; text-decoration: none; }
+  .career-axis__year { color: var(--accent); font-size: 0.7rem; }
+  .career-axis__org { color: var(--text); font-size: 0.95rem; }
+  .career-axis__role { color: var(--text-dim); font-size: 0.7rem; }
+  @media (min-width: 48rem) {
+    .career-axis__track { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0; }
+    .career-axis__stop { padding-inline-end: 1rem; }
+  }
+</style>
