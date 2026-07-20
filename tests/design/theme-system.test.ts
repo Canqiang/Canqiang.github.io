@@ -11,7 +11,7 @@ describe('two-theme token system', () => {
     expect(css).toMatch(/:root\s*\{[^}]*--bg:\s*#0C0E12/i);
     expect(css).toMatch(/--accent:\s*#D6A350/i);
     expect(css).toMatch(/:root\[data-theme="light"\]\s*\{[^}]*--bg:\s*#F6F1E7/i);
-    expect(css).toMatch(/:root\[data-theme="light"\][^{]*\{[^}]*--accent:\s*#9A6414/i);
+    expect(css).toMatch(/:root\[data-theme="light"\][^{]*\{[^}]*--accent:\s*#8A5A12/i);
   });
 
   it('drops every legacy token name', async () => {

@@ -16,7 +16,7 @@
   --bg-raised: #0E1016;
   --text: #E7E3DA;
   --text-muted: #A8A29E;
-  --text-dim: #6F6A60;
+  --text-dim: #8A857A;
   --accent: #D6A350;
   --rule: #23262E;
   color-scheme: dark;
@@ -27,8 +27,8 @@
   --bg-raised: #FBF7EE;
   --text: #211D17;
   --text-muted: #6B6459;
-  --text-dim: #948B7A;
-  --accent: #9A6414;
+  --text-dim: #756C5D;
+  --accent: #8A5A12;
   --rule: #E2D9C7;
   color-scheme: light;
 }

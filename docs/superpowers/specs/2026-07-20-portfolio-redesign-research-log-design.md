@@ -10,7 +10,10 @@
 
 **Supersedes:** Section 6 (Homepage Structure) and Section 10 (Visual System) of
 [`2026-07-19-personal-portfolio-design.md`](./2026-07-19-personal-portfolio-design.md).
-All other sections of that spec remain in force unless explicitly amended here.
+All other sections of that spec remain in force unless explicitly amended here. It
+also supersedes that spec's §18 line listing a "dark-mode toggle" as out of scope for
+v1: the Research Log redesign is built around exactly that dark/light theme toggle
+(§5), so that scope exclusion no longer applies.
 
 ## 1. Objective
 
@@ -41,7 +44,7 @@ entries, schemas, or public-safety rules change.
   theme is available via a user toggle and via `prefers-color-scheme`, with a stored
   choice always winning (precedence defined in §5). Both themes are first-class and
   must pass contrast checks.
-- **Accent color:** amber/gold — `#D6A350` on dark, deepened to `#9A6414` on light.
+- **Accent color:** amber/gold — `#D6A350` on dark, deepened to `#8A5A12` on light.
 - **Display typeface:** serif for large titles and section names (this is the source
   of the edition's refinement, especially for Chinese). Confirmed acceptable.
 - **Structure scope:** re-sequence the **homepage** into a numbered single-page flow;
@@ -86,7 +89,7 @@ in both themes.
 - `--bg-raised: #0E1016` — cards, grid cells
 - `--text: #E7E3DA` — primary (warm off-white)
 - `--text-muted: #A8A29E` — supporting copy
-- `--text-dim: #6F6A60` — captions, stamps, disabled
+- `--text-dim: #8A857A` — captions, stamps, disabled
 - `--accent: #D6A350` — amber; links, current state, section numbers, small emphasis
 - `--rule: #23262E` — hairline borders and grid gutters
 
@@ -96,8 +99,8 @@ in both themes.
 - `--bg-raised: #FBF7EE`
 - `--text: #211D17`
 - `--text-muted: #6B6459`
-- `--text-dim: #948B7A`
-- `--accent: #9A6414` — deepened amber for AA contrast on paper
+- `--text-dim: #756C5D`
+- `--accent: #8A5A12` — deepened amber for AA contrast on paper
 - `--rule: #E2D9C7`
 
 **Contrast requirement:** In *both* themes, `--text` on `--bg`, `--text-muted` on

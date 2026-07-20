@@ -20,7 +20,7 @@ Copied verbatim from the spec; every task implicitly includes these.
 - No runtime GitHub/Kaggle API calls. Static output only.
 - Do not publish a phone number or any private hostname, credential, customer data, or unpublished metric. `npm run scan:public-safety` must stay green.
 - Dark is the default/fallback theme; a stored choice wins over `prefers-color-scheme`; both themes must pass WCAG AA for text and for the amber accent used as a link/label.
-- Accent hexes: dark `#D6A350`, light `#9A6414`. Dark canvas `#0C0E12`; light canvas `#F6F1E7`.
+- Accent hexes: dark `#D6A350`, light `#8A5A12`. Dark canvas `#0C0E12`; light canvas `#F6F1E7`.
 - Support 360 / 768 / 1024 / 1440 px layouts, keyboard navigation, visible focus, descriptive alt text, and reduced motion.
 - Release targets: Lighthouse Performance, Accessibility, Best-Practices, SEO ≥ 0.95 on `/`, `/zh/`, `/projects/core-ai/`, `/zh/projects/core-ai/`.
 - Printing any page (from either screen theme) yields ink-on-white output.
@@ -73,8 +73,8 @@ The current stylesheet overloads a few tokens; this table is the authoritative o
 | `--carbon` **as text/border color** | `--text` | `#E7E3DA` | `#211D17` |
 | `--carbon` **as a fill/gutter/hover bg** | `--rule` (gutters) or `--text` (invert blocks) | see Task 2 inversion list | — |
 | `--graphite` (supporting text) | `--text-muted` | `#A8A29E` | `#6B6459` |
-| _(new: mono captions/stamps)_ | `--text-dim` | `#6F6A60` | `#948B7A` |
-| `--signal-blue` (accent) | `--accent` | `#D6A350` | `#9A6414` |
+| _(new: mono captions/stamps)_ | `--text-dim` | `#8A857A` | `#756C5D` |
+| `--signal-blue` (accent) | `--accent` | `#D6A350` | `#8A5A12` |
 | `--circuit-violet` (2nd accent) | `--accent` | folds into amber | folds into amber |
 | `--signal-coral` (rare emphasis) | `--accent` | folds into amber | folds into amber |
 | `--rule` (hairline) | `--rule` | `#23262E` | `#E2D9C7` |
