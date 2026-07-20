@@ -370,7 +370,7 @@ a {
   inset-block-end: 0;
   max-width: calc(100% - 1.25rem);
   padding: 0.65rem 0.8rem;
-  color: white;
+  color: var(--bg);
   background: var(--accent);
   font-family: var(--font-mono);
   font-size: 0.68rem;
