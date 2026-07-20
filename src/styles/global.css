@@ -1,19 +1,12 @@
-@import '@fontsource/barlow-condensed/700.css';
-@import '@fontsource/barlow-condensed/800.css';
+@import '@fontsource/spectral/500.css';
+@import '@fontsource/spectral/600.css';
 @import '@fontsource-variable/ibm-plex-sans';
 @import '@fontsource/ibm-plex-mono/400.css';
 @import '@fontsource/ibm-plex-mono/600.css';
 
 :root {
-  --paper-cool: #f1f4f8;
-  --carbon: #111318;
-  --signal-blue: #2456e8;
-  --circuit-violet: #6d3ae8;
-  --graphite: #687080;
-  --signal-coral: #ff5c35;
-  --rule: #c8cdd7;
   --content-width: 73.75rem;
-  --font-display: 'Barlow Condensed', 'Arial Narrow', sans-serif;
+  --font-display: 'Spectral', 'Songti SC', 'STSong', 'Noto Serif SC', 'SimSun', Georgia, serif;
   --font-body: 'IBM Plex Sans Variable', 'PingFang SC', 'Noto Sans CJK SC', 'Microsoft YaHei', sans-serif;
   --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
 }
