@@ -6,6 +6,7 @@ import AchievementIndex from '../AchievementIndex.astro';
 import CareerAxis from '../CareerAxis.astro';
 import ContactLinks from '../ContactLinks.astro';
 import FieldCards from '../FieldCards.astro';
+import GithubActivity from '../GithubActivity.astro';
 import Hero from '../Hero.astro';
 
 interface Props {
@@ -64,6 +65,7 @@ const copy = locale === 'en'
     <p class="portfolio-section__lede">{copy.recordLede}</p>
   </header>
   <AchievementIndex {locale} groups={achievementGroups} />
+  <GithubActivity {locale} />
 </section>
 
 <section class="portfolio-section shell" aria-labelledby="contact-title">

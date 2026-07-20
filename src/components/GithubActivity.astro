@@ -1,0 +1,186 @@
+---
+import type { Locale } from '../i18n/config';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const username = 'Canqiang';
+
+interface ContributionDay {
+  date: string;
+  count: number;
+  level: 0 | 1 | 2 | 3 | 4;
+}
+
+let contributions: ContributionDay[] = [];
+let totalLastYear = 0;
+let fetchFailed = false;
+
+try {
+  const res = await fetch(`https://github-contributions-api.jogruber.de/v4/${username}?y=last`, {
+    signal: AbortSignal.timeout(8000),
+  });
+  if (res.ok) {
+    const data = await res.json();
+    contributions = Array.isArray(data.contributions) ? data.contributions : [];
+    totalLastYear = typeof data.total?.lastYear === 'number' ? data.total.lastYear : 0;
+  } else {
+    fetchFailed = true;
+  }
+} catch {
+  fetchFailed = true;
+}
+
+type DayOrNull = ContributionDay | null;
+const weeks: DayOrNull[][] = [];
+let currentWeek: DayOrNull[] = [];
+
+if (contributions.length > 0) {
+  const firstDayIndex = new Date(`${contributions[0].date}T00:00:00`).getDay();
+  for (let i = 0; i < firstDayIndex; i++) currentWeek.push(null);
+}
+for (const day of contributions) {
+  currentWeek.push(day);
+  if (new Date(`${day.date}T00:00:00`).getDay() === 6) {
+    weeks.push(currentWeek);
+    currentWeek = [];
+  }
+}
+if (currentWeek.length > 0) {
+  while (currentWeek.length < 7) currentWeek.push(null);
+  weeks.push(currentWeek);
+}
+
+const monthLocale = locale === 'en' ? 'en-US' : 'zh-CN';
+const monthLabels: Array<{ label: string; weekIndex: number }> = [];
+let lastMonth = -1;
+weeks.forEach((week, weekIndex) => {
+  const first = week.find((day): day is ContributionDay => day !== null);
+  if (!first) return;
+  const date = new Date(`${first.date}T00:00:00`);
+  const month = date.getMonth();
+  if (month !== lastMonth) {
+    monthLabels.push({ label: date.toLocaleString(monthLocale, { month: 'short' }), weekIndex });
+    lastMonth = month;
+  }
+});
+
+const copy = locale === 'en'
+  ? { captionSuffix: 'contributions in the last year', less: 'Less', more: 'More' }
+  : { captionSuffix: '过去一年的贡献', less: '少', more: '多' };
+---
+
+{!fetchFailed && contributions.length > 0 && (
+  <div class="github-activity">
+    <p class="github-activity__caption mono">
+      <span class="github-activity__count">{totalLastYear.toLocaleString(monthLocale)}</span>
+      {' '}{copy.captionSuffix}
+    </p>
+    <div class="github-activity__scroll">
+      <div class="github-activity__months mono" style={`grid-template-columns: repeat(${weeks.length}, 1fr)`}>
+        {monthLabels.map(({ label, weekIndex }) => (
+          <span style={`grid-column-start: ${weekIndex + 1}`}>{label}</span>
+        ))}
+      </div>
+      <div class="github-activity__weeks">
+        {weeks.map((week) => (
+          <div class="github-activity__week">
+            {week.map((day) => (
+              day ? (
+                <div class="github-activity__cell" data-level={day.level} title={`${day.date}: ${day.count}`} />
+              ) : (
+                <div class="github-activity__cell github-activity__cell--empty" aria-hidden="true" />
+              )
+            ))}
+          </div>
+        ))}
+      </div>
+    </div>
+    <div class="github-activity__legend mono">
+      <span>{copy.less}</span>
+      <div class="github-activity__cell" data-level="0"></div>
+      <div class="github-activity__cell" data-level="1"></div>
+      <div class="github-activity__cell" data-level="2"></div>
+      <div class="github-activity__cell" data-level="3"></div>
+      <div class="github-activity__cell" data-level="4"></div>
+      <span>{copy.more}</span>
+    </div>
+  </div>
+)}
+
+<style>
+  .github-activity {
+    margin-top: clamp(2rem, 5vw, 3rem);
+  }
+
+  .github-activity__caption {
+    margin: 0 0 1rem;
+    color: var(--text-muted);
+    font-size: 0.78rem;
+  }
+
+  .github-activity__count {
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  .github-activity__scroll {
+    overflow-x: auto;
+    padding-bottom: 0.5rem;
+  }
+
+  .github-activity__months {
+    display: grid;
+    min-width: max-content;
+    margin-bottom: 0.35rem;
+  }
+
+  .github-activity__months span {
+    color: var(--text-dim);
+    font-size: 0.66rem;
+  }
+
+  .github-activity__weeks {
+    display: flex;
+    gap: 3px;
+    min-width: max-content;
+  }
+
+  .github-activity__week {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .github-activity__cell {
+    width: 11px;
+    height: 11px;
+    border-radius: 2px;
+    background: var(--rule);
+  }
+
+  .github-activity__cell--empty {
+    visibility: hidden;
+  }
+
+  .github-activity__cell[data-level="1"] { background: color-mix(in srgb, var(--accent) 30%, var(--bg-raised)); }
+  .github-activity__cell[data-level="2"] { background: color-mix(in srgb, var(--accent) 55%, var(--bg-raised)); }
+  .github-activity__cell[data-level="3"] { background: color-mix(in srgb, var(--accent) 78%, var(--bg-raised)); }
+  .github-activity__cell[data-level="4"] { background: var(--accent); }
+
+  .github-activity__legend {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    margin-top: 0.75rem;
+    color: var(--text-dim);
+    font-size: 0.66rem;
+  }
+
+  .github-activity__legend .github-activity__cell {
+    width: 11px;
+    height: 11px;
+  }
+</style>
