@@ -16,11 +16,15 @@ describe('LOG 00 hero', () => {
 });
 
 describe('career axis', () => {
-  it('renders the axis from careerAxis and links to full work', async () => {
+  it('renders the axis from careerAxis and links onward to Résumé', async () => {
     const axis = await read('src/components/CareerAxis.astro');
     expect(axis).toContain("from '../data/site'");
     expect(axis).toContain('careerAxis');
     expect(axis).toContain('career-axis__stop');
+
+    const home = await read('src/components/pages/HomePage.astro');
+    expect(home).toContain("localizedPath(locale, 'resume')");
+    expect(home).not.toContain("localizedPath(locale, 'work')");
   });
 });
 
@@ -56,6 +60,12 @@ describe('homepage numbered flow', () => {
     const home = await read('src/components/pages/HomePage.astro');
     expect(home).toContain("import GithubActivity from '../GithubActivity.astro'");
     expect(home).toContain('<GithubActivity {locale} />');
+  });
+
+  it('routes Current Practice cards to Résumé, not Work', async () => {
+    const fieldCards = await read('src/components/FieldCards.astro');
+    expect(fieldCards).toContain("localizedPath(locale, 'resume')");
+    expect(fieldCards).not.toContain("localizedPath(locale, 'work')");
   });
 });
 

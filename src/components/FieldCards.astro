@@ -8,13 +8,13 @@ interface Props {
 }
 
 const { locale } = Astro.props;
-const workPath = localizedPath(locale, 'work');
+const resumePath = localizedPath(locale, 'resume');
 ---
 
 <ol class="field-cards">
   {fieldCards.map((card, i) => (
     <li class="field-card">
-      <a class="field-card__link" href={`${workPath}#${card.key}`}>
+      <a class="field-card__link" href={resumePath}>
         <span class="field-card__tag mono">[{String(i + 1).padStart(2, '0')}]</span>
         <span class="field-card__name">{card.name[locale]}</span>
         <span class="field-card__scope">{card.scope[locale]}</span>
