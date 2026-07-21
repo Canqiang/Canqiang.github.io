@@ -1,12 +1,10 @@
 import type { Locale } from './config';
 
-export type RouteKey = 'home' | 'work' | 'projects' | 'project' | 'about' | 'resume';
+export type RouteKey = 'home' | 'projects' | 'project' | 'resume';
 
 const fixedRoutes: Record<Exclude<RouteKey, 'project'>, Record<Locale, string>> = {
   home: { en: '/', zh: '/zh/' },
-  work: { en: '/work/', zh: '/zh/work/' },
   projects: { en: '/projects/', zh: '/zh/projects/' },
-  about: { en: '/about/', zh: '/zh/about/' },
   resume: { en: '/resume/', zh: '/zh/resume/' },
 };
 

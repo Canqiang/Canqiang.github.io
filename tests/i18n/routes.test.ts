@@ -5,8 +5,8 @@ describe('localizedPath', () => {
   it('keeps English at the root and Chinese under /zh', () => {
     expect(localizedPath('en', 'home')).toBe('/');
     expect(localizedPath('zh', 'home')).toBe('/zh/');
-    expect(localizedPath('en', 'work')).toBe('/work/');
-    expect(localizedPath('zh', 'work')).toBe('/zh/work/');
+    expect(localizedPath('en', 'resume')).toBe('/resume/');
+    expect(localizedPath('zh', 'resume')).toBe('/zh/resume/');
   });
 
   it('preserves project context across locales', () => {
@@ -32,7 +32,7 @@ describe('alternateLocalePath', () => {
   it.each([
     ['/', '/zh/'],
     ['/zh/', '/'],
-    ['/work/', '/zh/work/'],
+    ['/resume/', '/zh/resume/'],
     ['/zh/projects/core-ai/', '/projects/core-ai/'],
   ])('maps %s to %s', (input, expected) => {
     expect(alternateLocalePath(input)).toBe(expected);

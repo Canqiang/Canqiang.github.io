@@ -22,15 +22,10 @@ describe('profile page shared data', () => {
     ]);
     expect(interests.map((interest) => interest.zh)).toEqual(['球类运动', '棋牌类游戏', '电脑游戏']);
 
-    const [aboutPage, resumePage] = await Promise.all([
-      source('src/components/pages/AboutPage.astro'),
-      source('src/components/pages/ResumePage.astro'),
-    ]);
-    for (const page of [aboutPage, resumePage]) {
-      expect(page).toContain("from '../../data/profile'");
-      expect(page).not.toContain('Fujian Medical University');
-      expect(page).not.toContain('Ball sports');
-    }
+    const resumePage = await source('src/components/pages/ResumePage.astro');
+    expect(resumePage).toContain("from '../../data/profile'");
+    expect(resumePage).not.toContain('Fujian Medical University');
+    expect(resumePage).not.toContain('Ball sports');
   });
 });
 
@@ -54,17 +49,6 @@ describe('explicit experience fields', () => {
       'Sep 2024 — Jul 2025',
       'Jul 15, 2025 — Present',
     ]);
-  });
-
-  it('filters Work by explicit field without positional or reverse ordering', async () => {
-    const [workPage, resumePage] = await Promise.all([
-      source('src/components/pages/WorkPage.astro'),
-      source('src/components/pages/ResumePage.astro'),
-    ]);
-
-    expect(workPage).toMatch(/experience\.filter\(\(entry\) => entry\.field === field\.key\)/);
-    expect(workPage).not.toMatch(/experience\.slice|\.reverse\(\)/);
-    expect(resumePage).toContain('[...experience].reverse()');
   });
 });
 
@@ -92,15 +76,5 @@ describe('print and profile semantics', () => {
     expect(css).toMatch(/\.print-only\s*\{[^}]*display:\s*none;/);
     expect(css).toMatch(/\.resume-link__destination\s*\{[^}]*overflow-wrap:\s*anywhere;/);
     expect(css).toMatch(/@media print[\s\S]*\.print-only\s*\{\s*display:\s*inline/);
-  });
-
-  it('uses sibling labelled sections for interests and contact', async () => {
-    const aboutPage = await source('src/components/pages/AboutPage.astro');
-
-    expect(aboutPage).not.toContain('<section class="about-profile__personal"');
-    expect(aboutPage).toMatch(
-      /<div class="about-profile__personal">[\s\S]*<section[^>]*aria-labelledby="interests-title"[\s\S]*<\/section>[\s\S]*<section[^>]*aria-labelledby="contact-title"[\s\S]*<\/section>[\s\S]*<\/div>/,
-    );
-    expect(aboutPage).toContain('<h2 id="contact-title">');
   });
 });

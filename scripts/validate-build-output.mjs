@@ -60,7 +60,7 @@ function jsonLdBlocks(html, route) {
 }
 
 const htmlFiles = await walk(distRoot);
-assert(htmlFiles.length === 21, `expected 21 built HTML files, found ${htmlFiles.length}`);
+assert(htmlFiles.length === 17, `expected 17 built HTML files, found ${htmlFiles.length}`);
 
 for (const path of htmlFiles) {
   const html = await readFile(path, 'utf8');
@@ -103,12 +103,6 @@ for (const path of htmlFiles) {
     assert(metaContent(html, 'property', 'og:image') === `${siteOrigin}/og/core-ai.png`, `${route}: Core-AI image mismatch`);
     assert(jsonLd.length === 1 && jsonLd[0]['@type'] === 'Article', `${route}: Core-AI must emit one Article JSON-LD block`);
     assert(jsonLd[0].inLanguage === (route.startsWith('/zh/') ? 'zh-CN' : 'en'), `${route}: Article language mismatch`);
-  }
-
-  if (route === '/about/' || route === '/zh/about/') {
-    assert(metaContent(html, 'property', 'og:type') === 'website', `${route}: about must use og:type website`);
-    assert(metaContent(html, 'property', 'og:image') === undefined, `${route}: about must not emit an image`);
-    assert(jsonLd.length === 0, `${route}: about must not emit JSON-LD`);
   }
 
   if (route === '/404.html') {
