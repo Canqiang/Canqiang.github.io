@@ -28,12 +28,14 @@ describe('evidence cells', () => {
   it('shows condensed counts, each linking to the destination that actually covers it', async () => {
     const ai = await read('src/components/AchievementIndex.astro');
     expect(ai).toContain('achievement-cell__count');
-    expect(ai).toContain("localizedPath(locale, 'about')");
+    expect(ai).toContain("localizedPath(locale, 'resume')");
+    expect(ai).not.toContain("localizedPath(locale, 'about')");
     // Pin the exact key-to-destination pairing, not just that both strings
     // exist somewhere — a swapped ternary (openSource <-> competitions)
     // would still contain both strings but route to the wrong page.
     expect(ai).toMatch(/group\.key === 'openSource'\s*\?\s*localizedPath\(locale, 'project', 'core-ai'\)/);
     expect(ai).toMatch(/group\.key === 'competitions'\s*\?\s*localizedPath\(locale, 'project', 'competitions'\)/);
+    expect(ai).toMatch(/resume-\$\{group\.key\}-title/);
   });
 });
 

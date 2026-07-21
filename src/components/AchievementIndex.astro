@@ -15,14 +15,14 @@ const ordered = expectedOrder.map((key) => {
   if (!group) throw new Error(`Missing achievement group: ${key}`);
   return group;
 });
-const aboutPath = localizedPath(locale, 'about');
-// Each group routes to wherever it is actually shown in full — About's
-// record section covers publications/patents only; open source and
-// competitions have their own project detail pages.
+const resumePath = localizedPath(locale, 'resume');
+// Each group routes to wherever it is actually shown in full — Résumé has
+// its own publications/patents sections with stable heading ids; open
+// source and competitions have their own project detail pages.
 const destination = (group: AchievementGroup) =>
   group.key === 'openSource' ? localizedPath(locale, 'project', 'core-ai')
   : group.key === 'competitions' ? localizedPath(locale, 'project', 'competitions')
-  : `${aboutPath}#record`;
+  : `${resumePath}#resume-${group.key}-title`;
 // Headline figure per group: a count, or a signature value for singletons.
 const figure = (group: AchievementGroup) =>
   group.key === 'openSource' ? 'Core-AI'
