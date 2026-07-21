@@ -443,67 +443,6 @@ a {
   font-size: clamp(1rem, 2.2vw, 1.25rem);
 }
 
-.field-index {
-  border-block: 1px solid var(--text);
-}
-
-.field-index__list {
-  display: grid;
-  margin-block: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.field-index__item {
-  position: relative;
-  min-width: 0;
-}
-
-.field-index__item::before {
-  position: absolute;
-  inset-block: 0;
-  inset-inline-start: 0.25rem;
-  width: 1px;
-  background: var(--rule);
-  content: '';
-}
-
-.field-index__link {
-  position: relative;
-  display: flex;
-  align-items: center;
-  min-height: 3.75rem;
-  padding: 0.7rem 0.75rem 0.7rem 1.4rem;
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  text-decoration: none;
-  text-transform: uppercase;
-}
-
-.field-index__link::before {
-  position: absolute;
-  z-index: 1;
-  inset-inline-start: 0;
-  width: 0.55rem;
-  height: 0.55rem;
-  border: 1px solid var(--text);
-  background: var(--bg-raised);
-  content: '';
-}
-
-.field-index__link:hover,
-.field-index__link[aria-current='true'] {
-  color: var(--accent);
-}
-
-.field-index__link:hover::before,
-.field-index__link[aria-current='true']::before {
-  border-color: var(--accent);
-  background: var(--accent);
-}
-
 /* Project, timeline, and evidence foundations */
 
 .project-grid {
@@ -1234,30 +1173,6 @@ a {
     min-height: 2.75rem;
     padding-inline: 0;
     border-bottom: 0;
-  }
-
-  .field-index__list {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
-
-  .field-index__item::before {
-    inset-block-start: 50%;
-    inset-inline: 0;
-    width: auto;
-    height: 1px;
-  }
-
-  .field-index__link {
-    justify-content: center;
-    align-items: flex-end;
-    min-height: 5rem;
-    padding: 0 0.75rem 0.9rem;
-    text-align: center;
-  }
-
-  .field-index__link::before {
-    inset-block-start: 1.1rem;
-    inset-inline-start: calc(50% - 0.275rem);
   }
 }
 
