@@ -12,12 +12,11 @@ interface Props {
 
 const { locale, pathname, hasLocalePair = true } = Astro.props;
 const copy = locale === 'en'
-  ? { work: 'Work', projects: 'Projects', about: 'About', menu: 'Menu', switchLabel: '切换至中文' }
-  : { work: '经历', projects: '项目', about: '关于', menu: '菜单', switchLabel: 'Switch to English' };
-const navigation: Array<{ key: Exclude<RouteKey, 'home' | 'project' | 'resume'>; label: string }> = [
-  { key: 'work', label: copy.work },
+  ? { projects: '~/projects', resume: '~/resume', menu: 'Menu', switchLabel: '切换至中文' }
+  : { projects: '~/projects', resume: '~/resume', menu: '菜单', switchLabel: 'Switch to English' };
+const navigation: Array<{ key: Exclude<RouteKey, 'home' | 'project'>; label: string }> = [
   { key: 'projects', label: copy.projects },
-  { key: 'about', label: copy.about },
+  { key: 'resume', label: copy.resume },
 ];
 const normalizedPath = pathname.endsWith('/') ? pathname : `${pathname}/`;
 const isCurrent = (key: (typeof navigation)[number]['key']) => {
