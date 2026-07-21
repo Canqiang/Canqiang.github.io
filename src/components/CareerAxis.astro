@@ -8,14 +8,14 @@ interface Props {
 }
 
 const { locale } = Astro.props;
-const workPath = localizedPath(locale, 'work');
+const resumePath = localizedPath(locale, 'resume');
 ---
 
 <div class="career-axis">
   <ol class="career-axis__track">
     {careerAxis.map((stop) => (
       <li class="career-axis__stop">
-        <a class="career-axis__link" href={`${workPath}#${stop.field}`}>
+        <a class="career-axis__link" href={resumePath}>
           <span class="career-axis__year mono">{stop.year[locale]}</span>
           <span class="career-axis__org">{stop.org[locale]}</span>
           <span class="career-axis__role mono">{stop.role[locale]}</span>

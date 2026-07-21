@@ -34,6 +34,8 @@ describe('career axis', () => {
     expect(axis).toContain("from '../data/site'");
     expect(axis).toContain('careerAxis');
     expect(axis).toContain('career-axis__stop');
+    expect(axis).toContain("localizedPath(locale, 'resume')");
+    expect(axis).not.toContain("localizedPath(locale, 'work')");
 
     const home = await read('src/components/pages/HomePage.astro');
     expect(home).toContain("localizedPath(locale, 'resume')");
