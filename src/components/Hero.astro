@@ -9,21 +9,91 @@ interface Props {
 
 const { locale } = Astro.props;
 const copy = locale === 'en'
-  ? { work: 'View selected work', resume: 'View résumé', tagline: identity.headline.en }
-  : { work: '查看精选工作', resume: '查看简历', tagline: identity.headline.en };
-const stamp = `LOG 00 · EST. 2017 · ${identity.role[locale]}`;
+  ? { work: 'View selected work', resume: 'View résumé' }
+  : { work: '查看精选工作', resume: '查看简历' };
+const whoami = locale === 'en'
+  ? `${identity.name} — ${identity.role.en} — est. 2017`
+  : `${identity.chineseName} / ${identity.name} — ${identity.role.zh} — est. 2017`;
 const showEnglishSubline = locale === 'zh';
 ---
 
 <section class="portfolio-hero shell" aria-labelledby="hero-title">
-  <div class="portfolio-hero__copy">
-    <p class="portfolio-hero__stamp mono">{stamp}</p>
-    <h1 id="hero-title" class="portfolio-hero__title">{identity.headline[locale]}</h1>
-    {showEnglishSubline && <p class="portfolio-hero__subline">{identity.headline.en}</p>}
-    <p class="portfolio-hero__summary">{identity.introduction[locale]}</p>
-    <div class="portfolio-hero__actions no-print">
-      <a class="portfolio-hero__action portfolio-hero__action--primary" href="#current-practice">{copy.work}</a>
-      <a class="portfolio-hero__action" href={localizedPath(locale, 'resume')}>{copy.resume}</a>
+  <div class="portfolio-hero__terminal" data-hero-terminal>
+    <div class="portfolio-hero__titlebar" aria-hidden="true">
+      <span class="portfolio-hero__dot portfolio-hero__dot--red"></span>
+      <span class="portfolio-hero__dot portfolio-hero__dot--yellow"></span>
+      <span class="portfolio-hero__dot portfolio-hero__dot--green"></span>
+      <span class="portfolio-hero__titlebar-label mono">xander@canqiang:~ — 80×24</span>
+    </div>
+
+    <div class="portfolio-hero__body">
+      <p class="portfolio-hero__line mono" data-hero-line><span class="portfolio-hero__prompt">$</span> <span data-hero-typed>whoami</span></p>
+      <p class="portfolio-hero__stamp mono" data-hero-output>{whoami}</p>
+
+      <p class="portfolio-hero__line mono" data-hero-line><span class="portfolio-hero__prompt">$</span> <span data-hero-typed>cat mission.md</span></p>
+      <div data-hero-output>
+        <h1 id="hero-title" class="portfolio-hero__title">{identity.headline[locale]}</h1>
+        {showEnglishSubline && <p class="portfolio-hero__subline">{identity.headline.en}</p>}
+        <p class="portfolio-hero__summary">{identity.introduction[locale]}</p>
+      </div>
+
+      <p class="portfolio-hero__line mono" data-hero-line><span class="portfolio-hero__prompt">$</span> <span data-hero-typed>ls ./</span></p>
+      <div class="portfolio-hero__actions no-print" data-hero-output>
+        <a class="portfolio-hero__action portfolio-hero__action--primary" href="#current-practice">
+          <span class="portfolio-hero__action-mode mono">drwxr-xr-x</span> {copy.work}
+        </a>
+        <a class="portfolio-hero__action" href={localizedPath(locale, 'resume')}>
+          <span class="portfolio-hero__action-mode mono">-rw-r--r--</span> {copy.resume}
+        </a>
+      </div>
     </div>
   </div>
 </section>
+
+<script>
+  const terminal = document.querySelector('[data-hero-terminal]');
+  const lines = terminal ? Array.from(terminal.querySelectorAll<HTMLElement>('[data-hero-line]')) : [];
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const alreadyPlayed = sessionStorage.getItem('hero-terminal-played') === '1';
+
+  if (terminal instanceof HTMLElement && lines.length > 0 && !reduceMotion && !alreadyPlayed) {
+    terminal.dataset.state = 'typing';
+    const typedSpans = lines.map((line) => line.querySelector('[data-hero-typed]'));
+    const fullTexts = typedSpans.map((span) => span?.textContent ?? '');
+    typedSpans.forEach((span) => {
+      if (span) span.textContent = '';
+    });
+
+    let lineIndex = 0;
+    let charIndex = 0;
+
+    const typeNextChar = () => {
+      const line = lines[lineIndex];
+      const span = typedSpans[lineIndex];
+      const text = fullTexts[lineIndex];
+      line.dataset.heroActive = 'true';
+
+      if (span && charIndex < text.length) {
+        span.textContent = text.slice(0, charIndex + 1);
+        charIndex += 1;
+        window.setTimeout(typeNextChar, 28);
+        return;
+      }
+
+      delete line.dataset.heroActive;
+      const output = line.nextElementSibling;
+      if (output instanceof HTMLElement) output.dataset.heroRevealed = 'true';
+      lineIndex += 1;
+      charIndex = 0;
+
+      if (lineIndex < lines.length) {
+        window.setTimeout(typeNextChar, 260);
+      } else if (terminal instanceof HTMLElement) {
+        terminal.dataset.state = 'settled';
+        sessionStorage.setItem('hero-terminal-played', '1');
+      }
+    };
+
+    window.setTimeout(typeNextChar, 260);
+  }
+</script>

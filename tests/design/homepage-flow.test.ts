@@ -5,13 +5,26 @@ import { describe, expect, it } from 'vitest';
 const root = fileURLToPath(new URL('../..', import.meta.url));
 const read = (p: string) => readFile(`${root}/${p}`, 'utf8');
 
-describe('LOG 00 hero', () => {
-  it('is text-only and carries the log stamp', async () => {
+describe('terminal hero', () => {
+  it('is text-only, carries the terminal shell markers, and has real CTAs with or without JS', async () => {
     const hero = await read('src/components/Hero.astro');
     expect(hero).not.toContain('astro:assets');
     expect(hero).not.toContain('speakingPhoto');
-    expect(hero).toContain('LOG 00');
+    expect(hero).not.toContain('LOG 00');
     expect(hero).toContain('portfolio-hero__stamp');
+    expect(hero).toContain('data-hero-terminal');
+    expect(hero).toContain('data-hero-line');
+    expect(hero).toContain('data-hero-typed');
+    // The two CTAs must be real anchors in the server-rendered markup —
+    // not something only the typing script injects.
+    expect(hero).toMatch(/<a[^>]+href="#current-practice"/);
+    expect(hero).toMatch(/<a[^>]+href=\{localizedPath\(locale, 'resume'\)\}/);
+  });
+
+  it('skips the typing animation under reduced motion and after it has already played once', async () => {
+    const hero = await read('src/components/Hero.astro');
+    expect(hero).toContain('prefers-reduced-motion');
+    expect(hero).toContain('sessionStorage');
   });
 });
 
