@@ -658,7 +658,15 @@ git commit -m "feat: rebuild the Home hero as a decorative terminal shell"
 - [ ] **Step 1: Confirm no remaining consumers before deleting anything**
 
 Run: `grep -rln "'work'\|\"work\"\|'about'\|\"about\"" src/ --include="*.astro" --include="*.ts"`
-Expected output: only `src/components/FieldIndexRail.astro` (only ever used by `WorkPage.astro`, being deleted in this same task), `src/components/pages/WorkPage.astro`, `src/components/pages/AboutPage.astro`, `src/i18n/routes.ts`, `src/pages/work.astro`, `src/pages/zh/work.astro`, `src/pages/about.astro`, `src/pages/zh/about.astro`. If any other file appears, stop — Tasks 1-3 must be complete and committed first.
+
+**Correction (found by Task 5 attempt 1, and by a follow-up fix to CareerAxis.astro that landed after it):** the originally-written expected list here was wrong — several of the files it named (`WorkPage.astro`, `AboutPage.astro`, `work.astro`, `zh/work.astro`, `about.astro`, `zh/about.astro`) don't actually contain the literal quoted substrings this grep searches for (they reference the pages by import/component name, not by a `'work'`/`'about'` string), so they were never going to appear in real output regardless of whether Tasks 1-3 were done. The actual current expected output, verified directly, is just:
+
+```
+src/components/FieldIndexRail.astro
+src/i18n/routes.ts
+```
+
+`FieldIndexRail.astro` is only ever used by `WorkPage.astro` and is deleted alongside it in this same task (Step 4); `routes.ts` is the file this step modifies next (Step 3), not deleted. **If any file other than these two appears, stop** — it means a consumer outside this task's scope still references `work`/`about` (this is exactly how the CareerAxis.astro gap was originally caught) — investigate and fix it (or escalate) before proceeding, the same way that gap was resolved.
 
 - [ ] **Step 2: Update routes.test.ts**
 
@@ -749,7 +757,9 @@ git rm src/pages/about.astro src/pages/zh/about.astro
 
 - [ ] **Step 5: Remove the dead CSS**
 
-In `src/styles/global.css`, delete the entire block from `.work-ledger` through the second `.about-interest-list li, .resume-inline-list li` rule (currently lines 784-1072 inclusive), and replace it with only the declarations that `.resume-*` selectors still need (the `.resume-role__meta { ... }` and `.resume-role__title { ... }` rules in that range are untouched — they're not shared with any deleted selector — but the *shared* rules need their `.work-*`/`.about-*` half of the selector list removed while keeping the declaration block for the surviving `.resume-*` selector). Replace the full 784-1072 range with:
+**Correction (found by Task 5 attempt 1's own Step 1 safety check, applied here so a re-dispatch starts from accurate instructions):** the line numbers below were written against an earlier commit; Tasks 3-4 added CSS earlier in the file since then, shifting this block by +72 lines (784-1072 → 856-1144, content unchanged — verify with `grep -n "^\.work-ledger" src/styles/global.css` before editing, in case it has drifted further still). There is also a **second location**, not covered by the original version of this step, inside the `@media (min-width: 38rem)` block — see the second replacement below. Always re-verify current line numbers with `grep -n "\.work-\|\.about-" src/styles/global.css` before editing; treat the line numbers here as "as of this writing," not gospel.
+
+In `src/styles/global.css`, delete the entire block from `.work-ledger` through the second `.about-interest-list li, .resume-inline-list li` rule (as of this writing, lines 856-1144 inclusive — confirm current line numbers first), and replace it with only the declarations that `.resume-*` selectors still need (the `.resume-role__meta { ... }` and `.resume-role__title { ... }` rules in that range are untouched — they're not shared with any deleted selector — but the *shared* rules need their `.work-*`/`.about-*` half of the selector list removed while keeping the declaration block for the surviving `.resume-*` selector). Replace the full range with:
 
 ```css
 .resume-section > h2 {
@@ -822,7 +832,45 @@ In `src/styles/global.css`, delete the entire block from `.work-ledger` through 
 }
 ```
 
-Verify afterward with: `grep -n "work-\|about-" src/styles/global.css` — expected output: empty (no matches anywhere in the file, including the `@media print` block).
+There is a second location with the same shared/exclusive pattern, inside the `@media (min-width: 38rem)` block (as of this writing, around lines 1395-1412 — re-verify with the grep above, since Task 4's fix landed after this line-number estimate too):
+
+```css
+  .work-field,
+  .work-role,
+  .resume-role {
+    grid-template-columns: minmax(8rem, 0.28fr) minmax(0, 1fr);
+    gap: clamp(1.5rem, 4vw, 3.5rem);
+  }
+
+  .about-profile__section-header,
+  .about-profile__personal,
+  .resume-header,
+  .resume-support-grid,
+  .resume-achievement-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .about-evidence-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+```
+
+Replace it with (narrowing the two shared rules to their surviving `.resume-*` selectors, dropping `.about-evidence-grid` outright since it shares no selector with any `.resume-*` class):
+
+```css
+  .resume-role {
+    grid-template-columns: minmax(8rem, 0.28fr) minmax(0, 1fr);
+    gap: clamp(1.5rem, 4vw, 3.5rem);
+  }
+
+  .resume-header,
+  .resume-support-grid,
+  .resume-achievement-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+```
+
+Verify afterward with: `grep -n "work-\|about-" src/styles/global.css` — expected output: empty (no matches anywhere in the file, including the `@media print` block and the `@media (min-width: 38rem)` block above).
 
 - [ ] **Step 6: Update profile-pages.test.ts**
 
