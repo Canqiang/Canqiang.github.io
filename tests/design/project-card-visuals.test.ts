@@ -69,3 +69,27 @@ describe('ProjectCard visual markup', () => {
     expect(card.match(/<a\b/g)).toHaveLength(1);
   });
 });
+
+describe('ProjectCard visual presentation', () => {
+  it('uses full-row responsive cards without a fixed two-column category grid', async () => {
+    const css = await source('src/styles/global.css');
+
+    expect(css).not.toMatch(/\.project-index__cards\s*\{\s*grid-template-columns:\s*repeat\(2/);
+    expect(css).toContain('.project-card__copy');
+    expect(css).toContain('.project-card__visual');
+    expect(css).toContain('aspect-ratio: 16 / 9');
+    expect(css).toContain('max-inline-size: 100%');
+    expect(css).toContain('overflow: hidden');
+    expect(css).toContain('grid-template-columns: minmax(0, 13fr) minmax(18rem, 12fr)');
+  });
+
+  it('supports pointer, keyboard, reduced motion, and print', async () => {
+    const css = await source('src/styles/global.css');
+
+    expect(css).toContain('.project-card:focus-within .project-card__visual::after');
+    expect(css).toContain('@keyframes project-card-scan');
+    expect(css).toMatch(/@media \(prefers-reduced-motion: reduce\)[\s\S]*\.project-card__visual::after/);
+    expect(css).toMatch(/@media print[\s\S]*\.project-card__visual\s*\{[^}]*display:\s*none\s*!important/);
+    expect(css).toMatch(/\.project-card__visual\s*\{[^}]*pointer-events:\s*none/);
+  });
+});
