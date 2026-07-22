@@ -1,5 +1,7 @@
 ---
+import { Image } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
+import { getProjectVisual } from '../data/projectVisuals';
 
 interface Props {
   project: CollectionEntry<'projects'>;
@@ -8,15 +10,31 @@ interface Props {
 }
 
 const { project, categoryLabel, url } = Astro.props;
+const visual = getProjectVisual(project.data.translationKey);
 ---
 
-<article class="project-card">
-  <div class="project-card__meta">
-    <span>{categoryLabel}</span>
-    <span>{project.data.period}</span>
+<article class:list={['project-card', { 'project-card--with-visual': Boolean(visual) }]}>
+  <div class="project-card__copy">
+    <div class="project-card__meta">
+      <span>{categoryLabel}</span>
+      <span>{project.data.period}</span>
+    </div>
+    <h3 class="project-card__title">
+      <a class="project-card__link" href={url}>{project.data.title}</a>
+    </h3>
+    <p class="project-card__summary">{project.data.summary}</p>
   </div>
-  <h3 class="project-card__title">
-    <a class="project-card__link" href={url}>{project.data.title}</a>
-  </h3>
-  <p class="project-card__summary">{project.data.summary}</p>
+  {visual && (
+    <div class="project-card__visual" aria-hidden="true">
+      <Image
+        class="project-card__image"
+        src={visual.image}
+        alt=""
+        widths={[400, 640, 960, 1200]}
+        sizes="(min-width: 48rem) 48vw, calc(100vw - 2rem)"
+        loading="lazy"
+        decoding="async"
+      />
+    </div>
+  )}
 </article>

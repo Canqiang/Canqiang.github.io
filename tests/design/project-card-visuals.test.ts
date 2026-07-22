@@ -32,6 +32,10 @@ async function currentProjectKeys() {
   return [...new Set(translationKeys.filter((key): key is string => Boolean(key)))].sort();
 }
 
+async function source(path: string) {
+  return readFile(`${projectRoot}/${path}`, 'utf8');
+}
+
 describe('project visual mapping', () => {
   it('maps every current project content key to its exact editorial image', async () => {
     expect(await currentProjectKeys()).toEqual(Object.keys(expectedImages).sort());
@@ -44,5 +48,24 @@ describe('project visual mapping', () => {
 
   it('returns undefined for a translation key without an editorial image', () => {
     expect(getProjectVisual('unknown')).toBeUndefined();
+  });
+});
+
+describe('ProjectCard visual markup', () => {
+  it('renders copy first and one non-interactive lazy decorative image second', async () => {
+    const card = await source('src/components/ProjectCard.astro');
+
+    expect(card).toContain("import { Image } from 'astro:assets'");
+    expect(card).toContain('getProjectVisual(project.data.translationKey)');
+    expect(card).toContain('class="project-card__copy"');
+    expect(card).toContain("'project-card--with-visual': Boolean(visual)");
+    expect(card).toContain('class="project-card__visual"');
+    expect(card).toContain('class="project-card__image"');
+    expect(card).toContain('alt=""');
+    expect(card).toContain('loading="lazy"');
+    expect(card).toContain('decoding="async"');
+    expect(card).toContain('aria-hidden="true"');
+    expect(card.indexOf('project-card__summary')).toBeLessThan(card.indexOf('project-card__visual'));
+    expect(card.match(/<a\b/g)).toHaveLength(1);
   });
 });
