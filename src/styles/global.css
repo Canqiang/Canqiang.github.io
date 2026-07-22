@@ -1235,7 +1235,7 @@ a {
 
   .site-header__nav,
   .site-header__nav[hidden] {
-    display: block;
+    display: block !important;
     grid-column: auto;
     border-top: 0;
   }

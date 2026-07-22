@@ -22,4 +22,25 @@ describe('persistent nav', () => {
     expect(navLinkRule).not.toBeNull();
     expect(navLinkRule?.[0]).not.toMatch(/text-transform:\s*uppercase/);
   });
+
+  it('renders the mobile nav closed without hiding desktop or no-script navigation', async () => {
+    const [header, css] = await Promise.all([
+      read('src/components/Header.astro'),
+      read('src/styles/global.css'),
+    ]);
+    const navStartTag = header.match(/<nav\b[^>]*id="site-navigation"[^>]*>/)?.[0];
+    const noscript = header.match(/<noscript>[\s\S]*?<\/noscript>/)?.[0];
+    const desktopMedia = css.slice(
+      css.indexOf('@media (min-width: 48rem)'),
+      css.indexOf('@media (min-width: 56rem)'),
+    );
+
+    expect(navStartTag).toMatch(/\bhidden\b/);
+    expect(noscript).toMatch(/\.site-header__nav\[hidden\]\s*\{[^}]*display:\s*block\s*!important;/);
+    expect(desktopMedia).toMatch(
+      /\.site-header__nav,\s*\.site-header__nav\[hidden\]\s*\{[^}]*display:\s*block\s*!important;/,
+    );
+    expect(header).toContain('navigation.hidden = !expanded;');
+    expect(header).toContain('navigation.hidden = expanded;');
+  });
 });

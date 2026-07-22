@@ -43,9 +43,9 @@ const destinationLocale: Locale = locale === 'en' ? 'zh' : 'en';
     >
       {copy.menu}
     </button>
-    <noscript><style>.site-header__menu-button { display: none !important; }</style></noscript>
+    <noscript><style>.site-header__menu-button { display: none !important; } .site-header__nav[hidden] { display: block !important; }</style></noscript>
 
-    <nav id="site-navigation" class="site-header__nav" aria-label={locale === 'en' ? 'Primary navigation' : '主导航'} data-site-navigation>
+    <nav id="site-navigation" class="site-header__nav" aria-label={locale === 'en' ? 'Primary navigation' : '主导航'} data-site-navigation hidden>
       <ul class="site-header__nav-list">
         {navigation.map(({ key, label }) => (
           <li>
