@@ -20,9 +20,8 @@ const qualities = [82, 78, 74, 70, 66, 62, 58, 54];
 const targetBytes = 150 * 1024;
 const maximumBytes = 180 * 1024;
 
-await mkdir(outputDirectory, { recursive: true });
-
 let totalBytes = 0;
+const outputs = [];
 for (const key of keys) {
   const sourcePath = resolve(rawDirectory, `${key}.png`);
   const outputPath = resolve(outputDirectory, `${key}-editorial.webp`);
@@ -41,13 +40,16 @@ for (const key of keys) {
     throw new Error(`${key}: cannot meet the 180 KB asset limit`);
   }
 
-  await writeFile(outputPath, selected.candidate);
   totalBytes += selected.candidate.byteLength;
+  outputs.push({ key, outputPath, ...selected });
   console.log(`${key}: ${selected.candidate.byteLength} bytes at quality ${selected.quality}`);
 }
 
 if (totalBytes > 750 * 1024) {
   throw new Error(`project visuals total ${totalBytes} bytes exceeds 750 KB`);
 }
+
+await mkdir(outputDirectory, { recursive: true });
+await Promise.all(outputs.map(({ outputPath, candidate }) => writeFile(outputPath, candidate)));
 
 console.log(`project visuals total: ${totalBytes} bytes`);
