@@ -93,3 +93,11 @@ describe('ProjectCard visual presentation', () => {
     expect(css).toMatch(/\.project-card__visual\s*\{[^}]*pointer-events:\s*none/);
   });
 });
+
+describe('project visual release gates', () => {
+  it('runs Lighthouse on both project-index locales', async () => {
+    const config = JSON.parse(await source('.lighthouserc.json'));
+    expect(config.ci.collect.url).toContain('http://localhost/projects/');
+    expect(config.ci.collect.url).toContain('http://localhost/zh/projects/');
+  });
+});

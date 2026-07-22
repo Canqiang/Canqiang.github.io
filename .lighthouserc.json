@@ -5,6 +5,8 @@
       "url": [
         "http://localhost/",
         "http://localhost/zh/",
+        "http://localhost/projects/",
+        "http://localhost/zh/projects/",
         "http://localhost/projects/core-ai/",
         "http://localhost/zh/projects/core-ai/"
       ],
