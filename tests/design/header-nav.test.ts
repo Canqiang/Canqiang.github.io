@@ -40,6 +40,10 @@ describe('persistent nav', () => {
     expect(desktopMedia).toMatch(
       /\.site-header__nav,\s*\.site-header__nav\[hidden\]\s*\{[^}]*display:\s*block\s*!important;/,
     );
+    expect(header).toContain("const desktop = window.matchMedia('(min-width: 48rem)');");
+    expect(header).toContain('const expanded = desktop.matches;');
+    expect(header).toContain("desktop.addEventListener('change', syncMenu);");
+    expect(header).not.toContain('47.99rem');
     expect(header).toContain('navigation.hidden = !expanded;');
     expect(header).toContain('navigation.hidden = expanded;');
   });

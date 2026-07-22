@@ -78,9 +78,9 @@ const destinationLocale: Locale = locale === 'en' ? 'zh' : 'en';
   const navigation = document.querySelector('[data-site-navigation]');
 
   if (menuButton instanceof HTMLButtonElement && navigation instanceof HTMLElement) {
-    const mobile = window.matchMedia('(max-width: 47.99rem)');
+    const desktop = window.matchMedia('(min-width: 48rem)');
     const syncMenu = () => {
-      const expanded = !mobile.matches;
+      const expanded = desktop.matches;
       menuButton.setAttribute('aria-expanded', String(expanded));
       navigation.hidden = !expanded;
     };
@@ -91,7 +91,7 @@ const destinationLocale: Locale = locale === 'en' ? 'zh' : 'en';
     };
 
     menuButton.addEventListener('click', toggleMenu);
-    mobile.addEventListener('change', syncMenu);
+    desktop.addEventListener('change', syncMenu);
     syncMenu();
   }
 </script>
