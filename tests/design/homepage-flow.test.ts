@@ -87,10 +87,26 @@ describe('homepage numbered flow', () => {
 describe('GithubActivity', () => {
   it('fetches at build time, fails silently, and never hardcodes a second accent color', async () => {
     const component = await read('src/components/GithubActivity.astro');
-    expect(component).toContain('github-contributions-api.jogruber.de');
+    const lib = await read('src/lib/contributions.ts');
+    expect(lib).toContain('github-contributions-api.jogruber.de');
     expect(component).toContain('fetchFailed');
-    expect(component).toMatch(/\{!fetchFailed && contributions\.length > 0/);
+    expect(component).toContain('hasServerData');
+    expect(component).toMatch(/hidden=\{!hasServerData\}/);
     expect(component).not.toMatch(/#[0-9a-fA-F]{3,8}/);
     expect(component).toContain('var(--accent)');
+  });
+
+  // The site rebuilds once a day, so a build-time-only grid is always at least a
+  // day stale and its newest cell is a partial mid-build count. The client must
+  // refetch so the heatmap shows today.
+  it('refetches on the client and reuses the same layout helpers as the server render', async () => {
+    const component = await read('src/components/GithubActivity.astro');
+    expect(component).toContain("import { readSnapshot, toMonthLabels, toWeeks } from '../lib/contributions'");
+    expect(component).toContain('data-github-activity');
+    expect(component).toContain('data-endpoint');
+    expect(component).toMatch(/fetch\(endpoint/);
+    expect(component).toContain('root.hidden = false');
+    // A failed client fetch must leave the server-rendered grid in place.
+    expect(component).toMatch(/\.catch\(\(\) => \{/);
   });
 });

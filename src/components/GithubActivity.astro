@@ -1,5 +1,12 @@
 ---
 import type { Locale } from '../i18n/config';
+import {
+  contributionsEndpoint,
+  readSnapshot,
+  toMonthLabels,
+  toWeeks,
+  type ContributionDay,
+} from '../lib/contributions';
 
 interface Props {
   locale: Locale;
@@ -8,24 +15,16 @@ interface Props {
 const { locale } = Astro.props;
 const username = 'Canqiang';
 
-interface ContributionDay {
-  date: string;
-  count: number;
-  level: 0 | 1 | 2 | 3 | 4;
-}
-
 let contributions: ContributionDay[] = [];
 let total = 0;
 let fetchFailed = false;
 
 try {
-  const res = await fetch(`https://github-contributions-api.jogruber.de/v4/${username}?y=last`, {
+  const res = await fetch(contributionsEndpoint(username), {
     signal: AbortSignal.timeout(8000),
   });
   if (res.ok) {
-    const data = await res.json();
-    contributions = Array.isArray(data.contributions) ? data.contributions : [];
-    total = typeof data.total?.lastYear === 'number' ? data.total.lastYear : 0;
+    ({ contributions, total } = readSnapshot(await res.json()));
   } else {
     fetchFailed = true;
   }
@@ -33,81 +32,130 @@ try {
   fetchFailed = true;
 }
 
-type DayOrNull = ContributionDay | null;
-const weeks: DayOrNull[][] = [];
-let currentWeek: DayOrNull[] = [];
-
-if (contributions.length > 0) {
-  const firstDayIndex = new Date(`${contributions[0].date}T00:00:00`).getDay();
-  for (let i = 0; i < firstDayIndex; i++) currentWeek.push(null);
-}
-for (const day of contributions) {
-  currentWeek.push(day);
-  if (new Date(`${day.date}T00:00:00`).getDay() === 6) {
-    weeks.push(currentWeek);
-    currentWeek = [];
-  }
-}
-if (currentWeek.length > 0) {
-  while (currentWeek.length < 7) currentWeek.push(null);
-  weeks.push(currentWeek);
-}
-
 const monthLocale = locale === 'en' ? 'en-US' : 'zh-CN';
-const monthLabels: Array<{ label: string; weekIndex: number }> = [];
-let lastMonth = -1;
-weeks.forEach((week, weekIndex) => {
-  const first = week.find((day): day is ContributionDay => day !== null);
-  if (!first) return;
-  const date = new Date(`${first.date}T00:00:00`);
-  const month = date.getMonth();
-  if (month !== lastMonth) {
-    monthLabels.push({ label: date.toLocaleString(monthLocale, { month: 'short' }), weekIndex });
-    lastMonth = month;
-  }
-});
+const weeks = toWeeks(contributions);
+const monthLabels = toMonthLabels(weeks, monthLocale);
 
 const copy = locale === 'en'
   ? { captionPrefix: '', captionSuffix: ' contributions in the last year', less: 'Less', more: 'More' }
   : { captionPrefix: '近一年共 ', captionSuffix: ' 次代码贡献', less: '低', more: '高' };
+
+// The build-time render is the no-JS fallback and the first paint. Because the
+// site rebuilds only once a day, that snapshot is already stale by the time a
+// visitor sees it — the newest cell holds a partial count captured mid-build.
+// The client script below refetches on load so the grid always shows today.
+const hasServerData = !fetchFailed && contributions.length > 0;
 ---
 
-{!fetchFailed && contributions.length > 0 && (
-  <div class="github-activity">
-    <p class="github-activity__caption mono">
-      {copy.captionPrefix}<span class="github-activity__count">{total.toLocaleString(monthLocale)}</span>{copy.captionSuffix}
-    </p>
-    <div class="github-activity__scroll">
-      <div class="github-activity__months mono" style={`grid-template-columns: repeat(${weeks.length}, 11px); column-gap: 3px;`}>
-        {monthLabels.map(({ label, weekIndex }) => (
-          <span style={`grid-column-start: ${weekIndex + 1}`}>{label}</span>
-        ))}
-      </div>
-      <div class="github-activity__weeks">
-        {weeks.map((week) => (
-          <div class="github-activity__week">
-            {week.map((day) => (
-              day ? (
-                <div class="github-activity__cell" data-level={day.level} title={`${day.date}: ${day.count}`} />
-              ) : (
-                <div class="github-activity__cell github-activity__cell--empty" aria-hidden="true" />
-              )
-            ))}
-          </div>
-        ))}
-      </div>
+<div
+  class="github-activity"
+  data-github-activity
+  data-endpoint={contributionsEndpoint(username)}
+  data-month-locale={monthLocale}
+  data-caption-prefix={copy.captionPrefix}
+  data-caption-suffix={copy.captionSuffix}
+  hidden={!hasServerData}
+>
+  <p class="github-activity__caption mono">
+    <span data-activity-caption-prefix>{copy.captionPrefix}</span><span
+      class="github-activity__count"
+      data-activity-count>{total.toLocaleString(monthLocale)}</span><span
+      data-activity-caption-suffix>{copy.captionSuffix}</span>
+  </p>
+  <div class="github-activity__scroll">
+    <div
+      class="github-activity__months mono"
+      data-activity-months
+      style={`grid-template-columns: repeat(${weeks.length}, 11px); column-gap: 3px;`}
+    >
+      {monthLabels.map(({ label, weekIndex }) => (
+        <span style={`grid-column-start: ${weekIndex + 1}`}>{label}</span>
+      ))}
     </div>
-    <div class="github-activity__legend mono">
-      <span>{copy.less}</span>
-      <div class="github-activity__cell" data-level="0"></div>
-      <div class="github-activity__cell" data-level="1"></div>
-      <div class="github-activity__cell" data-level="2"></div>
-      <div class="github-activity__cell" data-level="3"></div>
-      <div class="github-activity__cell" data-level="4"></div>
-      <span>{copy.more}</span>
+    <div class="github-activity__weeks" data-activity-weeks>
+      {weeks.map((week) => (
+        <div class="github-activity__week">
+          {week.map((day) => (
+            day ? (
+              <div class="github-activity__cell" data-level={day.level} title={`${day.date}: ${day.count}`} />
+            ) : (
+              <div class="github-activity__cell github-activity__cell--empty" aria-hidden="true" />
+            )
+          ))}
+        </div>
+      ))}
     </div>
   </div>
-)}
+  <div class="github-activity__legend mono">
+    <span>{copy.less}</span>
+    <div class="github-activity__cell" data-level="0"></div>
+    <div class="github-activity__cell" data-level="1"></div>
+    <div class="github-activity__cell" data-level="2"></div>
+    <div class="github-activity__cell" data-level="3"></div>
+    <div class="github-activity__cell" data-level="4"></div>
+    <span>{copy.more}</span>
+  </div>
+</div>
+
+<script>
+  import { readSnapshot, toMonthLabels, toWeeks } from '../lib/contributions';
+
+  const root = document.querySelector<HTMLElement>('[data-github-activity]');
+  const endpoint = root?.dataset.endpoint;
+  if (root && endpoint) {
+    const monthsEl = root.querySelector<HTMLElement>('[data-activity-months]');
+    const weeksEl = root.querySelector<HTMLElement>('[data-activity-weeks]');
+    const countEl = root.querySelector<HTMLElement>('[data-activity-count]');
+    const monthLocale = root.dataset.monthLocale ?? 'en-US';
+
+    const render = (payload: unknown) => {
+      const { contributions, total } = readSnapshot(payload);
+      if (contributions.length === 0 || !monthsEl || !weeksEl || !countEl) return;
+
+      const weeks = toWeeks(contributions);
+      countEl.textContent = total.toLocaleString(monthLocale);
+
+      monthsEl.style.gridTemplateColumns = `repeat(${weeks.length}, 11px)`;
+      monthsEl.replaceChildren(
+        ...toMonthLabels(weeks, monthLocale).map(({ label, weekIndex }) => {
+          const span = document.createElement('span');
+          span.textContent = label;
+          span.style.gridColumnStart = String(weekIndex + 1);
+          return span;
+        }),
+      );
+
+      weeksEl.replaceChildren(
+        ...weeks.map((week) => {
+          const column = document.createElement('div');
+          column.className = 'github-activity__week';
+          for (const day of week) {
+            const cell = document.createElement('div');
+            cell.className = 'github-activity__cell';
+            if (day) {
+              cell.dataset.level = String(day.level);
+              cell.title = `${day.date}: ${day.count}`;
+            } else {
+              cell.classList.add('github-activity__cell--empty');
+              cell.setAttribute('aria-hidden', 'true');
+            }
+            column.append(cell);
+          }
+          return column;
+        }),
+      );
+
+      root.hidden = false;
+    };
+
+    fetch(endpoint, { signal: AbortSignal.timeout(8000) })
+      .then((res) => (res.ok ? res.json() : Promise.reject(new Error(String(res.status)))))
+      .then(render)
+      .catch(() => {
+        // Keep whatever the build-time render produced.
+      });
+  }
+</script>
 
 <style>
   .github-activity {
@@ -115,6 +163,10 @@ const copy = locale === 'en'
     flex-direction: column;
     align-items: center;
     margin-top: clamp(2rem, 5vw, 3rem);
+  }
+
+  .github-activity[hidden] {
+    display: none;
   }
 
   .github-activity__caption {

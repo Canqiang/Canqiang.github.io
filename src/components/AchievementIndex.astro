@@ -24,9 +24,11 @@ const destination = (group: AchievementGroup) =>
   : group.key === 'competitions' ? localizedPath(locale, 'project', 'competitions')
   : `${resumePath}#resume-${group.key}-title`;
 // Headline figure per group: a count, or a signature value for singletons.
+// Competitions carried a hardcoded rank while it held two entries; now that it
+// is a multi-entry group it counts like publications and patents, and the
+// caption below carries the signature result.
 const figure = (group: AchievementGroup) =>
   group.key === 'openSource' ? 'Core-AI'
-  : group.key === 'competitions' ? '62 / 1,010'
   : String(group.items.length).padStart(2, '0');
 const source = (group: AchievementGroup) => group.items[0].detail[locale];
 ---

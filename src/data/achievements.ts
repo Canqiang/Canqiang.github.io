@@ -101,8 +101,38 @@ export const competitions: AchievementGroup = {
   label: { en: 'Competitions', zh: '竞赛' },
   items: [
     {
+      title: { en: 'The 2026 NeuroGolf Championship', zh: '2026 NeuroGolf 锦标赛' },
+      detail: {
+        en: 'Kaggle · Silver medal · Rank 63 of 2,963',
+        zh: 'Kaggle · 银牌 · 2,963 支队伍中排名第 63',
+      },
+      href: 'https://www.kaggle.com/competitions/neurogolf-2026/leaderboard',
+    },
+    {
+      title: { en: 'Orbit Wars', zh: 'Orbit Wars' },
+      detail: {
+        en: 'Kaggle · Silver medal · Rank 112 of 4,729',
+        zh: 'Kaggle · 银牌 · 4,729 支队伍中排名第 112',
+      },
+      href: 'https://www.kaggle.com/competitions/orbit-wars/leaderboard',
+    },
+    {
+      title: {
+        en: 'AI Mathematical Olympiad — Progress Prize 3',
+        zh: 'AI 数学奥林匹克 — Progress Prize 3',
+      },
+      detail: {
+        en: 'Kaggle · Bronze medal · Rank 405 of 4,138 · Solution write-up',
+        zh: 'Kaggle · 铜牌 · 4,138 支队伍中排名第 405 · 附方案报告',
+      },
+      href: 'https://www.kaggle.com/competitions/ai-mathematical-olympiad-progress-prize-3/writeups/self-consistency-tir-with-python-verification',
+    },
+    {
       title: { en: 'Prostate cANcer graDe Assessment (PANDA) Challenge', zh: '前列腺癌分级评估（PANDA）挑战赛' },
-      detail: { en: 'Kaggle · Rank 62 of 1,010', zh: 'Kaggle · 1,010 支队伍中排名第 62' },
+      detail: {
+        en: 'Kaggle · Bronze medal · Rank 62 of 1,010',
+        zh: 'Kaggle · 铜牌 · 1,010 支队伍中排名第 62',
+      },
       href: 'https://www.kaggle.com/canqiang',
     },
     {
