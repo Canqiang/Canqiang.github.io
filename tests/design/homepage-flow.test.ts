@@ -109,4 +109,20 @@ describe('GithubActivity', () => {
     // A failed client fetch must leave the server-rendered grid in place.
     expect(component).toMatch(/\.catch\(\(\) => \{/);
   });
+
+  // Astro scopes this component's styles behind a [data-astro-cid-*] attribute.
+  // Client-built cells that lack it match no CSS and collapse to zero height —
+  // the grid keeps its DOM nodes and titles but renders invisible.
+  it('stamps the Astro scope attribute onto every client-built node', async () => {
+    const component = await read('src/components/GithubActivity.astro');
+    expect(component).toContain("startsWith('data-astro-cid-')");
+    expect(component).toMatch(/node\.setAttribute\(scopeAttr, ''\)/);
+    // Exactly one createElement, inside scoped() — any other call would build an
+    // unstyled node. Everything in the render path goes through the helper.
+    const clientScript = component.slice(component.indexOf('<script>'));
+    expect(clientScript.match(/document\.createElement\(/g)).toHaveLength(1);
+    expect(clientScript).toContain("scoped('div', 'github-activity__week')");
+    expect(clientScript).toContain("scoped('div', 'github-activity__cell')");
+    expect(clientScript).toContain("scoped('span')");
+  });
 });

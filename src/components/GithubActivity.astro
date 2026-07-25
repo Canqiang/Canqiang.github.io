@@ -108,6 +108,18 @@ const hasServerData = !fetchFailed && contributions.length > 0;
     const countEl = root.querySelector<HTMLElement>('[data-activity-count]');
     const monthLocale = root.dataset.monthLocale ?? 'en-US';
 
+    // Astro scopes every rule in this component's <style> block behind a
+    // generated [data-astro-cid-*] attribute. Elements built here must carry it
+    // or they match no CSS at all and collapse to zero height. The attribute
+    // name is read off the root so a rebuilt hash cannot desync from it.
+    const scopeAttr = root.getAttributeNames().find((name) => name.startsWith('data-astro-cid-'));
+    const scoped = <K extends keyof HTMLElementTagNameMap>(tag: K, className?: string) => {
+      const node = document.createElement(tag);
+      if (className) node.className = className;
+      if (scopeAttr) node.setAttribute(scopeAttr, '');
+      return node;
+    };
+
     const render = (payload: unknown) => {
       const { contributions, total } = readSnapshot(payload);
       if (contributions.length === 0 || !monthsEl || !weeksEl || !countEl) return;
@@ -118,7 +130,7 @@ const hasServerData = !fetchFailed && contributions.length > 0;
       monthsEl.style.gridTemplateColumns = `repeat(${weeks.length}, 11px)`;
       monthsEl.replaceChildren(
         ...toMonthLabels(weeks, monthLocale).map(({ label, weekIndex }) => {
-          const span = document.createElement('span');
+          const span = scoped('span');
           span.textContent = label;
           span.style.gridColumnStart = String(weekIndex + 1);
           return span;
@@ -127,11 +139,9 @@ const hasServerData = !fetchFailed && contributions.length > 0;
 
       weeksEl.replaceChildren(
         ...weeks.map((week) => {
-          const column = document.createElement('div');
-          column.className = 'github-activity__week';
+          const column = scoped('div', 'github-activity__week');
           for (const day of week) {
-            const cell = document.createElement('div');
-            cell.className = 'github-activity__cell';
+            const cell = scoped('div', 'github-activity__cell');
             if (day) {
               cell.dataset.level = String(day.level);
               cell.title = `${day.date}: ${day.count}`;
