@@ -81,11 +81,6 @@ const printDestination = (href: string) => href.startsWith('mailto:') ? href.sli
       </nav>
     </header>
 
-    <section class="resume-section" aria-labelledby="resume-public-achievements-title">
-      <h2 id="resume-public-achievements-title">{copy.publicAchievements}</h2>
-      <PublicAchievements {locale} />
-    </section>
-
     <section class="resume-section" aria-labelledby="resume-experience-title">
       <h2 id="resume-experience-title">{copy.experience}</h2>
       <div class="resume-experience">
@@ -106,6 +101,11 @@ const printDestination = (href: string) => href.startsWith('mailto:') ? href.sli
           </article>
         ))}
       </div>
+    </section>
+
+    <section class="resume-section" aria-labelledby="resume-public-achievements-title">
+      <h2 id="resume-public-achievements-title">{copy.publicAchievements}</h2>
+      <PublicAchievements {locale} />
     </section>
 
     <div class="resume-support-grid">

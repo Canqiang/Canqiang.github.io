@@ -88,8 +88,8 @@ export const openSource: AchievementGroup = {
     {
       title: { en: 'Core-AI', zh: 'Core-AI' },
       detail: {
-        en: 'A team-built open-source AI Agent framework; contributions span durable workflows, provider integration, sandbox lifecycle, desktop reliability, and bilingual documentation.',
-        zh: '由团队共同建设的开源 AI Agent 框架；参与持久化工作流、模型集成、沙箱生命周期、桌面端可靠性与中英文档建设。',
+        en: 'A team-built open-source agent framework; contributions span durable execution, model interfaces, state recovery, sandbox lifecycle, and observability.',
+        zh: '由团队共同建设的开源智能体框架；参与持久化执行、模型接口、状态恢复、沙箱生命周期与可观测性建设。',
       },
       href: 'https://github.com/chancetop-com/core-ai',
     },

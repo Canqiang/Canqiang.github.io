@@ -1,8 +1,8 @@
 ---
 translationKey: applied-ai-products
 locale: en
-title: Applied AI Products
-summary: Applied AI across restaurant menu and Local SEO workflows, medical RAG, multimodal agents, and voice interfaces.
+title: LLM & Multimodal Systems
+summary: RAG and knowledge retrieval, LoRA-based model adaptation, function calling, and multimodal generation and voice pipelines.
 period: 2023 — Present
 role: Technical lead and AI engineer
 category: applied-ai
@@ -13,26 +13,28 @@ order: 2
 draft: false
 ---
 
-This field note groups applied-AI product work across restaurant operations, medical LLM systems, and consumer multimodal experiences. The common thread is turning model capability into a product flow that people can use.
+My work on LLM systems combines knowledge retrieval, model adaptation, tool invocation, multimodal generation, and speech interaction.
 
-## Restaurant menu and Local SEO workflows
+## RAG and knowledge retrieval
 
-My current work includes menu understanding, data normalization, content completion, and menu optimization within an existing restaurant-industry AI product.
+I connected specialist knowledge bases to large language models through RAG, including an oncology knowledge base. I also integrated retrieval with function calling in conversational agent systems.
 
-For Local SEO, I build workflows linking keyword research, Google Business Profile and website content, Maps ranking collection, and weekly reviews. The review connects recorded content changes to query observations while preserving missing or unevaluable results and differences in collection protocol and location conditions. Ranking changes are observations to investigate, not automatic evidence that a content edit caused an improvement.
+## Model adaptation and language processing
 
-## Product surface
+I used LoRA for domain-focused model adaptation and developed intent recognition, entity extraction, and sentiment analysis for language-model interactions. This work also included prompt design and content controls.
 
-I designed and developed a multimodal agent with capabilities such as search, storytelling, and educational content. I also combined story generation with text-to-image workflows to produce interactive picture-book experiences for mobile devices.
+## Multimodal generation and tool use
 
-## Knowledge and voice
+I designed and developed multimodal agents with search and generation capabilities, combining text generation with text-to-image workflows. Function calling connects model responses to retrieval and other tools.
 
-Earlier medical LLM work connected a specialist oncology knowledge base to a large language model through RAG. Across later product work, I integrated RAG and function calling with TTS and ASR to support conversational voice interactions.
+## Speech interaction
 
-## Adaptation and safety
+I integrated ASR, LLM interaction, and TTS into conversational voice pipelines, alongside retrieval and tool use. Content controls were part of the system design for child-facing interactions.
 
-The work included prompt design, LoRA-based adaptation, and product-level content controls for child-facing interactions. Safety was treated as part of the interaction design and delivery process rather than as a separate benchmark claim.
+## Application experience
+
+I also applied agent workflows to menu data processing and Local SEO research, content generation, and evaluation.
 
 ## Scope
 
-These products were built with broader engineering and product teams. This public summary describes my areas of work without publishing internal customer details, private systems, or unpublished performance metrics.
+These systems were built with broader engineering and product teams. This page describes my areas of contribution without publishing internal customer details or unverified performance claims.

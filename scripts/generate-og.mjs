@@ -78,7 +78,7 @@ await mkdir(outputDirectory, { recursive: true });
 await Promise.all([
   writeCard('home.png', {
     label: 'XANDER XU',
-    lines: ['Models are only', 'useful when', 'they ship.'],
+    lines: ['From algorithms', 'to agent', 'runtimes.'],
     index: '01 / 02',
   }),
   writeCard('core-ai.png', {

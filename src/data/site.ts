@@ -8,12 +8,12 @@ export const identity = {
   chineseName: '许灿强',
   role: { en: 'AI Engineer', zh: 'AI 研发工程师' },
   headline: {
-    en: 'Models are only useful when they ship.',
-    zh: '模型只有真正落地，才有价值。',
+    en: 'From algorithms to agent runtimes.',
+    zh: '从算法建模到智能体运行时。',
   },
   introduction: {
-    en: 'I build open-source agent frameworks and applied AI systems, from biomedical modeling to restaurant AI and Local SEO workflows. I also explain AI through animated lessons on Bilibili.',
-    zh: '我专注于开源智能体框架与应用型 AI 系统研发，经历从生物医学建模延伸到餐饮 AI 与 Local SEO 工作流，也在 B 站通过动画讲解 AI。',
+    en: 'I work on machine-learning algorithms and AI systems, spanning deep-learning models, RAG, LoRA adaptation, and open-source agent runtimes with tool execution, state recovery, and observability.',
+    zh: '我从事机器学习算法与 AI 系统研发，经历覆盖深度学习建模、RAG、LoRA 模型适配，以及开源智能体运行时的工具执行、状态恢复与可观测性。',
   },
   photoAlt: {
     en: 'Xander Xu presenting an AI system at a hackathon',
@@ -27,7 +27,7 @@ export const siteCopy = identity;
 export const fieldIndex = [
   { key: 'bioinformatics', en: 'Bioinformatics', zh: '生物信息' },
   { key: 'medical-ai', en: 'Medical AI', zh: '医疗 AI' },
-  { key: 'llm-products', en: 'LLM Products', zh: '大模型产品' },
+  { key: 'llm-products', en: 'LLM Systems', zh: '大模型系统' },
   { key: 'agent-systems', en: 'Agent Systems', zh: '智能体系统' },
 ] as const;
 
@@ -52,28 +52,28 @@ export const fieldCards: FieldCard[] = [
   {
     key: 'bioinformatics',
     name: { en: 'Bioinformatics', zh: '生物信息' },
-    scope: { en: 'Drug-target prediction, multi-omics data systems, cryo-EM detection.', zh: '药物靶点、多组学数据系统、冷冻电镜识别。' },
+    scope: { en: 'Graph features, multi-omics data pipelines, cryo-EM object detection.', zh: '图特征建模、多组学数据流程、冷冻电镜目标检测。' },
     span: '2017 — 2018',
     orgs: { en: 'Tsinghua IIIS', zh: '清华交叉信息院' },
   },
   {
     key: 'medical-ai',
     name: { en: 'Medical AI', zh: '医疗 AI' },
-    scope: { en: 'Pathology imaging, spatial omics, prognostic risk stratification.', zh: '病理图像、时空组学、预后风险分层。' },
+    scope: { en: 'Image segmentation, spatial-omics correction, predictive modeling.', zh: '图像分割、空间组学数据校正、预测建模。' },
     span: '2018 — 2023',
     orgs: { en: 'Jiyuan · BGI · Fapon', zh: '极元 / 华大 / 菲鹏' },
   },
   {
     key: 'llm-products',
-    name: { en: 'LLM Products', zh: '大模型产品' },
-    scope: { en: 'Medical RAG, multimodal agents, child-content safety.', zh: '医疗 RAG、多模态智能体、儿童内容安全。' },
+    name: { en: 'LLM Systems', zh: '大模型系统' },
+    scope: { en: 'RAG, LoRA adaptation, multimodal and speech integration.', zh: 'RAG、LoRA 模型适配、多模态与语音集成。' },
     span: '2023 — 2025',
     orgs: { en: 'Jiyuan · Qudian', zh: '极元 / 趣店' },
   },
   {
     key: 'agent-systems',
     name: { en: 'Agent Systems', zh: '智能体系统' },
-    scope: { en: 'Core-AI workflows, runtime reliability, restaurant AI and Local SEO.', zh: 'Core-AI 工作流、运行时可靠性、餐饮 AI 与 Local SEO。' },
+    scope: { en: 'Agent runtimes, model interfaces, durable state, observability.', zh: '智能体运行时、模型接口、状态持久化与可观测性。' },
     span: '2025 — Now',
     orgs: { en: 'ChanceTop · Core-AI', zh: '畅拓 / Core-AI' },
   },

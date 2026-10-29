@@ -24,11 +24,11 @@ The Bilibili video API identifies the same channel owner, UID 255230761. Channel
 
 Core-AI remains a team-built project. Its public README now includes the desktop preview client alongside the Java framework, CLI, server and web interface. The project page links specific contributions to public commits covering model routing, sandbox retention and desktop IME behavior. It also describes macOS preview-package verification and bilingual documentation work without attributing the entire desktop client to one contributor.
 
-The restaurant-AI summary now includes implemented Local SEO research, content, collection and review workflows. It does not disclose merchant details or private metrics, or claim that observed ranking movements establish causal SEO or revenue gains.
+The profile emphasizes machine-learning algorithms and AI infrastructure: deep-learning modeling, RAG, LoRA adaptation, model interfaces, tool execution, durable state and recovery. Work experience precedes public achievements in the résumé. Business domains are supporting context; Local SEO is summarized in one application-experience sentence per relevant page. This positioning describes established contributions and does not add claims of foundation-model pretraining, distributed training or inference-kernel optimization.
 
 The existing web résumé remains the maintained source; this update does not replace separate historical documents or video production assets.
 
-## Validation
+## Initial refresh validation
 
 - 69 tests passed; Astro reported zero errors, warnings or hints; all five bilingual project pairs validated.
 - All 17 static pages built successfully; metadata and public-safety checks passed.
@@ -36,3 +36,7 @@ The existing web résumé remains the maintained source; this update does not re
 - Lighthouse CI passed the existing performance, accessibility, best-practices and SEO thresholds across six URLs and 18 runs.
 - Browser checks covered English/Chinese home, résumé and competition pages at 1440px and 390px with no horizontal overflow or page errors.
 - Both résumé PDFs contain two pages; all four rendered pages were inspected for layout and legibility. Exports stay in the ignored local `output/pdf/` directory.
+
+## Technical positioning revision validation
+
+The revised copy passed all 69 tests, Astro checks, five bilingual-pair checks, the 17-page build and public-safety checks. Link validation again reported 438 occurrences with zero errors. Browser inspection at 1440px and 390px found no overflow or page errors; home pages contain no Local SEO references, while each résumé and LLM-system page contains one. Both regenerated PDFs remain two pages, with work experience before public achievements; all four rendered pages and the revised social card were inspected. The deployment workflow continues to require Lighthouse CI before publication.
