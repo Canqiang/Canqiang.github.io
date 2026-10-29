@@ -2,9 +2,9 @@
 translationKey: applied-ai-products
 locale: en
 title: Applied AI Products
-summary: Product engineering across medical RAG, multimodal agents, interactive storybooks, voice interfaces, and content safety.
-period: 2023 — 2025
-role: Technical lead and LLM application engineer
+summary: Applied AI across restaurant menu and Local SEO workflows, medical RAG, multimodal agents, and voice interfaces.
+period: 2023 — Present
+role: Technical lead and AI engineer
 category: applied-ai
 technologies: [Python, RAG, LoRA, Function Calling, TTS, ASR, Multimodal AI]
 links: []
@@ -13,7 +13,13 @@ order: 2
 draft: false
 ---
 
-This field note groups applied-AI product work across medical LLM systems and consumer multimodal experiences. The common thread was turning model capability into a product flow that people could use.
+This field note groups applied-AI product work across restaurant operations, medical LLM systems, and consumer multimodal experiences. The common thread is turning model capability into a product flow that people can use.
+
+## Restaurant menu and Local SEO workflows
+
+My current work includes menu understanding, data normalization, content completion, and menu optimization within an existing restaurant-industry AI product.
+
+For Local SEO, I build workflows linking keyword research, Google Business Profile and website content, Maps ranking collection, and weekly reviews. The review connects recorded content changes to query observations while preserving missing or unevaluable results and differences in collection protocol and location conditions. Ranking changes are observations to investigate, not automatic evidence that a content edit caused an improvement.
 
 ## Product surface
 

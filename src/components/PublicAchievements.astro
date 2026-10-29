@@ -1,0 +1,54 @@
+---
+import { profileUpdatedAt, profileUpdatedLabel, publicAchievements } from '../data/profile';
+import type { Locale } from '../i18n/config';
+
+interface Props { locale: Locale; }
+const { locale } = Astro.props;
+---
+
+<div class="public-achievements">
+  <ul class="public-achievements__list">
+    {publicAchievements.map((item) => (
+      <li>
+        <h3><a href={item.href}>{item.title[locale]}</a></h3>
+        <p class="public-achievements__metric">{item.metric[locale]}</p>
+        <p>{item.detail[locale]}</p>
+        {item.work && <a class="public-achievements__work" href={item.work.href}>{item.work.label[locale]}</a>}
+      </li>
+    ))}
+  </ul>
+  <p class="public-achievements__date">
+    {locale === 'en' ? 'Profile and audience figures as of ' : '等级与观众数据截至 '}
+    <time datetime={profileUpdatedAt}>{profileUpdatedLabel[locale]}</time>
+  </p>
+</div>
+
+<style>
+  .public-achievements { margin-top: 1.5rem; }
+  .public-achievements__list {
+    display: grid;
+    gap: 1.5rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  li { min-width: 0; padding-top: 1rem; border-top: 1px solid var(--rule); }
+  h3 { margin: 0; font-size: 1rem; line-height: 1.5; }
+  h3 a { text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  p { margin: 0.5rem 0; color: var(--text-muted); font-size: 0.86rem; }
+  .public-achievements__metric { color: var(--accent); font-size: 1.1rem; font-weight: 600; }
+  .public-achievements__work { font-size: 0.8rem; }
+  .public-achievements__date { margin: 1rem 0 0; color: var(--text-dim); font-size: 0.75rem; }
+  @media (min-width: 48rem) {
+    .public-achievements__list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @media print {
+    .public-achievements { margin-top: 0; break-inside: avoid; }
+    .public-achievements__list { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+    li { padding-top: 0; border-top: 0; }
+    h3 { font-size: 9pt; }
+    p, .public-achievements__metric, .public-achievements__work { font-size: 8pt; line-height: 1.35; }
+    .public-achievements__date { margin-top: 0.4rem; font-size: 7pt; }
+  }
+</style>

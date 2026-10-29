@@ -1,9 +1,10 @@
 ---
 import { patents, publications } from '../../data/achievements';
 import { experience } from '../../data/experience';
-import { education, interests } from '../../data/profile';
+import { education, interests, profileUpdatedLabel } from '../../data/profile';
 import { identity, publicLinks } from '../../data/site';
 import type { Locale } from '../../i18n/config';
+import PublicAchievements from '../PublicAchievements.astro';
 
 interface Props {
   locale: Locale;
@@ -12,7 +13,8 @@ interface Props {
 const { locale } = Astro.props;
 const copy = locale === 'en'
   ? {
-      documentLabel: 'Current web résumé · Jul 2026',
+      documentLabel: `Current web résumé · ${profileUpdatedLabel.en}`,
+      publicAchievements: 'Selected achievements & public education',
       print: 'Print résumé',
       printHint: 'Opens the browser print dialog',
       experience: 'Experience',
@@ -23,7 +25,8 @@ const copy = locale === 'en'
       publicProfiles: 'Public profiles',
     }
   : {
-      documentLabel: '最新 Web 简历 · 2026 年 7 月',
+      documentLabel: `最新 Web 简历 · ${profileUpdatedLabel.zh}`,
+      publicAchievements: '竞赛成果与知识分享',
       print: '打印简历',
       printHint: '打开浏览器打印对话框',
       experience: '工作经历',
@@ -33,7 +36,7 @@ const copy = locale === 'en'
       interests: '兴趣爱好',
       publicProfiles: '公开主页',
     };
-const resumeLinks = ['Email', 'GitHub', 'Core-AI', 'LinkedIn', 'Kaggle'].map((label) => {
+const resumeLinks = ['Email', 'GitHub', 'Core-AI', 'LinkedIn', 'Kaggle', 'Bilibili'].map((label) => {
   const link = publicLinks.find((candidate) => candidate.label === label);
   if (!link) throw new Error(`Missing résumé link: ${label}`);
   return link;
@@ -77,6 +80,11 @@ const printDestination = (href: string) => href.startsWith('mailto:') ? href.sli
         </ul>
       </nav>
     </header>
+
+    <section class="resume-section" aria-labelledby="resume-public-achievements-title">
+      <h2 id="resume-public-achievements-title">{copy.publicAchievements}</h2>
+      <PublicAchievements {locale} />
+    </section>
 
     <section class="resume-section" aria-labelledby="resume-experience-title">
       <h2 id="resume-experience-title">{copy.experience}</h2>

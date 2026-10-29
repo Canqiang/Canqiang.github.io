@@ -12,8 +12,8 @@ export const identity = {
     zh: '模型只有真正落地，才有价值。',
   },
   introduction: {
-    en: 'I build open-source agent frameworks and applied AI systems, with a career spanning bioinformatics, medical vision, LLM products, and workflow infrastructure.',
-    zh: '我专注于开源智能体框架与应用型 AI 系统研发，经历覆盖生物信息、医疗视觉、大模型产品与工作流基础设施。',
+    en: 'I build open-source agent frameworks and applied AI systems, from biomedical modeling to restaurant AI and Local SEO workflows. I also explain AI through animated lessons on Bilibili.',
+    zh: '我专注于开源智能体框架与应用型 AI 系统研发，经历从生物医学建模延伸到餐饮 AI 与 Local SEO 工作流，也在 B 站通过动画讲解 AI。',
   },
   photoAlt: {
     en: 'Xander Xu presenting an AI system at a hackathon',
@@ -35,6 +35,7 @@ export const publicLinks: PublicLink[] = [
   { label: 'GitHub', href: 'https://github.com/Canqiang' },
   { label: 'Core-AI', href: 'https://github.com/chancetop-com/core-ai' },
   { label: 'Kaggle', href: 'https://www.kaggle.com/canqiang' },
+  { label: 'Bilibili', href: 'https://space.bilibili.com/255230761' },
   { label: 'LinkedIn', href: 'https://www.linkedin.com/in/canqiang-xu-8510531b3/' },
   { label: 'Email', href: 'mailto:canqiangxu@yeah.net' },
 ];
@@ -72,7 +73,7 @@ export const fieldCards: FieldCard[] = [
   {
     key: 'agent-systems',
     name: { en: 'Agent Systems', zh: '智能体系统' },
-    scope: { en: 'Core-AI durable workflows and platform delivery.', zh: 'Core-AI 持久化工作流与平台交付。' },
+    scope: { en: 'Core-AI workflows, runtime reliability, restaurant AI and Local SEO.', zh: 'Core-AI 工作流、运行时可靠性、餐饮 AI 与 Local SEO。' },
     span: '2025 — Now',
     orgs: { en: 'ChanceTop · Core-AI', zh: '畅拓 / Core-AI' },
   },

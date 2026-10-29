@@ -2,9 +2,9 @@
 translationKey: applied-ai-products
 locale: zh
 title: 应用型 AI 产品
-summary: 覆盖医疗 RAG、多模态智能体、交互式绘本、语音界面与内容安全的产品工程实践。
-period: 2023 — 2025
-role: 技术负责人、大语言模型应用研发工程师
+summary: 覆盖餐饮菜单与 Local SEO 工作流、医疗 RAG、多模态智能体和语音界面的 AI 产品实践。
+period: 2023 — 至今
+role: 技术负责人、AI 研发工程师
 category: applied-ai
 technologies: [Python, RAG, LoRA, Function Calling, TTS, ASR, 多模态 AI]
 links: []
@@ -13,7 +13,13 @@ order: 2
 draft: false
 ---
 
-这篇现场笔记汇总了医疗大模型系统和消费级多模态体验中的应用型 AI 产品工作。贯穿这些工作的共同主线，是把模型能力转化为用户真正可以使用的产品流程。
+这篇笔记汇总了餐饮运营、医疗大模型系统和消费级多模态体验中的 AI 产品工作。贯穿这些工作的共同主线，是把模型能力转化为用户可以使用的产品流程。
+
+## 餐饮菜单与 Local SEO 工作流
+
+目前的工作包括餐饮行业 AI 产品中的菜单理解、数据标准化、内容补全与菜单优化，并将这些能力接入现有产品流程。
+
+在 Local SEO 方向，我建设串联关键词研究、Google Business Profile 与官网内容、Maps 排名采集及周度复盘的工作流。复盘将已记录的内容改动与查询观测关联，同时保留未见、不可评估结果，以及采集协议和定位条件的差异。排名变化是需要进一步调查的观测，不能自动归因于某次内容修改。
 
 ## 产品界面
 

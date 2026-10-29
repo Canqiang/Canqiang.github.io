@@ -1,10 +1,10 @@
 ---
 translationKey: competitions
 locale: en
-title: Selected Competitions
-summary: Four Kaggle medals and one PrecisionFDA placement, presented as one peer category within a broader engineering and research record.
+title: Kaggle & Selected Competitions
+summary: Kaggle Notebooks Master with 6 gold and 4 silver notebook medals, 7 competition medals, and a PrecisionFDA placement.
 period: Selected results
-role: Competition participant
+role: Notebook author and competition participant
 category: competitions
 technologies: [Program Synthesis, Reinforcement Learning, LLM Reasoning, Medical Imaging]
 links:
@@ -19,7 +19,7 @@ order: 5
 draft: false
 ---
 
-Competitions are one source of evidence in my record, alongside open-source engineering, product delivery, publications, and patents. On Kaggle I hold Competitions Expert standing, with two silver and two bronze competition medals across program synthesis, reinforcement learning, LLM reasoning, and biomedical modeling.
+Competitions and public notebooks are one source of evidence in my record, alongside open-source engineering, product delivery, publications, and patents. As of October 29, 2026, I hold **Kaggle Notebooks Master** standing, with **6 gold and 4 silver notebook medals**. My separate competition standing is **Competitions Expert**, with **2 silver and 5 bronze competition medals** across program synthesis, strategy agents, agent security, LLM reasoning, and biomedical modeling.
 
 ## Selected results
 
@@ -46,6 +46,24 @@ Fifty olympiad problems with integer answers, solved offline on a single H100 wi
 Kaggle · Featured · Code · Bronze medal · 62nd of 1,010 teams
 
 A medical-imaging competition on prostate-cancer grading under the Gleason system.
+
+### AI Agent Security — Multi-Step Tool Attacks
+
+Kaggle · Bronze medal · 268th of 4,186 teams
+
+[Competition page](https://www.kaggle.com/competitions/ai-agent-security-multi-step-tool-attacks)
+
+### Kaggriculture
+
+Kaggle · Bronze medal · 628th of 10,148 teams
+
+[Competition page](https://www.kaggle.com/competitions/kaggriculture)
+
+### The Pokémon Company — PTCG AI Battle Challenge Simulation
+
+Kaggle · Bronze medal · 671st of 6,807 teams
+
+[Competition page](https://www.kaggle.com/competitions/pokemon-tcg-ai-battle)
 
 ### Brain Cancer Predictive Modeling and Biomarker Discovery Challenge
 

@@ -88,8 +88,8 @@ export const openSource: AchievementGroup = {
     {
       title: { en: 'Core-AI', zh: 'Core-AI' },
       detail: {
-        en: 'A team-built open-source AI Agent framework; Xander contributes across durable workflows, model integration, observability, sandbox recovery, and end-to-end platform delivery.',
-        zh: '由团队共同建设的开源 AI Agent 框架；许灿强作为贡献者参与持久化工作流、模型集成、可观测性、沙箱恢复与端到端平台交付。',
+        en: 'A team-built open-source AI Agent framework; contributions span durable workflows, provider integration, sandbox lifecycle, desktop reliability, and bilingual documentation.',
+        zh: '由团队共同建设的开源 AI Agent 框架；参与持久化工作流、模型集成、沙箱生命周期、桌面端可靠性与中英文档建设。',
       },
       href: 'https://github.com/chancetop-com/core-ai',
     },
@@ -134,6 +134,30 @@ export const competitions: AchievementGroup = {
         zh: 'Kaggle · 铜牌 · 1,010 支队伍中排名第 62',
       },
       href: 'https://www.kaggle.com/canqiang',
+    },
+    {
+      title: { en: 'AI Agent Security — Multi-Step Tool Attacks', zh: 'AI Agent Security — 多步骤工具攻击' },
+      detail: {
+        en: 'Kaggle · Bronze medal · Rank 268 of 4,186',
+        zh: 'Kaggle · 铜牌 · 4,186 支队伍中排名第 268',
+      },
+      href: 'https://www.kaggle.com/competitions/ai-agent-security-multi-step-tool-attacks',
+    },
+    {
+      title: { en: 'Kaggriculture', zh: 'Kaggriculture' },
+      detail: {
+        en: 'Kaggle · Bronze medal · Rank 628 of 10,148',
+        zh: 'Kaggle · 铜牌 · 10,148 支队伍中排名第 628',
+      },
+      href: 'https://www.kaggle.com/competitions/kaggriculture',
+    },
+    {
+      title: { en: 'The Pokémon Company — PTCG AI Battle Challenge Simulation', zh: '宝可梦 PTCG AI 对战模拟挑战赛' },
+      detail: {
+        en: 'Kaggle · Bronze medal · Rank 671 of 6,807',
+        zh: 'Kaggle · 铜牌 · 6,807 支队伍中排名第 671',
+      },
+      href: 'https://www.kaggle.com/competitions/pokemon-tcg-ai-battle',
     },
     {
       title: {

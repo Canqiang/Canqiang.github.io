@@ -7,7 +7,7 @@ interface Props {
 }
 
 const { locale } = Astro.props;
-const linkOrder = ['Email', 'GitHub', 'Core-AI', 'LinkedIn', 'Kaggle'];
+const linkOrder = ['Email', 'GitHub', 'Core-AI', 'LinkedIn', 'Kaggle', 'Bilibili'];
 const links = linkOrder.map((label) => {
   const link = publicLinks.find((candidate) => candidate.label === label);
   if (!link) throw new Error(`Missing public link: ${label}`);

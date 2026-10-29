@@ -8,6 +8,7 @@ import ContactLinks from '../ContactLinks.astro';
 import FieldCards from '../FieldCards.astro';
 import GithubActivity from '../GithubActivity.astro';
 import Hero from '../Hero.astro';
+import PublicAchievements from '../PublicAchievements.astro';
 
 interface Props {
   locale: Locale;
@@ -17,14 +18,14 @@ const { locale } = Astro.props;
 const copy = locale === 'en'
   ? {
       practice: 'Current practice', practiceLede: 'Four fields, from bioinformatics to agent systems.',
-      axis: 'Career axis', axisLede: 'Eight years, condensed.', fullExperience: 'View full experience',
-      record: 'Evidence index', recordLede: 'Publications, patents, open source, and competitions as peers.',
+      axis: 'Career axis', axisLede: 'From 2017 to today.', fullExperience: 'View full experience',
+      record: 'Evidence index', recordLede: 'Research, open source, competitions, and public education.',
       contact: 'Contact', contactLede: 'For engineering roles, open-source collaboration, and research.', resume: 'View résumé',
     }
   : {
       practice: '当前实践', practiceLede: '四个领域，从生物信息到智能体系统。',
-      axis: '生涯轴', axisLede: '八年，浓缩于此。', fullExperience: '查看完整经历',
-      record: '证据索引', recordLede: '论文、专利、开源与竞赛，同等权重。',
+      axis: '生涯轴', axisLede: '从 2017 年至今。', fullExperience: '查看完整经历',
+      record: '证据索引', recordLede: '研究、开源、竞赛与知识分享。',
       contact: '联系', contactLede: '欢迎就工程岗位、开源协作与研究交流联系我。', resume: '查看简历',
     };
 ---
@@ -65,6 +66,7 @@ const copy = locale === 'en'
     <p class="portfolio-section__lede">{copy.recordLede}</p>
   </header>
   <AchievementIndex {locale} groups={achievementGroups} />
+  <PublicAchievements {locale} />
   <GithubActivity {locale} />
 </section>
 

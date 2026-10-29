@@ -1,10 +1,10 @@
 ---
 translationKey: competitions
 locale: zh
-title: 精选竞赛
-summary: 四枚 Kaggle 奖牌与一项 PrecisionFDA 名次，作为整体工程与科研记录中的一个同级成果类别呈现。
+title: Kaggle 与精选竞赛
+summary: Kaggle Notebooks Master，获 6 金 4 银代码奖牌、7 枚竞赛奖牌及一项 PrecisionFDA 名次。
 period: 精选成绩
-role: 竞赛参与者
+role: Notebook 作者、竞赛参与者
 category: competitions
 technologies: [程序合成, 强化学习, 大模型推理, 医学影像]
 links:
@@ -19,7 +19,7 @@ order: 5
 draft: false
 ---
 
-竞赛是我的经历证据来源之一，与开源工程、产品交付、论文和专利并列。在 Kaggle 上我目前是 Competitions Expert，共获两银两铜四枚竞赛奖牌，覆盖程序合成、强化学习、大模型推理与生物医学建模四个方向。
+竞赛与公开 Notebook 是我的经历证据来源之一，与开源工程、产品交付、论文和专利并列。截至 2026 年 10 月 29 日，我已获得 **Kaggle Notebooks Master（代码赛道大师）**称号，拥有 **6 金 4 银代码奖牌**。竞赛赛道等级为 **Competitions Expert**，累计 **2 银 5 铜竞赛奖牌**，覆盖程序合成、策略智能体、智能体安全、大模型推理与生物医学建模。
 
 ## 精选成绩
 
@@ -46,6 +46,24 @@ Kaggle · Featured · Code · 铜牌 · 4,138 支队伍中排名第 405
 Kaggle · Featured · Code · 铜牌 · 1,010 支队伍中排名第 62
 
 一项基于 Gleason 分级体系、聚焦前列腺癌分级的医学影像竞赛。
+
+### AI Agent Security — Multi-Step Tool Attacks
+
+Kaggle · 铜牌 · 4,186 支队伍中排名第 268
+
+[竞赛页面](https://www.kaggle.com/competitions/ai-agent-security-multi-step-tool-attacks)
+
+### Kaggriculture
+
+Kaggle · 铜牌 · 10,148 支队伍中排名第 628
+
+[竞赛页面](https://www.kaggle.com/competitions/kaggriculture)
+
+### The Pokémon Company — PTCG AI Battle Challenge Simulation
+
+Kaggle · 铜牌 · 6,807 支队伍中排名第 671
+
+[竞赛页面](https://www.kaggle.com/competitions/pokemon-tcg-ai-battle)
 
 ### 脑癌预测建模与生物标志物发现挑战赛
 
