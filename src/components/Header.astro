@@ -21,9 +21,7 @@ const navigation: Array<{ key: Exclude<RouteKey, 'home' | 'project'>; label: str
 const normalizedPath = pathname.endsWith('/') ? pathname : `${pathname}/`;
 const isCurrent = (key: (typeof navigation)[number]['key']) => {
   const target = localizedPath(locale, key);
-  return key === 'projects'
-    ? normalizedPath === target || normalizedPath.startsWith(target)
-    : normalizedPath === target;
+  return normalizedPath === target || normalizedPath.startsWith(target);
 };
 const destinationLocale: Locale = locale === 'en' ? 'zh' : 'en';
 ---

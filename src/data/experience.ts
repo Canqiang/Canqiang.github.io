@@ -54,14 +54,14 @@ export const experience: ExperienceEntry[] = [
     },
     highlights: {
       en: [
-        'Developed cell segmentation, classification, and feature-extraction pipelines for H&E pathology images.',
-        'Built a metagenomic geolocation framework combining classification, feature selection, and geographic interpolation.',
-        'Applied expression-signature analysis and machine learning to anti-PD-1 response research.',
+        'Developed H&E cell segmentation and classification with U-Net and convolutional feature extractors including ResNet and DenseNet.',
+        'Built a metagenomic geolocation framework combining classification, feature selection, and geographic interpolation; co-first author of the Biology Direct paper.',
+        'Contributed data processing and machine-learning analysis to anti-PD-1 response research; co-first author of the npj Genomic Medicine paper.',
       ],
       zh: [
-        '研发 HE 染色病理图像的细胞分割、分类与特征提取流程。',
-        '结合分类、特征选择与地理插值，构建微生物宏基因组城市定位框架。',
-        '将表达特征分析与机器学习用于 anti-PD-1 治疗响应研究。',
+        '使用 U-Net 及 ResNet、DenseNet 等卷积特征提取方法，研发 HE 染色图像的细胞分割与分类。',
+        '结合分类、特征选择与地理插值构建微生物宏基因组城市定位框架，为 Biology Direct 相关论文共同第一作者。',
+        '参与 anti-PD-1 治疗响应研究的数据处理与机器学习分析，为 npj Genomic Medicine 相关论文共同第一作者。',
       ],
     },
   },
@@ -77,14 +77,14 @@ export const experience: ExperienceEntry[] = [
     },
     highlights: {
       en: [
-        'Coordinated spatial clinical analysis work and cross-team delivery.',
+        'Led spatial clinical algorithm development across image segmentation and expression-data correction.',
         'Developed attention-enhanced semantic segmentation for ssDNA-stained tissue images.',
-        'Proposed a GMM-based correction approach using spatial and expression information.',
+        'Proposed GMM-based correction combining spatial and expression information; the work is documented in patent application WO2024000313A1.',
       ],
       zh: [
-        '协调时空临床分析研发与跨团队交付。',
+        '负责图像分割与表达数据校正相关的时空临床算法研发。',
         '面向 ssDNA 染色组织图像研发结合注意力机制的语义分割方法。',
-        '提出融合空间信息与表达信息的 GMM 数据校正方法。',
+        '提出融合空间与表达信息的 GMM 数据校正方法，相关工作形成专利申请 WO2024000313A1。',
       ],
     },
   },
@@ -116,19 +116,19 @@ export const experience: ExperienceEntry[] = [
     period: { en: 'Mar 2023 — Jun 2024', zh: '2023 年 3 月 — 2024 年 6 月' },
     location: { en: 'Xiamen, China', zh: '中国厦门' },
     summary: {
-      en: 'Led medical LLM research and product design across RAG, NLP, efficient fine-tuning, and enterprise workflows.',
-      zh: '负责医疗大模型研发与产品设计，覆盖 RAG、NLP、高效微调与企业级工作流。',
+      en: 'Led medical LLM R&D spanning knowledge retrieval, NLP components, and LoRA-based domain adaptation.',
+      zh: '负责医疗大模型研发，覆盖知识检索、NLP 组件与 LoRA 领域适配。',
     },
     highlights: {
       en: [
         'Integrated large language models with a specialist oncology knowledge base through RAG.',
         'Applied intent recognition, entity extraction, and sentiment analysis to product interactions.',
-        'Designed supporting product workflows and used LoRA for domain-focused model adaptation.',
+        'Used LoRA for domain-focused model adaptation.',
       ],
       zh: [
         '通过 RAG 将大语言模型与专业肿瘤学知识库结合。',
         '将意图识别、实体提取和情感分析应用于产品交互。',
-        '设计配套产品工作流，并使用 LoRA 进行领域适配。',
+        '使用 LoRA 进行领域模型适配。',
       ],
     },
   },
@@ -167,15 +167,15 @@ export const experience: ExperienceEntry[] = [
     },
     highlights: {
       en: [
-        'Developed durable agent workflows with human-in-the-loop steps, nested execution, persisted run state, resumption, artifact delivery, and execution tracing.',
-        'Built model-gateway integrations across OpenAI-compatible and Responses APIs, including routing tool-bearing reasoning turns and preserving user queries when rendering authored prompt templates.',
-        'Built session-recovery and sandbox snapshot mechanisms, including configurable retention and scoped permissions, to support long-running task recovery and diagnosis.',
+        'Fixed cross-pod session-status errors with Redis-backed turn liveness, heartbeat/TTL handling, and separate SSE state; added server and frontend recovery regression cases.',
+        'Fixed a cancel/save persistence race by serializing snapshot creation and writes; added a deterministic concurrency regression test and capability-aware Responses routing for reasoning models with tools.',
+        'Implemented configurable sandbox snapshot retention and scoped permissions; development checks verified new-snapshot expiry calculation and preservation of existing expiries.',
         'Applied agent workflows to menu data processing and Local SEO automation, spanning data collection, structured transformation, and evaluation.',
       ],
       zh: [
-        '研发持久化智能体工作流，支持人工介入、嵌套执行、运行状态保存、断点恢复、产物交付与执行追踪。',
-        '建设覆盖 OpenAI 兼容接口与 Responses API 的模型网关，完善推理模型工具调用路由；限制提示词模板渲染范围，保留用户查询原文。',
-        '建设会话恢复与沙箱快照机制，加入保留周期配置和权限控制，支持长任务的运行恢复与故障排查。',
+        '通过 Redis 轮次存活注册、心跳与 TTL 分离跨 Pod 执行状态和本地 SSE 状态，修复运行中会话误判，并补充前后端恢复回归用例。',
+        '将状态序列化与写入纳入同一临界区，修复取消与保存竞态并补充并发回归测试；按模型能力完善推理与工具调用的 Responses 路由。',
+        '实现沙箱快照保留周期配置与独立权限；开发环境验证确认配置作用于新快照到期时间，既有快照时间保持不变。',
         '将 Agent 技术用于菜单数据处理与 Local SEO 自动化，覆盖数据采集、结构化处理和结果评估。',
       ],
     },

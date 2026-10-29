@@ -27,19 +27,25 @@ draft: false
 
 Kaggle · Research · 银牌 · 2,963 支队伍中排名第 63
 
-NeuroGolf 要求为每个 ARC-AGI 任务找到*最小*的网络：在 400 个任务上分别提交 ONNX 计算图，既要在测试样例上输出正确，又要压低 `cost = params + memory`，单任务得分为 `max(1, 25 − ln(cost))`。我们的方案与其说是一个模型，不如说是一座解法工厂。多个 worker agent 各自认领独立的 track，共同工作在一套在线底座上——带 pgvector 的 Postgres、内容寻址的 blob 存储，以及统一在前的 FastAPI 服务——在全局的单任务锁下领取任务，并把候选计算图推入固定的验证状态机。所有 agent 与 Kaggle 之间只隔着一条受控的提交队列；只要解法在生成的任务变体上还有任何一处不匹配，硬门禁就会拒绝它，这正是筛掉"本地看着对、其实是错的"计算图的关键。每个被接受的任务都保留完整记录：人类可读的变换规则、ONNX 模型、能复现出同样字节的 Python 构建脚本，以及数据集自带的种子元信息。
+NeuroGolf 要求为 400 个 ARC-AGI 任务分别提交 ONNX 计算图，在输出正确的前提下降低参数与中间张量内存成本。我参与候选图的优化与验证，使用团队已有的工具检查静态形状、ONNX Runtime 兼容性及图成本，并区分本地验证结果与 Kaggle 隐藏集结果。
+
+团队基础设施提供任务认领、模型与构建产物存储、验证状态转换和提交队列。生成样本上的差异用于风险诊断，不等同于隐藏集判定；规则说明、构建脚本与种子记录也尚未覆盖全部任务。这些基础模块属于团队工程，不作为个人独立研发成果。[Kaggle 成绩](https://www.kaggle.com/canqiang/competitions)
 
 ### Orbit Wars
 
 Kaggle · Featured · 仿真竞赛 · 银牌 · 4,729 支队伍中排名第 112
 
-一款实时策略游戏：二人或四人在连续二维空间中争夺绕恒星公转的行星。最终沉淀下来的成果是一个路由器，而不是单一策略——2P 对局交给行为克隆并经 PPO 自博弈精调的策略，4P 对局交给另一条以压制为导向的分支，两者都导出为不依赖 torch 的 NumPy 部署包，使整个 agent 能以单文件提交。大范围奖励塑形和只做监督的重跑都试过，但没能通过各自的门禁；真正留下来的做法，是在任何规模化训练之前，先把工程投入放在与官方环境的一致性、产物 manifest 和成对评测面板上。
+我基于已有的 BC→PPO 自博弈训练栈开展策略、奖励与训练配置实验，并整合按二人／四人对局选择策略的路由及不依赖 PyTorch 的 NumPy 部署。个人修改记录包括落后状态下的奖励塑形实验、运行配置，以及 JAX 编译参数和持久编译缓存；训练栈的来源与修改边界见 [PATCHES](https://github.com/Canqiang/orbit-wars/blob/main/helios/PATCHES.md)。
+
+评测使用官方环境与配对种子，检查候选策略是否能迁移到外部对手。复盘保留了奖励塑形、扩大自博弈和监督实验的负结果，未将它们写成稳定增益。[方案与实验复盘](https://github.com/Canqiang/orbit-wars/blob/main/public_release/docs/orbit-wars-approach-writeup.md)
 
 ### AI 数学奥林匹克 — Progress Prize 3
 
 Kaggle · Featured · Code · 铜牌 · 4,138 支队伍中排名第 405
 
-50 道答案为整数的奥赛题，需要在单张 H100 上离线求解并控制在五小时内。我向公开的开源方案谱系贡献了两部分。其一是构建在 gpt-oss-120b 上的自洽性加工具集成推理脚手架：使用模型原生的 Harmony 对话模板并开到高推理强度，为每个线程维持一个常驻 Jupyter 内核，以八路并行采样配合流式答案扫描与多数提前终止，再用多线程页缓存预热把 vLLM 启动时间从约 400 秒压到 130 秒。这份 notebook 公开发布后，成为若干更强的下游 fork 的起点。其二是对投票逻辑二十行的改动：按每次尝试是否真的用 Python 自我验证来加权，调用达三次以上加权，多数调用报错则降权。它把同一份代码 25 次提交的最高分推到 42/50（均值 38.4，σ 1.6）——这是真实但有限的提升，且建立在其他参赛者搭好的基础设施之上，方案报告中已逐一署名致谢。
+比赛要求在单张 H100、五小时预算内离线回答 50 道整数答案奥赛题。我在已有工具集成推理（TIR）方案上开展答案聚合实验，并公开了基于 gpt-oss-120B／vLLM 的 [Notebook](https://github.com/Canqiang/kaggle-AIMO-3/blob/main/AIMO/weighted-voting-with-python-verification.ipynb)：包含八路采样、四票共识早停、持久 Python 执行环境、动态时间预算，以及 FP8 KV cache、前缀缓存和异步调度配置。
+
+我的实验重点是以 Python 调用次数和错误率调整候选答案票重。这是工具使用信号构成的置信度启发式，不能证明最终答案已被正确验证。公开实现沿用其他参赛者的推理基础设施，来源与致谢见[方案报告](https://www.kaggle.com/competitions/ai-mathematical-olympiad-progress-prize-3/writeups/self-consistency-tir-with-python-verification)。
 
 ### 前列腺癌分级评估（PANDA）挑战赛
 

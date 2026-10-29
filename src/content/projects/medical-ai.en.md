@@ -27,11 +27,11 @@ I later led research on whole-slide-image methods for stratifying prognostic rec
 
 ## Translational data work
 
-My biomedical data work included a machine-learning framework for locating metagenomic samples and expression-signature analysis for predicting anti-PD-1 treatment response. These projects contributed to peer-reviewed publications and patent work.
+I contributed to a metagenomic geolocation framework combining feature selection, classification, and geographic interpolation, and am a co-first author of the related Biology Direct paper. My anti-PD-1 response work included data processing and machine-learning analysis; I am a co-first author of the related npj Genomic Medicine paper. The linked papers provide the full research questions, methods, and team results.
 
 ## Spatial omics
 
-At BGI Research, I led spatial clinical algorithm work, developed semantic segmentation for ssDNA-stained tissue images, and worked on GMM-based correction of Stereo-seq expression data using spatial and expression information.
+At BGI Research, I led spatial clinical algorithm work, developed attention-enhanced semantic segmentation for ssDNA-stained tissue images, and proposed GMM-based correction combining spatial and expression information. The method is documented in the [Stereo-seq data-bias correction patent application](https://patents.google.com/patent/WO2024000313A1/zh).
 
 ## Scope
 

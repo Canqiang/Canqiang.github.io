@@ -8,7 +8,11 @@
         "http://localhost/projects/",
         "http://localhost/zh/projects/",
         "http://localhost/projects/core-ai/",
-        "http://localhost/zh/projects/core-ai/"
+        "http://localhost/zh/projects/core-ai/",
+        "http://localhost/resume/",
+        "http://localhost/zh/resume/",
+        "http://localhost/resume/algorithms/",
+        "http://localhost/zh/resume/algorithms/"
       ],
       "numberOfRuns": 3,
       "settings": {

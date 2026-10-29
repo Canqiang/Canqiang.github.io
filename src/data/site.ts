@@ -12,8 +12,8 @@ export const identity = {
     zh: '从算法建模到智能体运行时。',
   },
   introduction: {
-    en: 'I work on machine-learning algorithms and AI systems, spanning deep-learning models, RAG, LoRA adaptation, and open-source agent runtimes with tool execution, state recovery, and observability.',
-    zh: '我从事机器学习算法与 AI 系统研发，经历覆盖深度学习建模、RAG、LoRA 模型适配，以及开源智能体运行时的工具执行、状态恢复与可观测性。',
+    en: 'I develop machine-learning models and AI systems, from image segmentation and probabilistic modeling to tool-augmented LLM inference. As a Core-AI contributor, I work on agent execution, model interfaces, state recovery, and observability.',
+    zh: '我从事机器学习建模与 AI 系统研发，经历覆盖图像分割、概率建模和工具增强大模型推理。作为 Core-AI 核心贡献者，我参与智能体执行、模型接口、状态恢复与可观测性研发。',
   },
   photoAlt: {
     en: 'Xander Xu presenting an AI system at a hackathon',

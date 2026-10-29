@@ -1,11 +1,12 @@
 import type { Locale } from './config';
 
-export type RouteKey = 'home' | 'projects' | 'project' | 'resume';
+export type RouteKey = 'home' | 'projects' | 'project' | 'resume' | 'resume-algorithms';
 
 const fixedRoutes: Record<Exclude<RouteKey, 'project'>, Record<Locale, string>> = {
   home: { en: '/', zh: '/zh/' },
   projects: { en: '/projects/', zh: '/zh/projects/' },
   resume: { en: '/resume/', zh: '/zh/resume/' },
+  'resume-algorithms': { en: '/resume/algorithms/', zh: '/zh/resume/algorithms/' },
 };
 
 const projectSlugPattern = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;

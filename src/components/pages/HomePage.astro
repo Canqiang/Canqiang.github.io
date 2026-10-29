@@ -20,13 +20,13 @@ const copy = locale === 'en'
       practice: 'Technical focus', practiceLede: 'Machine-learning algorithms, model integration, and agent runtimes.',
       axis: 'Career axis', axisLede: 'From 2017 to today.', fullExperience: 'View full experience',
       record: 'Evidence index', recordLede: 'Research, open source, competitions, and public education.',
-      contact: 'Contact', contactLede: 'For engineering roles, open-source collaboration, and research.', resume: 'View résumé',
+      contact: 'Contact', contactLede: 'For engineering roles, open-source collaboration, and research.', resume: 'AI systems résumé', algorithmResume: 'Algorithm R&D résumé',
     }
   : {
       practice: '技术方向', practiceLede: '机器学习算法、模型集成与智能体运行时。',
       axis: '生涯轴', axisLede: '从 2017 年至今。', fullExperience: '查看完整经历',
       record: '证据索引', recordLede: '研究、开源、竞赛与知识分享。',
-      contact: '联系', contactLede: '欢迎就工程岗位、开源协作与研究交流联系我。', resume: '查看简历',
+      contact: '联系', contactLede: '欢迎就工程岗位、开源协作与研究交流联系我。', resume: 'AI 系统研发简历', algorithmResume: '算法研发简历',
     };
 ---
 
@@ -80,6 +80,9 @@ const copy = locale === 'en'
   </header>
   <div class="portfolio-contact">
     <ContactLinks {locale} />
-    <a class="portfolio-contact__resume" href={localizedPath(locale, 'resume')}>{copy.resume}</a>
+    <div class="resume-actions">
+      <a class="portfolio-contact__resume" href={localizedPath(locale, 'resume')}>{copy.resume}</a>
+      <a class="portfolio-contact__resume" href={localizedPath(locale, 'resume-algorithms')}>{copy.algorithmResume}</a>
+    </div>
   </div>
 </section>

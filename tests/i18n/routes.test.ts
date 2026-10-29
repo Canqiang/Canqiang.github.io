@@ -7,6 +7,8 @@ describe('localizedPath', () => {
     expect(localizedPath('zh', 'home')).toBe('/zh/');
     expect(localizedPath('en', 'resume')).toBe('/resume/');
     expect(localizedPath('zh', 'resume')).toBe('/zh/resume/');
+    expect(localizedPath('en', 'resume-algorithms')).toBe('/resume/algorithms/');
+    expect(localizedPath('zh', 'resume-algorithms')).toBe('/zh/resume/algorithms/');
   });
 
   it('preserves project context across locales', () => {
@@ -33,6 +35,8 @@ describe('alternateLocalePath', () => {
     ['/', '/zh/'],
     ['/zh/', '/'],
     ['/resume/', '/zh/resume/'],
+    ['/resume/algorithms/', '/zh/resume/algorithms/'],
+    ['/zh/resume/algorithms/', '/resume/algorithms/'],
     ['/zh/projects/core-ai/', '/projects/core-ai/'],
   ])('maps %s to %s', (input, expected) => {
     expect(alternateLocalePath(input)).toBe(expected);

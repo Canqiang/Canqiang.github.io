@@ -60,7 +60,7 @@ function jsonLdBlocks(html, route) {
 }
 
 const htmlFiles = await walk(distRoot);
-assert(htmlFiles.length === 17, `expected 17 built HTML files, found ${htmlFiles.length}`);
+assert(htmlFiles.length === 19, `expected 19 built HTML files, found ${htmlFiles.length}`);
 
 for (const path of htmlFiles) {
   const html = await readFile(path, 'utf8');

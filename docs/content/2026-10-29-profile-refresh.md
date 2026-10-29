@@ -40,3 +40,31 @@ The existing web résumé remains the maintained source; this update does not re
 ## Technical positioning revision validation
 
 The revised copy passed all 69 tests, Astro checks, five bilingual-pair checks, the 17-page build and public-safety checks. Link validation again reported 438 occurrences with zero errors. Browser inspection at 1440px and 390px found no overflow or page errors; home pages contain no Local SEO references, while each résumé and LLM-system page contains one. Both regenerated PDFs remain two pages, with work experience before public achievements; all four rendered pages and the revised social card were inspected. The deployment workflow continues to require Lighthouse CI before publication.
+
+## Role-specific résumés and evidence corrections
+
+The maintained résumé now has two focuses in both languages: AI systems at `/resume/` and `/zh/resume/`, and algorithm R&D at `/resume/algorithms/` and `/zh/resume/algorithms/`. Language switching preserves the selected focus. Both variants share source career dates and public-achievement snapshots, while `src/data/resume.ts` selects role-specific summaries, skills, projects and contribution bullets.
+
+The systems version leads with runtime consistency, cross-pod state recovery and model-protocol work. The algorithm version leads with AIMO inference/answer-selection experiments and Orbit Wars policy experiments, and expands earlier image-modeling, GMM and co-first-author research. Both preserve a one-sentence Local SEO application context. Bilibili is a compact technical-communication entry; interests and the full patent list remain outside the targeted résumé.
+
+The project pages now link attributable Core-AI commits and distinguish inherited competition infrastructure from personal changes. Unsupported AIMO startup and stable-score improvements and NeuroGolf universal-gate/full-record claims have been removed. See `2026-10-29-project-evidence.md` and `2026-10-29-resume-evidence.md` for source boundaries.
+
+### PDF regeneration
+
+Four PDFs are served from `public/resumes/` and copied to the ignored `output/pdf/` folder. After changing résumé content or print styles:
+
+1. Build the site and run its preview server on port 4321.
+2. Run `node scripts/export-resumes.mjs` with Playwright available. For a bundled runtime, set `PLAYWRIGHT_MODULE` to its absolute `playwright/index.mjs` path. Google Chrome is the default browser; `RESUME_BROWSER_CHANNEL` can select another installed Playwright channel.
+3. Render and inspect every PDF page, then rebuild so the public PDF copies are included in `dist/`.
+
+`RESUME_PREVIEW_URL` can select a different preview origin. The export does not run model experiments or alter public-profile metrics.
+
+### Role-specific release validation
+
+- 71 tests passed; Astro reported zero errors, warnings or hints; five bilingual project pairs validated.
+- 19 static pages built; metadata and public-safety validation passed.
+- Lychee checked 514 link occurrences with zero errors.
+- Ten affected pages were checked at 1440px and 390px, with no horizontal overflow or JavaScript page errors. All four résumé pages preserved focus across language switching; the PDF responses matched the corresponding public files byte for byte.
+- All four PDFs contain two A4 pages. All eight rendered pages were inspected; text and clickable project/paper references were checked, and public/local copies matched by SHA-256.
+- Lighthouse passed the existing 95-point thresholds for all four résumé routes. The English mobile navigation labels were shortened to prevent a font-loading wrap from shifting the document. Accessibility, best practices and SEO scored 100 in these local runs.
+- The deployment workflow now includes the four résumé routes in its regular Lighthouse checks (ten URLs, three runs each).
