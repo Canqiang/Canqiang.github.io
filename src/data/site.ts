@@ -42,39 +42,53 @@ export const publicLinks: PublicLink[] = [
 
 export interface FieldCard {
   key: string;
+  project: string;
+  projectLabel: Localized;
   name: Localized;
   scope: Localized;
-  span: string;
+  startYear: number;
+  endYear?: number;
   orgs: Localized;
 }
 
 export const fieldCards: FieldCard[] = [
   {
     key: 'bioinformatics',
+    project: 'research',
+    projectLabel: { en: 'Papers & patents', zh: '论文与专利' },
     name: { en: 'Bioinformatics', zh: '生物信息' },
     scope: { en: 'Graph features, multi-omics data pipelines, cryo-EM object detection.', zh: '图特征建模、多组学数据流程、冷冻电镜目标检测。' },
-    span: '2017 — 2018',
+    startYear: 2017,
+    endYear: 2018,
     orgs: { en: 'Tsinghua IIIS', zh: '清华交叉信息院' },
   },
   {
     key: 'medical-ai',
+    project: 'medical-ai',
+    projectLabel: { en: 'Pathology & spatial omics', zh: '病理影像与空间组学' },
     name: { en: 'Medical AI', zh: '医疗 AI' },
     scope: { en: 'Image segmentation, spatial-omics correction, predictive modeling.', zh: '图像分割、空间组学数据校正、预测建模。' },
-    span: '2018 — 2023',
+    startYear: 2018,
+    endYear: 2023,
     orgs: { en: 'Jiyuan · BGI · Fapon', zh: '极元 / 华大 / 菲鹏' },
   },
   {
     key: 'llm-products',
+    project: 'applied-ai-products',
+    projectLabel: { en: 'RAG & multimodal systems', zh: 'RAG 与多模态应用' },
     name: { en: 'LLM Systems', zh: '大模型系统' },
     scope: { en: 'RAG, LoRA adaptation, multimodal and speech integration.', zh: 'RAG、LoRA 模型适配、多模态与语音集成。' },
-    span: '2023 — 2025',
+    startYear: 2023,
+    endYear: 2025,
     orgs: { en: 'Jiyuan · Qudian', zh: '极元 / 趣店' },
   },
   {
     key: 'agent-systems',
+    project: 'core-ai',
+    projectLabel: { en: 'Core-AI', zh: 'Core-AI' },
     name: { en: 'Agent Systems', zh: '智能体系统' },
     scope: { en: 'Agent runtimes, model interfaces, durable state, observability.', zh: '智能体运行时、模型接口、状态持久化与可观测性。' },
-    span: '2025 — Now',
+    startYear: 2025,
     orgs: { en: 'ChanceTop · Core-AI', zh: '畅拓 / Core-AI' },
   },
 ];

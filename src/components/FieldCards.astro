@@ -8,21 +8,24 @@ interface Props {
 }
 
 const { locale } = Astro.props;
-const resumePath = localizedPath(locale, 'resume');
+// The collection follows career chronology; show current work first on the homepage.
+const recentFirst = fieldCards.toReversed();
+const present = locale === 'en' ? 'present' : '至今';
 ---
 
-<ol class="field-cards">
-  {fieldCards.map((card) => (
+<ul class="field-cards">
+  {recentFirst.map((card) => (
     <li class="field-card" data-field={card.key}>
-      <a class="field-card__link" href={resumePath}>
+      <a class="field-card__link" href={localizedPath(locale, 'project', card.project)}>
         <span class="field-card__icon" aria-hidden="true"></span>
         <span class="field-card__name">{card.name[locale]}</span>
         <span class="field-card__scope">{card.scope[locale]}</span>
-        <span class="field-card__meta mono">{card.span} · {card.orgs[locale]}</span>
+        <span class="field-card__meta">{card.startYear}–{card.endYear ?? present} · {card.orgs[locale]}</span>
+        <span class="field-card__destination">{card.projectLabel[locale]} <span aria-hidden="true">→</span></span>
       </a>
     </li>
   ))}
-</ol>
+</ul>
 
 <style>
   .field-cards {
@@ -35,7 +38,7 @@ const resumePath = localizedPath(locale, 'resume');
   .field-card { min-width: 0; }
   .field-card__link {
     display: grid;
-    grid-template-rows: auto auto 1fr auto;
+    grid-template-rows: auto auto 1fr auto auto;
     align-content: start;
     gap: 0.5rem;
     height: 100%;
@@ -59,7 +62,30 @@ const resumePath = localizedPath(locale, 'resume');
   [data-field="agent-systems"] .field-card__icon { background-position-x: -144px; }
   .field-card__name { font: 400 1.5rem/1.15 var(--font-display); color: var(--text); }
   .field-card__scope { color: var(--text-muted); font-size: 0.95rem; }
-  .field-card__meta { margin-top: 0.5rem; color: var(--text-dim); font-size: 0.75rem; }
+  .field-card__meta { margin-block: 0.35rem; color: var(--text-dim); font-size: 0.8rem; }
+  .field-card__destination {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 0.5rem;
+    padding-top: 0.65rem;
+    border-top: 1px solid var(--rule);
+    color: var(--cyan);
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+  @media (max-width: 37.99rem) {
+    .field-card__link {
+      grid-template: "icon title" auto "icon summary" auto "icon meta" auto "icon destination" auto / 36px minmax(0, 1fr);
+      column-gap: 0.875rem;
+      row-gap: 0.25rem;
+    }
+    .field-card__icon { grid-area: icon; transform: scale(0.75); transform-origin: top left; }
+    .field-card__name { grid-area: title; }
+    .field-card__scope { grid-area: summary; }
+    .field-card__meta { grid-area: meta; }
+    .field-card__destination { grid-area: destination; }
+  }
   @media (min-width: 38rem) { .field-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
   @media (min-width: 56rem) { .field-cards { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
 </style>

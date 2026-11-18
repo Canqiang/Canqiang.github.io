@@ -1,4 +1,5 @@
 ---
+import type { MarkdownHeading } from 'astro';
 import type { CollectionEntry } from 'astro:content';
 import type { Locale } from '../i18n/config';
 import { localizedPath } from '../i18n/routes';
@@ -6,13 +7,25 @@ import BaseLayout from './BaseLayout.astro';
 
 interface Props {
   project: CollectionEntry<'projects'>;
+  headings: MarkdownHeading[];
 }
 
-const { project } = Astro.props;
+const { project, headings } = Astro.props;
 const { data } = project;
 const locale: Locale = data.locale;
 const otherLocale: Locale = locale === 'en' ? 'zh' : 'en';
 const pathname = localizedPath(locale, 'project', data.translationKey);
+// Link to the three in-depth cases. Astro assigns each translated heading its own slug.
+const caseLinks = data.translationKey === 'competitions'
+  ? [
+      { label: 'NeuroGolf', term: 'NeuroGolf' },
+      { label: 'Orbit Wars', term: 'Orbit Wars' },
+      { label: 'AIMO3', term: 'Progress Prize 3' },
+    ].flatMap(({ label, term }) => {
+      const heading = headings.find(({ depth, text }) => depth === 3 && text.includes(term));
+      return heading ? [{ label, heading }] : [];
+    })
+  : [];
 const copy = locale === 'en'
   ? {
       titleSuffix: 'Xander Xu',
@@ -24,6 +37,7 @@ const copy = locale === 'en'
       period: 'Period',
       technology: 'Technology index',
       links: 'Public links',
+      cases: 'Competition writeups',
       navigation: 'Project navigation',
     }
   : {
@@ -36,6 +50,7 @@ const copy = locale === 'en'
       period: '时间',
       technology: '技术索引',
       links: '公开链接',
+      cases: '竞赛复盘',
       navigation: '项目导航',
     };
 ---
@@ -64,6 +79,16 @@ const copy = locale === 'en'
         {data.translationKey === 'core-ai' && <p class="project-detail__status">{copy.status}</p>}
         <h1>{data.title}</h1>
         <p class="project-detail__summary">{data.summary}</p>
+        {caseLinks.length > 0 && (
+          <nav class="case-menu no-print" aria-labelledby="case-menu-title">
+            <p id="case-menu-title">{copy.cases}</p>
+            <ul>
+              {caseLinks.map(({ label, heading }) => (
+                <li><a href={`#${heading.slug}`} title={heading.text}>{label}</a></li>
+              ))}
+            </ul>
+          </nav>
+        )}
       </div>
       <dl class="project-detail__facts">
         <div>
@@ -100,3 +125,45 @@ const copy = locale === 'en'
     </div>
   </article>
 </BaseLayout>
+
+<style>
+  .case-menu {
+    margin-top: 1.35rem;
+  }
+
+  .case-menu p {
+    margin: 0 0 0.45rem;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+  }
+
+  .case-menu ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .case-menu a {
+    display: flex;
+    align-items: center;
+    min-height: 2.75rem;
+    padding: 0.4rem 0.625rem;
+    border: 2px solid var(--rule);
+    box-shadow: 2px 2px var(--shadow);
+    color: var(--cyan);
+    background: var(--bg-raised);
+    font: 400 1rem/1.25 var(--font-display);
+    text-decoration: none;
+  }
+
+  .case-menu a:hover,
+  .case-menu a:focus-visible { border-color: var(--cyan); }
+
+  .case-menu a:active {
+    transform: translate(2px, 2px);
+    box-shadow: none;
+  }
+</style>

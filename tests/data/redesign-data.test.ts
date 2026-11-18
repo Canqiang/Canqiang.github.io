@@ -6,11 +6,16 @@ describe('fieldCards', () => {
     expect(fieldCards.map((c) => c.key)).toEqual([
       'bioinformatics', 'medical-ai', 'llm-products', 'agent-systems',
     ]);
+    expect(fieldCards.map((card) => card.project)).toEqual([
+      'research', 'medical-ai', 'applied-ai-products', 'core-ai',
+    ]);
     for (const card of fieldCards) {
+      expect(card.projectLabel.en && card.projectLabel.zh).toBeTruthy();
       expect(card.name.en && card.name.zh).toBeTruthy();
       expect(card.scope.en && card.scope.zh).toBeTruthy();
       expect(card.orgs.en && card.orgs.zh).toBeTruthy();
-      expect(card.span).toMatch(/\d{4}/);
+      expect(card.startYear).toBeGreaterThan(2000);
+      if (card.endYear) expect(card.endYear).toBeGreaterThanOrEqual(card.startYear);
     }
   });
 });

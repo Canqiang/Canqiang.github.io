@@ -69,10 +69,9 @@ describe('homepage sections', () => {
     expect(home).toContain('<GithubActivity {locale} />');
   });
 
-  it('routes Current Practice cards to Résumé, not Work', async () => {
+  it('links each field to its own project in the current language', async () => {
     const fieldCards = await read('src/components/FieldCards.astro');
-    expect(fieldCards).toContain("localizedPath(locale, 'resume')");
-    expect(fieldCards).not.toContain("localizedPath(locale, 'work')");
+    expect(fieldCards).toContain("localizedPath(locale, 'project', card.project)");
   });
 });
 

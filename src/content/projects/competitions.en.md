@@ -3,7 +3,7 @@ translationKey: competitions
 locale: en
 title: Kaggle & Selected Competitions
 summary: Kaggle Notebooks Master with 6 gold and 4 silver notebook medals, 7 competition medals, and a PrecisionFDA placement.
-period: Selected results
+period: As of 2026-10-29
 role: Notebook author and competition participant
 category: competitions
 technologies: [Program Synthesis, Reinforcement Learning, LLM Reasoning, Medical Imaging]

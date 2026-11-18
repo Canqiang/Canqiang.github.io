@@ -3,7 +3,7 @@ translationKey: competitions
 locale: zh
 title: Kaggle 与精选竞赛
 summary: Kaggle Notebooks Master，获 6 金 4 银代码奖牌、7 枚竞赛奖牌及一项 PrecisionFDA 名次。
-period: 精选成绩
+period: 截至 2026-10-29
 role: Notebook 作者、竞赛参与者
 category: competitions
 technologies: [程序合成, 强化学习, 大模型推理, 医学影像]

@@ -7,9 +7,10 @@ interface Props {
   project: CollectionEntry<'projects'>;
   categoryLabel: string;
   url: string;
+  heading?: 'h2' | 'h3';
 }
 
-const { project, categoryLabel, url } = Astro.props;
+const { project, categoryLabel, url, heading: Heading = 'h3' } = Astro.props;
 const visual = getProjectVisual(project.data.translationKey);
 ---
 
@@ -19,9 +20,9 @@ const visual = getProjectVisual(project.data.translationKey);
       <span>{categoryLabel}</span>
       <span>{project.data.period}</span>
     </div>
-    <h3 class="project-card__title">
+    <Heading class="project-card__title">
       <a class="project-card__link" href={url}>{project.data.title}</a>
-    </h3>
+    </Heading>
     <p class="project-card__summary">{project.data.summary}</p>
   </div>
   {visual && (
@@ -31,7 +32,7 @@ const visual = getProjectVisual(project.data.translationKey);
         src={visual.image}
         alt=""
         widths={[400, 640, 960, 1200]}
-        sizes="(min-width: 48rem) 48vw, calc(100vw - 2rem)"
+        sizes="(min-width: 76rem) 35.5rem, (min-width: 38rem) 48vw, calc(100vw - 2rem)"
         loading="lazy"
         decoding="async"
       />
