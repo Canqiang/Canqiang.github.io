@@ -1,5 +1,5 @@
 ---
-import { profileUpdatedAt, profileUpdatedLabel, publicAchievements } from '../data/profile';
+import { publicAchievements } from '../data/profile';
 import type { Locale } from '../i18n/config';
 
 interface Props { locale: Locale; }
@@ -14,13 +14,12 @@ const { locale } = Astro.props;
         <p class="public-achievements__metric">{item.metric[locale]}</p>
         <p>{item.detail[locale]}</p>
         {item.work && <a class="public-achievements__work" href={item.work.href}>{item.work.label[locale]}</a>}
+        <p class="public-achievements__date">
+          {locale === 'en' ? 'Figures as of ' : '数据截至 '}<time datetime={item.checkedOn}>{item.checkedOn}</time>
+        </p>
       </li>
     ))}
   </ul>
-  <p class="public-achievements__date">
-    {locale === 'en' ? 'Profile and audience figures as of ' : '等级与观众数据截至 '}
-    <time datetime={profileUpdatedAt}>{profileUpdatedLabel[locale]}</time>
-  </p>
 </div>
 
 <style>

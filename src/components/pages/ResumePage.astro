@@ -1,8 +1,8 @@
 ---
 import { publications } from '../../data/achievements';
 import { experience } from '../../data/experience';
-import { education, profileUpdatedLabel, publicAchievements } from '../../data/profile';
-import { resumeVariants, type ResumeVariant } from '../../data/resume';
+import { education, publicAchievements } from '../../data/profile';
+import { resumeUpdatedOn, resumeVariants, type ResumeVariant } from '../../data/resume';
 import { identity, publicLinks } from '../../data/site';
 import type { Locale } from '../../i18n/config';
 import { localizedPath } from '../../i18n/routes';
@@ -12,13 +12,13 @@ const { locale, variant = 'systems' } = Astro.props;
 const resume = resumeVariants[variant];
 const copy = locale === 'en'
   ? {
-      updated: `Updated ${profileUpdatedLabel.en}`, print: 'Print résumé', download: 'Download PDF',
+      updated: 'Updated', asOf: 'Figures as of', print: 'Print résumé', download: 'Download PDF',
       printHint: 'Opens the browser print dialog', variants: 'Résumé focus', skills: 'Technical capabilities',
       experience: 'Recent experience', earlier: 'Earlier algorithm & research experience', projects: 'Selected technical projects',
       education: 'Education', publications: 'Selected research', achievements: 'Competitions & technical communication', publicProfiles: 'Contact & code',
     }
   : {
-      updated: `更新于 ${profileUpdatedLabel.zh}`, print: '打印简历', download: '下载 PDF',
+      updated: '更新于', asOf: '数据截至', print: '打印简历', download: '下载 PDF',
       printHint: '打开浏览器打印对话框', variants: '简历方向', skills: '技术能力',
       experience: '近期工作经历', earlier: '早期算法与研究经历', projects: '精选技术项目',
       education: '教育经历', publications: '代表研究成果', achievements: '竞赛与技术传播', publicProfiles: '联系方式与代码',
@@ -37,7 +37,7 @@ const [kaggle, bilibili] = publicAchievements;
 <div class="resume-page shell">
   <div class="resume-toolbar no-print">
     <div>
-      <p>{copy.updated}</p>
+      <p>{copy.updated} <time datetime={resumeUpdatedOn}>{resumeUpdatedOn}</time></p>
       <nav class="resume-variants" aria-label={copy.variants}>
         {variantKeys.map((key) => <a href={resumePath(key)} aria-current={key === variant ? 'page' : undefined}>{key === 'systems' ? (locale === 'en' ? 'AI systems' : 'AI 系统研发') : (locale === 'en' ? 'Algorithm R&D' : '算法研发')}</a>)}
       </nav>
@@ -102,8 +102,8 @@ const [kaggle, bilibili] = publicAchievements;
 
     <section class="resume-section resume-compact" aria-labelledby="resume-public-achievements-title">
       <h2 id="resume-public-achievements-title">{copy.achievements}</h2>
-      <p><a href={kaggle.href}>{kaggle.title[locale]}</a> · {kaggle.metric[locale]}<br />{kaggle.detail[locale]}</p>
-      <p><a href={bilibili.href}>{bilibili.title[locale]}</a> · {bilibili.metric[locale]} · {locale === 'en' ? 'Animated explanations of AI mechanisms' : '通过动画讲解 AI 技术原理'}<small class="resume-snapshot">{copy.updated}</small></p>
+      <p><a href={kaggle.href}>{kaggle.title[locale]}</a> · {kaggle.metric[locale]}<br />{kaggle.detail[locale]}<small class="resume-snapshot">{copy.asOf} <time datetime={kaggle.checkedOn}>{kaggle.checkedOn}</time></small></p>
+      <p><a href={bilibili.href}>{bilibili.title[locale]}</a> · {bilibili.metric[locale]} · {locale === 'en' ? 'Animated explanations of AI mechanisms' : '通过动画讲解 AI 技术原理'}<small class="resume-snapshot">{copy.asOf} <time datetime={bilibili.checkedOn}>{bilibili.checkedOn}</time></small></p>
     </section>
 
     <section class="resume-section resume-compact" aria-labelledby="resume-education-title">

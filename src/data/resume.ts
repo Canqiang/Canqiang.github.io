@@ -1,6 +1,8 @@
 import type { Locale } from '../i18n/config';
 import type { Localized } from './site';
 
+export const resumeUpdatedOn = '2026-11-18';
+
 export type ResumeVariant = 'systems' | 'algorithms';
 type LocalizedList = Record<Locale, string[]>;
 
