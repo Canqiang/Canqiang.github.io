@@ -1,7 +1,7 @@
 ---
 import type { Locale } from '../i18n/config';
 import { localeMeta } from '../i18n/config';
-import { alternateLocalePath, localizedPath, type RouteKey } from '../i18n/routes';
+import { alternateLocalePath, localizedPath } from '../i18n/routes';
 import ThemeToggle from './ThemeToggle.astro';
 
 interface Props {
@@ -12,24 +12,26 @@ interface Props {
 
 const { locale, pathname, hasLocalePair = true } = Astro.props;
 const copy = locale === 'en'
-  ? { projects: '~/projects', resume: '~/resume', menu: 'Menu', switchLabel: '切换至中文' }
-  : { projects: '~/projects', resume: '~/resume', menu: '菜单', switchLabel: 'Switch to English' };
-const navigation: Array<{ key: Exclude<RouteKey, 'home' | 'project'>; label: string }> = [
+  ? { projects: 'Projects', resume: 'Résumé', menu: 'Menu', switchLabel: '切换至中文' }
+  : { projects: '项目', resume: '简历', menu: '菜单', switchLabel: 'Switch to English' };
+const navigation = [
   { key: 'projects', label: copy.projects },
   { key: 'resume', label: copy.resume },
-];
+] as const;
 const normalizedPath = pathname.endsWith('/') ? pathname : `${pathname}/`;
-const isCurrent = (key: (typeof navigation)[number]['key']) => {
+const activeState = (key: (typeof navigation)[number]['key']) => {
   const target = localizedPath(locale, key);
-  return normalizedPath === target || normalizedPath.startsWith(target);
+  if (normalizedPath === target) return 'page';
+  return normalizedPath.startsWith(target) ? 'location' : undefined;
 };
 const destinationLocale: Locale = locale === 'en' ? 'zh' : 'en';
 ---
 
 <header class="site-header">
   <div class="site-header__inner shell">
-    <a class="site-header__identity" href={localizedPath(locale, 'home')} aria-label={`${locale === 'en' ? 'Xander Xu' : '许灿强'} — ${locale === 'en' ? 'Home' : '首页'}`}>
-      Xander <span class="site-header__identity-mark">/</span> Canqiang
+    <a class="site-header__identity" href={localizedPath(locale, 'home')} aria-label={locale === 'en' ? 'Xander Xu — Home' : '许灿强 — 首页'} aria-current={normalizedPath === localizedPath(locale, 'home') ? 'page' : undefined}>
+      <span class="site-header__gamepad" aria-hidden="true"></span>
+      <span>{locale === 'en' ? 'Xander Xu' : '许灿强'}</span>
     </a>
 
     <button
@@ -41,13 +43,13 @@ const destinationLocale: Locale = locale === 'en' ? 'zh' : 'en';
     >
       {copy.menu}
     </button>
-    <noscript><style>.site-header__menu-button { display: none !important; } .site-header__nav[hidden] { display: block !important; }</style></noscript>
+    <noscript><style is:inline>.site-header__nav-toggle, .site-header__menu-button { display: none !important; } .site-header__nav[hidden] { display: block !important; }</style></noscript>
 
     <nav id="site-navigation" class="site-header__nav" aria-label={locale === 'en' ? 'Primary navigation' : '主导航'} data-site-navigation hidden>
       <ul class="site-header__nav-list">
         {navigation.map(({ key, label }) => (
           <li>
-            <a class="site-header__nav-link" href={localizedPath(locale, key)} aria-current={isCurrent(key) ? 'page' : undefined}>
+            <a class="site-header__nav-link" href={localizedPath(locale, key)} aria-current={activeState(key)}>
               {label}
             </a>
           </li>

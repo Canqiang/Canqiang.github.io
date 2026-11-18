@@ -16,13 +16,14 @@ const ordered = expectedOrder.map((key) => {
   return group;
 });
 const resumePath = localizedPath(locale, 'resume');
-// Each group routes to wherever it is actually shown in full — Résumé has
-// its own publications/patents sections with stable heading ids; open
-// source and competitions have their own project detail pages.
-const destination = (group: AchievementGroup) =>
-  group.key === 'openSource' ? localizedPath(locale, 'project', 'core-ai')
-  : group.key === 'competitions' ? localizedPath(locale, 'project', 'competitions')
-  : `${resumePath}#resume-${group.key}-title`;
+const destination = (group: AchievementGroup) => {
+  switch (group.key) {
+    case 'openSource': return localizedPath(locale, 'project', 'core-ai');
+    case 'competitions': return localizedPath(locale, 'project', 'competitions');
+    case 'patents': return localizedPath(locale, 'project', 'research');
+    case 'publications': return `${resumePath}#resume-publications-title`;
+  }
+};
 // Headline figure per group: a count, or a signature value for singletons.
 // Competitions carried a hardcoded rank while it held two entries; now that it
 // is a multi-entry group it counts like publications and patents, and the

@@ -1,4 +1,5 @@
 ---
+import workstation from '../assets/nes-workstation.png';
 import { identity } from '../data/site';
 import type { Locale } from '../i18n/config';
 import { localizedPath } from '../i18n/routes';
@@ -9,91 +10,181 @@ interface Props {
 
 const { locale } = Astro.props;
 const copy = locale === 'en'
-  ? { work: 'View selected work', resume: 'View résumé' }
-  : { work: '查看精选工作', resume: '查看简历' };
-const whoami = locale === 'en'
-  ? `${identity.name} — ${identity.role.en} — est. 2017`
-  : `${identity.chineseName} / ${identity.name} — ${identity.role.zh} — est. 2017`;
-const showEnglishSubline = locale === 'zh';
+  ? {
+      name: identity.name, projects: 'View projects', competitions: 'Competitions',
+      resumes: 'Résumés', systems: 'AI systems', algorithms: 'Algorithms',
+    }
+  : {
+      name: `${identity.chineseName} / ${identity.name}`, projects: '查看项目', competitions: '竞赛记录',
+      resumes: '简历', systems: 'AI 系统研发', algorithms: '算法研发',
+    };
 ---
 
-<section class="portfolio-hero shell" aria-labelledby="hero-title">
-  <div class="portfolio-hero__terminal" data-hero-terminal>
-    <div class="portfolio-hero__titlebar" aria-hidden="true">
-      <span class="portfolio-hero__dot portfolio-hero__dot--red"></span>
-      <span class="portfolio-hero__dot portfolio-hero__dot--yellow"></span>
-      <span class="portfolio-hero__dot portfolio-hero__dot--green"></span>
-      <span class="portfolio-hero__titlebar-label mono">xander@canqiang:~ — 80×24</span>
+<section class="nes-hero shell" aria-labelledby="hero-title">
+  <div class="nes-hero__copy">
+    <p class="nes-hero__identity">
+      <span class="nes-hero__beacon" aria-hidden="true"></span>
+      {copy.name} <span class="nes-hero__divider" aria-hidden="true">/</span> {identity.role[locale]}
+    </p>
+    <h1 class="nes-hero__title" id="hero-title">{identity.headline[locale]}</h1>
+    <p class="nes-hero__intro">{identity.introduction[locale]}</p>
+    <div class="nes-hero__actions">
+      <a class="nes-button nes-button--primary" href={localizedPath(locale, 'projects')}>
+        <span class="nes-button__cursor" aria-hidden="true"></span>{copy.projects}
+      </a>
+      <a class="nes-button" href={localizedPath(locale, 'project', 'competitions')}>{copy.competitions}</a>
     </div>
-
-    <div class="portfolio-hero__body">
-      <p class="portfolio-hero__line mono" data-hero-line><span class="portfolio-hero__prompt">$</span> <span data-hero-typed>whoami</span></p>
-      <p class="portfolio-hero__stamp mono" data-hero-output>{whoami}</p>
-
-      <p class="portfolio-hero__line mono" data-hero-line><span class="portfolio-hero__prompt">$</span> <span data-hero-typed>cat mission.md</span></p>
-      <div data-hero-output>
-        <h1 id="hero-title" class="portfolio-hero__title">{identity.headline[locale]}</h1>
-        {showEnglishSubline && <p class="portfolio-hero__subline">{identity.headline.en}</p>}
-        <p class="portfolio-hero__summary">{identity.introduction[locale]}</p>
-      </div>
-
-      <p class="portfolio-hero__line mono" data-hero-line><span class="portfolio-hero__prompt">$</span> <span data-hero-typed>ls ./</span></p>
-      <div class="portfolio-hero__actions no-print" data-hero-output>
-        <a class="portfolio-hero__action portfolio-hero__action--primary" href="#current-practice">
-          <span class="portfolio-hero__action-mode mono">drwxr-xr-x</span> {copy.work}
-        </a>
-        <a class="portfolio-hero__action" href={localizedPath(locale, 'resume')}>
-          <span class="portfolio-hero__action-mode mono">-rw-r--r--</span> {copy.resume}
-        </a>
-      </div>
-    </div>
+    <p class="nes-hero__resumes">
+      <span>{copy.resumes}</span>
+      <a href={localizedPath(locale, 'resume')}>{copy.systems}</a>
+      <a href={localizedPath(locale, 'resume-algorithms')}>{copy.algorithms}</a>
+    </p>
+  </div>
+  <div class="nes-hero__art" aria-hidden="true">
+    <img
+      src={workstation.src}
+      width={workstation.width}
+      height={workstation.height}
+      alt=""
+      decoding="async"
+    />
   </div>
 </section>
 
-<script>
-  const terminal = document.querySelector('[data-hero-terminal]');
-  const lines = terminal ? Array.from(terminal.querySelectorAll<HTMLElement>('[data-hero-line]')) : [];
-  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const alreadyPlayed = sessionStorage.getItem('hero-terminal-played') === '1';
-
-  if (terminal instanceof HTMLElement && lines.length > 0 && !reduceMotion && !alreadyPlayed) {
-    terminal.dataset.state = 'typing';
-    const typedSpans = lines.map((line) => line.querySelector('[data-hero-typed]'));
-    const fullTexts = typedSpans.map((span) => span?.textContent ?? '');
-    typedSpans.forEach((span) => {
-      if (span) span.textContent = '';
-    });
-
-    let lineIndex = 0;
-    let charIndex = 0;
-
-    const typeNextChar = () => {
-      const line = lines[lineIndex];
-      const span = typedSpans[lineIndex];
-      const text = fullTexts[lineIndex];
-      line.dataset.heroActive = 'true';
-
-      if (span && charIndex < text.length) {
-        span.textContent = text.slice(0, charIndex + 1);
-        charIndex += 1;
-        window.setTimeout(typeNextChar, 28);
-        return;
-      }
-
-      delete line.dataset.heroActive;
-      const output = line.nextElementSibling;
-      if (output instanceof HTMLElement) output.dataset.heroRevealed = 'true';
-      lineIndex += 1;
-      charIndex = 0;
-
-      if (lineIndex < lines.length) {
-        window.setTimeout(typeNextChar, 260);
-      } else if (terminal instanceof HTMLElement) {
-        terminal.dataset.state = 'settled';
-        sessionStorage.setItem('hero-terminal-played', '1');
-      }
-    };
-
-    window.setTimeout(typeNextChar, 260);
+<style>
+  .nes-hero {
+    display: grid;
+    align-items: center;
+    gap: clamp(2rem, 5vw, 4.5rem);
+    padding-block: clamp(2.5rem, 6vw, 5.5rem);
   }
-</script>
+
+  .nes-hero__copy { min-width: 0; }
+
+  .nes-hero__identity {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.55rem;
+    margin: 0 0 1.4rem;
+    color: var(--cyan);
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+
+  .nes-hero__beacon {
+    width: 0.75rem;
+    height: 0.75rem;
+    background: currentColor;
+    clip-path: polygon(25% 0, 75% 0, 75% 25%, 100% 25%, 100% 75%, 75% 75%, 75% 100%, 25% 100%, 25% 75%, 0 75%, 0 25%, 25% 25%);
+  }
+
+  .nes-hero__divider { color: var(--text-dim); }
+
+  .nes-hero__title {
+    margin: 0;
+    max-width: 100%;
+    color: var(--text);
+    font-family: var(--font-display);
+    font-size: clamp(2.125rem, 4.6vw, 3.75rem);
+    font-weight: 400;
+    line-height: 1.055;
+    white-space: pre-line;
+  }
+
+  :global(html[lang^='zh']) .nes-hero__title {
+    line-height: 1.22;
+  }
+
+  .nes-hero__intro {
+    max-width: 58ch;
+    margin: 1.2rem 0 0;
+    color: var(--text-muted);
+    font-size: clamp(1rem, 1.25vw, 1.12rem);
+    line-height: 1.65;
+  }
+
+  .nes-hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    margin-block: 1.65rem 1rem;
+  }
+
+  .nes-button {
+    display: inline-flex;
+    min-height: 2.75rem;
+    gap: 0.65rem;
+    align-items: center;
+    justify-content: center;
+    padding: 0.45rem 1rem;
+    border: 2px solid var(--text);
+    background: var(--bg-raised);
+    box-shadow: 3px 3px 0 var(--rule);
+    color: var(--text);
+    font-family: var(--font-display);
+    font-size: 1.125rem;
+    line-height: 1.25;
+    text-decoration: none;
+  }
+
+  .nes-button--primary {
+    border-color: var(--accent);
+    color: var(--bg);
+    background: var(--accent);
+  }
+
+  .nes-button:hover { transform: translate(-1px, -1px); box-shadow: 4px 4px 0 var(--rule); }
+  .nes-button:active { transform: translate(2px, 2px); box-shadow: none; }
+
+  .nes-button__cursor {
+    width: 0.55rem;
+    height: 0.65rem;
+    background: currentColor;
+    clip-path: polygon(0 0, 33% 0, 33% 20%, 67% 20%, 67% 40%, 100% 40%, 100% 60%, 67% 60%, 67% 80%, 33% 80%, 33% 100%, 0 100%);
+  }
+
+  .nes-hero__resumes {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.25rem 0.85rem;
+    margin: 0;
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+  }
+
+  .nes-hero__resumes a { color: var(--text); }
+  .nes-hero__resumes a:hover { color: var(--accent); }
+
+  .nes-hero__art {
+    position: relative;
+    width: 100%;
+    max-width: 33rem;
+    justify-self: center;
+    padding: 5px;
+    border: 2px solid var(--text-muted);
+    background: #11172d;
+    box-shadow: 5px 5px 0 var(--rule);
+  }
+
+  .nes-hero__art img {
+    width: 100%;
+    height: auto;
+    image-rendering: pixelated;
+  }
+
+  @media (min-width: 55rem) {
+    .nes-hero {
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+    }
+    .nes-hero__art { justify-self: end; }
+  }
+
+  @media print {
+    .nes-hero { display: block; padding-block: 1rem; }
+    .nes-hero__art, .nes-hero__actions, .nes-hero__resumes { display: none; }
+  }
+</style>

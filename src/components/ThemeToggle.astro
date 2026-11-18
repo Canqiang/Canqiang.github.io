@@ -6,22 +6,24 @@ interface Props {
 }
 
 const { locale } = Astro.props;
-const label = locale === 'en' ? 'Toggle color theme' : '切换配色主题';
+const label = locale === 'en' ? 'Light palette' : '浅色配色';
 ---
 
-<button class="theme-toggle no-print" type="button" data-theme-toggle aria-label={label}>
-  <span class="theme-toggle__glyph" aria-hidden="true">◐</span>
+<button class="theme-toggle no-print" type="button" data-theme-toggle aria-label={label} title={label} aria-pressed="false">
+  <span class="theme-toggle__glyph" aria-hidden="true"></span>
 </button>
 
 <script>
   const button = document.querySelector('[data-theme-toggle]');
   if (button instanceof HTMLButtonElement) {
+    const root = document.documentElement;
+    button.setAttribute('aria-pressed', String(root.dataset.theme === 'light'));
     button.addEventListener('click', () => {
-      const root = document.documentElement;
       const next = root.dataset.theme === 'light' ? 'dark' : 'light';
       root.dataset.theme = next;
       const meta = document.getElementById('theme-color-meta');
-      if (meta) meta.setAttribute('content', next === 'light' ? '#F6F1E7' : '#0C0E12');
+      if (meta instanceof HTMLMetaElement) meta.content = meta.dataset[next] ?? meta.content;
+      button.setAttribute('aria-pressed', String(next === 'light'));
       try { localStorage.setItem('theme', next); } catch (e) { /* storage unavailable */ }
     });
   }
@@ -29,19 +31,25 @@ const label = locale === 'en' ? 'Toggle color theme' : '切换配色主题';
 
 <style>
   .theme-toggle {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 2.75rem;
-    min-height: 2.75rem;
+    display: inline-grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
     padding: 0;
-    border: 1px solid var(--rule);
-    border-radius: 0;
-    color: var(--text-muted);
-    background: transparent;
-    font-size: 1rem;
-    line-height: 1;
+    border: 2px solid var(--rule);
+    color: var(--accent);
+    background: var(--bg-raised);
     cursor: pointer;
   }
-  .theme-toggle:hover { color: var(--accent); border-color: var(--accent); }
+
+  .theme-toggle__glyph {
+    width: 1rem;
+    height: 1rem;
+    border: 2px solid currentColor;
+    background: linear-gradient(to right, currentColor 50%, transparent 50%);
+    clip-path: polygon(0 25%, 12.5% 25%, 12.5% 12.5%, 25% 12.5%, 25% 0, 75% 0, 75% 12.5%, 87.5% 12.5%, 87.5% 25%, 100% 25%, 100% 75%, 87.5% 75%, 87.5% 87.5%, 75% 87.5%, 75% 100%, 25% 100%, 25% 87.5%, 12.5% 87.5%, 12.5% 75%, 0 75%);
+  }
+
+  .theme-toggle[aria-pressed='true'] .theme-toggle__glyph { transform: rotate(180deg); }
+  .theme-toggle:hover { border-color: var(--accent); }
 </style>

@@ -8,10 +8,10 @@ const read = (p: string) => readFile(`${root}/${p}`, 'utf8');
 describe('two-theme token system', () => {
   it('defines dark defaults and a light override with the approved hexes', async () => {
     const css = await read('src/styles/global.css');
-    expect(css).toMatch(/:root\s*\{[^}]*--bg:\s*#0C0E12/i);
-    expect(css).toMatch(/--accent:\s*#D6A350/i);
-    expect(css).toMatch(/:root\[data-theme="light"\]\s*\{[^}]*--bg:\s*#F6F1E7/i);
-    expect(css).toMatch(/:root\[data-theme="light"\][^{]*\{[^}]*--accent:\s*#8A5A12/i);
+    expect(css).toMatch(/:root\s*\{[^}]*--bg:\s*#151728/i);
+    expect(css).toMatch(/--accent:\s*#ffd36c/i);
+    expect(css).toMatch(/:root\[data-theme="light"\]\s*\{[^}]*--bg:\s*#f7f1dc/i);
+    expect(css).toMatch(/:root\[data-theme="light"\][^{]*\{[^}]*--accent:\s*#835000/i);
   });
 
   it('drops every legacy token name', async () => {
@@ -40,7 +40,7 @@ describe('no-FOUC boot', () => {
 
   it('emits a theme-color meta matching the dark default and updates it via JS', async () => {
     const layout = await read('src/layouts/BaseLayout.astro');
-    expect(layout).toMatch(/<meta id="theme-color-meta" name="theme-color" content="#0C0E12"/i);
+    expect(layout).toMatch(/<meta id="theme-color-meta" name="theme-color" content="#151728"/i);
     expect(layout).toContain("getElementById('theme-color-meta')");
   });
 });

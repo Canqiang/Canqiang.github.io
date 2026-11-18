@@ -8,8 +8,8 @@ export const identity = {
   chineseName: '许灿强',
   role: { en: 'AI Engineer', zh: 'AI 研发工程师' },
   headline: {
-    en: 'From algorithms to agent runtimes.',
-    zh: '从算法建模到智能体运行时。',
+    en: 'From algorithms\nto agent runtimes.',
+    zh: '从算法建模\n到智能体运行时。',
   },
   introduction: {
     en: 'I develop machine-learning models and AI systems, from image segmentation and probabilistic modeling to tool-augmented LLM inference. As a Core-AI contributor, I work on agent execution, model interfaces, state recovery, and observability.',

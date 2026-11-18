@@ -6,17 +6,17 @@ const root = fileURLToPath(new URL('../..', import.meta.url));
 const read = (p: string) => readFile(`${root}/${p}`, 'utf8');
 
 describe('persistent nav', () => {
-  it('links only to Projects and Résumé, path-styled, not Work or About', async () => {
+  it('links to the localized project index and résumé', async () => {
     const header = await read('src/components/Header.astro');
     expect(header).toContain("key: 'projects'");
     expect(header).toContain("key: 'resume'");
     expect(header).not.toContain("key: 'work'");
     expect(header).not.toContain("key: 'about'");
-    expect(header).toContain('~/projects');
-    expect(header).toContain('~/resume');
+    expect(header).toContain("projects: 'Projects', resume: 'Résumé'");
+    expect(header).toContain("projects: '项目', resume: '简历'");
   });
 
-  it('does not uppercase nav labels, so the path-prefix style renders lowercase', async () => {
+  it('preserves the capitalization of localized nav labels', async () => {
     const css = await read('src/styles/global.css');
     const navLinkRule = css.match(/\.site-header__nav-link\s*\{[^}]*\}/);
     expect(navLinkRule).not.toBeNull();

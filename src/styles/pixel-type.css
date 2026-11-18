@@ -1,0 +1,18 @@
+/* Subsets of Fusion Pixel 12px proportional. Full notices: /fonts/portfolio-pixel-LICENSE.txt.
+   Keep pixel strokes at their original weight across headings and controls. */
+@font-face {
+  font-family: 'Portfolio Pixel';
+  src: url('/fonts/portfolio-pixel-latin.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 400 900;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Portfolio Pixel';
+  src: url('/fonts/portfolio-pixel-hans.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 400 900;
+  font-display: swap;
+  unicode-range: U+2E80-9FFF, U+F900-FAFF, U+FE30-FE4F, U+FF00-FFEF, U+20000-323AF;
+}

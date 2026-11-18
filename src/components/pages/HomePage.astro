@@ -18,14 +18,14 @@ const { locale } = Astro.props;
 const copy = locale === 'en'
   ? {
       practice: 'Technical focus', practiceLede: 'Machine-learning algorithms, model integration, and agent runtimes.',
-      axis: 'Career axis', axisLede: 'From 2017 to today.', fullExperience: 'View full experience',
-      record: 'Evidence index', recordLede: 'Research, open source, competitions, and public education.',
+      axis: 'Experience', axisLede: 'From 2017 to today.', fullExperience: 'View full experience',
+      record: 'Public work', recordLede: 'Research, open source, competitions, and public education.',
       contact: 'Contact', contactLede: 'For engineering roles, open-source collaboration, and research.', resume: 'AI systems résumé', algorithmResume: 'Algorithm R&D résumé',
     }
   : {
       practice: '技术方向', practiceLede: '机器学习算法、模型集成与智能体运行时。',
-      axis: '生涯轴', axisLede: '从 2017 年至今。', fullExperience: '查看完整经历',
-      record: '证据索引', recordLede: '研究、开源、竞赛与知识分享。',
+      axis: '工作经历', axisLede: '从 2017 年至今。', fullExperience: '查看完整经历',
+      record: '公开成果', recordLede: '研究、开源、竞赛与知识分享。',
       contact: '联系', contactLede: '欢迎就工程岗位、开源协作与研究交流联系我。', resume: 'AI 系统研发简历', algorithmResume: '算法研发简历',
     };
 ---
@@ -35,7 +35,6 @@ const copy = locale === 'en'
 <section id="current-practice" class="portfolio-section shell" aria-labelledby="practice-title">
   <header class="portfolio-section__header">
     <div>
-      <p class="portfolio-section__index mono">01 /</p>
       <h2 id="practice-title" class="portfolio-section__title">{copy.practice}</h2>
     </div>
     <p class="portfolio-section__lede">{copy.practiceLede}</p>
@@ -46,7 +45,6 @@ const copy = locale === 'en'
 <section class="portfolio-section shell" aria-labelledby="axis-title">
   <header class="portfolio-section__header">
     <div>
-      <p class="portfolio-section__index mono">02 /</p>
       <h2 id="axis-title" class="portfolio-section__title">{copy.axis}</h2>
     </div>
     <div>
@@ -60,7 +58,6 @@ const copy = locale === 'en'
 <section class="portfolio-section shell" aria-labelledby="record-title">
   <header class="portfolio-section__header">
     <div>
-      <p class="portfolio-section__index mono">03 /</p>
       <h2 id="record-title" class="portfolio-section__title">{copy.record}</h2>
     </div>
     <p class="portfolio-section__lede">{copy.recordLede}</p>
@@ -73,7 +70,6 @@ const copy = locale === 'en'
 <section class="portfolio-section shell" aria-labelledby="contact-title">
   <header class="portfolio-section__header">
     <div>
-      <p class="portfolio-section__index mono">04 /</p>
       <h2 id="contact-title" class="portfolio-section__title">{copy.contact}</h2>
     </div>
     <p class="portfolio-section__lede">{copy.contactLede}</p>

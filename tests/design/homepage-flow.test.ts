@@ -5,26 +5,20 @@ import { describe, expect, it } from 'vitest';
 const root = fileURLToPath(new URL('../..', import.meta.url));
 const read = (p: string) => readFile(`${root}/${p}`, 'utf8');
 
-describe('terminal hero', () => {
-  it('is text-only, carries the terminal shell markers, and has real CTAs with or without JS', async () => {
+describe('NES homepage', () => {
+  it('shows localized identity and pixel artwork on the first render', async () => {
     const hero = await read('src/components/Hero.astro');
-    expect(hero).not.toContain('astro:assets');
-    expect(hero).not.toContain('speakingPhoto');
-    expect(hero).not.toContain('LOG 00');
-    expect(hero).toContain('portfolio-hero__stamp');
-    expect(hero).toContain('data-hero-terminal');
-    expect(hero).toContain('data-hero-line');
-    expect(hero).toContain('data-hero-typed');
-    // The two CTAs must be real anchors in the server-rendered markup —
-    // not something only the typing script injects.
-    expect(hero).toMatch(/<a[^>]+href="#current-practice"/);
-    expect(hero).toMatch(/<a[^>]+href=\{localizedPath\(locale, 'resume'\)\}/);
+    expect(hero).toContain('identity.headline[locale]');
+    expect(hero).toContain('nes-workstation.png');
+    expect(hero).not.toContain('data-hero-terminal');
   });
 
-  it('skips the typing animation under reduced motion and after it has already played once', async () => {
+  it('links from the title screen to portfolio content in the selected language', async () => {
     const hero = await read('src/components/Hero.astro');
-    expect(hero).toContain('prefers-reduced-motion');
-    expect(hero).toContain('sessionStorage');
+    for (const route of ["'projects'", "'competitions'", "'resume'", "'resume-algorithms'"]) {
+      expect(hero).toContain(route);
+    }
+    expect(hero).toMatch(/<a\s[^>]*href=/);
   });
 });
 
@@ -49,16 +43,14 @@ describe('evidence cells', () => {
     expect(ai).toContain('achievement-cell__count');
     expect(ai).toContain("localizedPath(locale, 'resume')");
     expect(ai).not.toContain("localizedPath(locale, 'about')");
-    // Pin the exact key-to-destination pairing, not just that both strings
-    // exist somewhere — a swapped ternary (openSource <-> competitions)
-    // would still contain both strings but route to the wrong page.
-    expect(ai).toMatch(/group\.key === 'openSource'\s*\?\s*localizedPath\(locale, 'project', 'core-ai'\)/);
-    expect(ai).toMatch(/group\.key === 'competitions'\s*\?\s*localizedPath\(locale, 'project', 'competitions'\)/);
-    expect(ai).toMatch(/resume-\$\{group\.key\}-title/);
+    expect(ai).toMatch(/case 'openSource': return localizedPath\(locale, 'project', 'core-ai'\)/);
+    expect(ai).toMatch(/case 'competitions': return localizedPath\(locale, 'project', 'competitions'\)/);
+    expect(ai).toMatch(/case 'patents': return localizedPath\(locale, 'project', 'research'\)/);
+    expect(ai).toContain('#resume-publications-title');
   });
 });
 
-describe('homepage numbered flow', () => {
+describe('homepage sections', () => {
   it('wires the new sections and drops the retired ones', async () => {
     const home = await read('src/components/pages/HomePage.astro');
     for (const used of ['Hero', 'FieldCards', 'CareerAxis', 'AchievementIndex', 'ContactLinks']) {
@@ -68,7 +60,7 @@ describe('homepage numbered flow', () => {
       expect(home, `should not import ${gone}`).not.toContain(gone);
     }
     expect(home).toContain('id="current-practice"');
-    expect(home).toContain('portfolio-section__index');
+    expect(home).toContain('aria-labelledby="record-title"');
   });
 
   it('renders GitHub activity inside the evidence index, wired for both locales', async () => {
