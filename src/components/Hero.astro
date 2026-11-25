@@ -11,12 +11,12 @@ interface Props {
 const { locale } = Astro.props;
 const copy = locale === 'en'
   ? {
-      name: identity.name, projects: 'View projects', competitions: 'Competitions',
-      resumes: 'Résumés', systems: 'AI systems', algorithms: 'Algorithms',
+      name: identity.name, projects: 'View projects', systemsButton: 'AI Systems Résumé',
+      more: 'Also', algorithms: 'Reasoning, Eval & ML résumé', competitions: 'Competitions',
     }
   : {
-      name: `${identity.chineseName} / ${identity.name}`, projects: '查看项目', competitions: '竞赛记录',
-      resumes: '简历', systems: 'AI 系统研发', algorithms: '算法研发',
+      name: `${identity.chineseName} / ${identity.name}`, projects: '查看项目', systemsButton: 'AI 系统简历',
+      more: '更多', algorithms: '推理、评测与算法简历', competitions: '竞赛记录',
     };
 ---
 
@@ -32,12 +32,12 @@ const copy = locale === 'en'
       <a class="nes-button nes-button--primary" href={localizedPath(locale, 'projects')}>
         <span class="nes-button__cursor" aria-hidden="true"></span>{copy.projects}
       </a>
-      <a class="nes-button" href={localizedPath(locale, 'project', 'competitions')}>{copy.competitions}</a>
+      <a class="nes-button" href={localizedPath(locale, 'resume')}>{copy.systemsButton}</a>
     </div>
     <p class="nes-hero__resumes">
-      <span>{copy.resumes}</span>
-      <a href={localizedPath(locale, 'resume')}>{copy.systems}</a>
+      <span>{copy.more}</span>
       <a href={localizedPath(locale, 'resume-algorithms')}>{copy.algorithms}</a>
+      <a href={localizedPath(locale, 'project', 'competitions')}>{copy.competitions}</a>
     </p>
   </div>
   <div class="nes-hero__art" aria-hidden="true">

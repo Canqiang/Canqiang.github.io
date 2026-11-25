@@ -6,7 +6,7 @@ summary: 团队共同建设的开源智能体框架，涵盖模型与工具执�
 period: 2025 — 至今
 role: 核心贡献者
 category: open-source
-technologies: [Java, TypeScript, MCP, OpenTelemetry, MongoDB, Redis, Kubernetes]
+technologies: [Java, TypeScript, MCP, OpenTelemetry, MongoDB, Redis, PostgreSQL, Kubernetes]
 links:
   - label: GitHub
     href: https://github.com/chancetop-com/core-ai
@@ -25,6 +25,10 @@ Core-AI 是团队共同建设的开源智能体框架，提供 Java 执行引擎
 ### 跨实例运行状态与流式恢复
 
 在多 Pod 部署中，会话状态查询可能落到没有本地 SSE 连接的实例，导致仍在执行的轮次被误判为结束，前端随后重载历史并清空正在显示的流式内容。我[加入基于 Redis 的轮次存活注册、心跳与 TTL](https://github.com/chancetop-com/core-ai/commit/51e811e5a8bca04734317684944ea32aa6967f95)，将共享执行状态与本地连接状态分开；Redis 不可用时返回未知状态并保留本地判断。该提交包含服务端状态解析与前端流恢复的回归用例。
+
+### 跨 Pod RPC 会话归属修复
+
+在多副本部署下，RPC 客户端若未注入会话归属注册表，跨 Pod 转发到非持有实例的请求会失败。我[在 `MessagingInfrastructureModule` 中为 `RpcClient` 注入必需的 `SessionOwnershipRegistry`](https://github.com/chancetop-com/core-ai/commit/f58f3d06cd5a14f9c3f179aabe3691829cccf6b2)，并补充基于真实模块装配的回归测试以覆盖纯 Mock 构造器漏检的问题。
 
 ### 并发持久化的一致性
 

@@ -6,7 +6,7 @@ summary: Agent runtime infrastructure for model and tool execution, durable stat
 period: 2025 — Present
 role: Core contributor
 category: open-source
-technologies: [Java, TypeScript, MCP, OpenTelemetry, MongoDB, Redis, Kubernetes]
+technologies: [Java, TypeScript, MCP, OpenTelemetry, MongoDB, Redis, PostgreSQL, Kubernetes]
 links:
   - label: GitHub
     href: https://github.com/chancetop-com/core-ai
@@ -25,6 +25,10 @@ Core-AI is a team-built open-source agent framework with a Java execution engine
 ### Cross-instance execution state and stream recovery
 
 In a multi-pod deployment, a session-status request can reach an instance without the local SSE connection. A running turn could then appear finished, causing the frontend to reload history and clear its in-progress output. I [added Redis-backed turn liveness with heartbeats and TTLs](https://github.com/chancetop-com/core-ai/commit/51e811e5a8bca04734317684944ea32aa6967f95), separating shared execution state from local connection state. When Redis is unavailable, the resolver returns an unknown liveness state and retains the local status. The commit includes regression cases for server-side status resolution and frontend stream recovery.
+
+### Cross-pod RPC session ownership
+
+In multi-replica deployments, cross-pod RPC forwarding failed when the RPC client was constructed without a session-ownership registry. I [wired `SessionOwnershipRegistry` into `MessagingInfrastructureModule` and required it on `RpcClient`](https://github.com/chancetop-com/core-ai/commit/f58f3d06cd5a14f9c3f179aabe3691829cccf6b2), adding module-wiring regression tests that exercise real ownership resolution rather than mocked constructors.
 
 ### Consistent concurrent persistence
 

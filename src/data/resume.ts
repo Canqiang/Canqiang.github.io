@@ -1,7 +1,7 @@
 import type { Locale } from '../i18n/config';
 import type { Localized } from './site';
 
-export const resumeUpdatedOn = '2026-11-18';
+export const resumeUpdatedOn = '2026-11-25';
 
 export type ResumeVariant = 'systems' | 'algorithms';
 type LocalizedList = Record<Locale, string[]>;
@@ -41,18 +41,30 @@ const earlyExperience: Record<number, LocalizedList> = {
     zh: ['负责基于全切片病理图像的复发风险分层算法设计。'],
   },
   4: {
-    en: ['Integrated an oncology knowledge base through RAG, applied LoRA for domain adaptation, and developed intent-recognition and entity-extraction workflows.'],
-    zh: ['通过 RAG 接入肿瘤学知识库，使用 LoRA 进行领域适配，并研发意图识别与实体抽取流程。'],
+    en: [
+      'Led medical LLM R&D integrating an oncology knowledge base via RAG and LoRA domain adaptation.',
+      'Built intent-recognition, entity-extraction, and sentiment pipelines for structured clinical interactions.',
+    ],
+    zh: [
+      '负责医疗大模型应用研发，通过 RAG 接入专业肿瘤学知识库，并采用 LoRA 完成领域模型适配。',
+      '研发意图识别、实体抽取与情感分析流程，支撑医疗场景交互中的结构化信息提取与路由。',
+    ],
   },
   5: {
-    en: ['Designed multimodal agent workflows combining retrieval, function calling, image generation and speech interfaces, with prompt and content-safety controls.'],
-    zh: ['设计结合检索、工具调用、图像生成与语音接口的多模态智能体工作流，并建设提示词与内容安全控制。'],
+    en: [
+      'Designed multimodal agent workflows orchestrating retrieval, function calling, and text-to-image generation.',
+      'Integrated ASR, LLM, and TTS voice pipelines with prompt and child-facing content-safety controls.',
+    ],
+    zh: [
+      '设计多模态智能体工作流，编排知识检索、Function Calling 与文生图以支持交互式内容生成。',
+      '集成 ASR、大模型交互与 TTS 对话语音链路，结合检索与工具调用，并建设提示词与儿童内容安全控制。',
+    ],
   },
 };
 
 const applicationContext: Localized = {
-  en: 'Applied agent workflows to structured data processing and Local SEO automation.',
-  zh: '将智能体工作流用于结构化数据处理与 Local SEO 自动化。',
+  en: 'Built agent workflows and skill pipelines for structured data ingestion, automated auditing, and evaluation, with end-to-end execution tracing and regression checks.',
+  zh: '将智能体工作流与技能编排落地于结构化数据采集、自动化审计与评估流程，补齐端到端执行追踪与质量回归检查。',
 };
 
 const aimo = {
@@ -71,27 +83,27 @@ export const resumeVariants: Record<ResumeVariant, ResumeContent> = {
   systems: {
     title: { en: 'AI Systems R&D', zh: 'AI 系统研发' },
     summary: {
-      en: 'AI systems engineer and Core-AI open-source contributor, working on durable agent execution, recovery consistency and model-protocol integration. Earlier work spans biomedical machine learning; recent competition projects cover LLM inference and policy deployment.',
-      zh: 'AI 系统研发工程师、Core-AI 开源贡献者，重点研发智能体持久化执行、恢复一致性与模型协议适配。具备生物医学机器学习背景，近期通过竞赛开展大模型推理与策略部署实验。',
+      en: 'AI systems engineer and Core-AI open-source contributor focused on durable agent execution, cross-pod recovery, sandbox lifecycle, and model-protocol routing, pairing backend concurrency and observability with LLM inference and evaluation rigor.',
+      zh: 'AI 系统研发工程师、Core-AI 开源贡献者，专注智能体持久化执行、跨 Pod 状态恢复、沙箱生命周期与模型协议路由，兼具分布式并发、可观测工程与大模型推理评测实践。',
     },
     skills: [
-      { label: { en: 'Runtime', zh: '运行时' }, detail: { en: 'Java, Python; agent workflows, pause/resume, state persistence, concurrency', zh: 'Java、Python；智能体工作流、暂停恢复、状态持久化与并发控制' } },
-      { label: { en: 'Interfaces & state', zh: '接口与状态' }, detail: { en: 'OpenAI-compatible / Responses APIs, MCP; MongoDB, Redis, execution tracing', zh: 'OpenAI 兼容接口、Responses API、MCP；MongoDB、Redis、执行追踪' } },
-      { label: { en: 'Inference', zh: '推理实验' }, detail: { en: 'vLLM, NumPy; tool-augmented inference, sampling, early stopping, policy deployment', zh: 'vLLM、NumPy；工具增强推理、并行采样、早停与策略部署' } },
+      { label: { en: 'Runtime & infra', zh: '运行时与设施' }, detail: { en: 'Java, Python, TypeScript; durable workflows, pause/resume, concurrency, sandbox lifecycle, Kubernetes', zh: 'Java、Python、TypeScript；智能体持久化工作流、暂停恢复、并发控制、沙箱生命周期、Kubernetes' } },
+      { label: { en: 'Protocols & state', zh: '协议与可观测' }, detail: { en: 'OpenAI-compatible / Responses APIs, MCP; MongoDB, Redis, PostgreSQL, OpenTelemetry tracing', zh: 'OpenAI 兼容接口、Responses API、MCP；MongoDB、Redis、PostgreSQL、OpenTelemetry 执行追踪' } },
+      { label: { en: 'Inference & eval', zh: '推理与评测' }, detail: { en: 'vLLM, PyTorch, NumPy; tool-augmented reasoning, parallel sampling, paired evaluation, policy deployment', zh: 'vLLM、PyTorch、NumPy；工具增强推理、并行采样、配对评测门禁与策略部署' } },
     ],
     experienceBullets: {
       ...earlyExperience,
       6: {
         en: [
-          'Implemented human-input pause/resume and persisted workflow state in the team-built Core-AI framework; serialized snapshot-and-write operations to prevent stale overwrites during cancellation, with a concurrency regression test.',
-          'Added Redis heartbeat/TTL-based cross-pod execution-state detection and an unknown-state fallback, fixing erroneous clearing of active chat messages; added recovery and failure-path regression coverage.',
-          'Implemented capability-aware Responses routing for reasoning models with tools, preserving other model routes and adding compatibility regression cases.',
+          'Implemented human-input pause/resume and MongoDB workflow persistence in team-built Core-AI; serialized snapshot-and-write to prevent cancel/save overwrites with a concurrency regression test.',
+          'Added Redis heartbeat/TTL cross-pod turn liveness with unknown-state fallback and wired session-ownership into cross-pod RPC dispatch, with module-wiring and recovery regression tests.',
+          'Built capability-aware Responses routing for reasoning models with tools and configurable sandbox snapshot retention with scoped permissions, with routing and expiry validation.',
           applicationContext.en,
         ],
         zh: [
-          '在团队开源框架 Core-AI 中实现人工介入的暂停恢复与工作流状态持久化；串行化快照与写入，修复取消时旧状态覆盖问题，并加入并发回归用例。',
-          '加入基于 Redis 心跳与 TTL 的跨 Pod 执行状态识别及未知状态降级，修复运行中消息被误清空的问题，补充恢复与异常路径回归覆盖。',
-          '按模型推理能力、工具配置与接口能力选择 Responses 路由，保留其他模型原有路径，并补充兼容性回归场景。',
+          '在团队开源框架 Core-AI 中实现人工介入暂停恢复与基于 MongoDB 的工作流状态持久化；串行化快照与写入，修复取消与保存竞态覆盖，并加入并发回归用例。',
+          '实现基于 Redis 心跳与 TTL 的跨 Pod 轮次存活识别及未知状态降级，修复运行中流式输出被误清空；补齐跨 Pod RPC 调度的会话归属注入，补充模块装配与异常路径回归覆盖。',
+          '实现面向推理模型与工具调用的 Responses API 能力感知路由，以及可配置的沙箱快照保留周期与独立权限控制，并补充兼容性与到期逻辑校验。',
           applicationContext.zh,
         ],
       },
@@ -126,15 +138,15 @@ export const resumeVariants: Record<ResumeVariant, ResumeContent> = {
     ],
   },
   algorithms: {
-    title: { en: 'Machine Learning & Algorithm R&D', zh: '机器学习与算法研发' },
+    title: { en: 'AI Reasoning, Evaluation & ML R&D', zh: 'AI 推理、评测与算法研发' },
     summary: {
-      en: 'Algorithm engineer with experience in image segmentation, probabilistic modeling and biomedical prediction; co-first author of two peer-reviewed papers. Recent work covers tool-augmented LLM inference, self-play policy experiments and reliable research execution.',
-      zh: '算法研发工程师，具备图像分割、概率建模与生物医学预测研究经验，为两篇同行评审论文的共同第一作者。近期工作覆盖大模型工具增强推理、自博弈策略实验及可靠的实验执行。',
+      en: 'Applied AI and algorithm engineer bridging tool-augmented LLM inference, self-play policy evaluation, and biomedical machine learning (two co-first-author papers, PCT patent application). Experienced in paired evaluation gates, agent runtime reliability, and reproducible experimentation.',
+      zh: '应用算法与 AI 研发工程师，连接工具增强大模型推理、自博弈策略评测与生物医学机器学习（两篇共一论文、PCT 专利申请）。注重配对评测门禁、智能体运行时可靠性与可复现实验工程。',
     },
     skills: [
-      { label: { en: 'Modeling', zh: '算法建模' }, detail: { en: 'Python, PyTorch; U-Net, convolutional features, GMM, feature selection', zh: 'Python、PyTorch；U-Net、卷积特征、GMM、特征选择' } },
-      { label: { en: 'LLM methods', zh: '大模型方法' }, detail: { en: 'vLLM; tool-augmented reasoning, self-consistency, answer aggregation; RAG, LoRA adaptation', zh: 'vLLM；工具增强推理、自洽采样、答案聚合；RAG、LoRA 领域适配' } },
-      { label: { en: 'Policy experiments', zh: '策略实验' }, detail: { en: 'BC/PPO experimentation, JAX training configuration, paired evaluation, NumPy deployment', zh: 'BC/PPO 实验、JAX 训练配置、配对评测、NumPy 部署' } },
+      { label: { en: 'LLM & eval', zh: '推理与评测' }, detail: { en: 'vLLM, Python; tool-augmented reasoning, self-consistency, weighted aggregation, paired-seed eval gates', zh: 'vLLM、Python；工具增强推理、自洽采样、加权聚合、配对种子评测门禁' } },
+      { label: { en: 'Policy & ML', zh: '策略与建模' }, detail: { en: 'PyTorch, JAX, NumPy; BC/PPO self-play, U-Net, CNNs, GMM, feature selection, RAG & LoRA adaptation', zh: 'PyTorch、JAX、NumPy；BC/PPO 自博弈、U-Net、卷积特征、GMM、特征选择、RAG 与 LoRA 适配' } },
+      { label: { en: 'Agent systems', zh: '智能体系统' }, detail: { en: 'Java, TypeScript; durable workflows, cross-pod recovery, OpenAI/Responses APIs, MCP, sandbox lifecycle, PostgreSQL, Redis', zh: 'Java、TypeScript；持久化工作流、跨 Pod 恢复、OpenAI/Responses API、MCP、沙箱生命周期、PostgreSQL、Redis' } },
     ],
     experienceBullets: {
       ...earlyExperience,
@@ -160,13 +172,13 @@ export const resumeVariants: Record<ResumeVariant, ResumeContent> = {
       },
       6: {
         en: [
-          'Contributed to Core-AI workflow persistence and pause/resume; fixed stale state overwrites during cancellation and cross-pod execution-state misclassification, with regression coverage.',
-          'Implemented capability-aware model routing for reasoning and tool use across OpenAI-compatible and Responses APIs.',
+          'Contributed to Core-AI durable workflow persistence, pause/resume, cancel/save concurrency fixes, and cross-pod execution-state and RPC ownership recovery with regression coverage.',
+          'Implemented capability-aware model routing for reasoning with tools across OpenAI-compatible and Responses APIs, plus configurable sandbox snapshot retention and permissions.',
           applicationContext.en,
         ],
         zh: [
-          '参与 Core-AI 工作流持久化与暂停恢复，修复取消时旧状态覆盖及跨 Pod 执行状态误判，并补充回归覆盖。',
-          '面向推理与工具调用实现模型能力感知路由，适配 OpenAI 兼容接口与 Responses API。',
+          '参与 Core-AI 持久化工作流与暂停恢复，修复取消竞态覆盖、跨 Pod 执行状态误判及跨 Pod RPC 会话归属问题，并补充回归覆盖。',
+          '面向推理与工具调用实现 OpenAI 兼容接口与 Responses API 的能力感知路由，并实现可配置沙箱快照保留周期与权限控制。',
           applicationContext.zh,
         ],
       },

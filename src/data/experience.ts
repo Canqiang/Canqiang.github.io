@@ -167,16 +167,16 @@ export const experience: ExperienceEntry[] = [
     },
     highlights: {
       en: [
-        'Fixed cross-pod session-status errors with Redis-backed turn liveness, heartbeat/TTL handling, and separate SSE state; added server and frontend recovery regression cases.',
+        'Fixed cross-pod session-status errors with Redis-backed turn liveness, heartbeat/TTL handling, and separate SSE state, and wired SessionOwnershipRegistry into cross-pod RPC dispatch with module-wiring and recovery regression coverage.',
         'Fixed a cancel/save persistence race by serializing snapshot creation and writes; added a deterministic concurrency regression test and capability-aware Responses routing for reasoning models with tools.',
         'Implemented configurable sandbox snapshot retention and scoped permissions; development checks verified new-snapshot expiry calculation and preservation of existing expiries.',
-        'Applied agent workflows to menu data processing and Local SEO automation, spanning data collection, structured transformation, and evaluation.',
+        'Built agent workflows and skill pipelines for structured data ingestion, automated auditing, and evaluation, with end-to-end execution tracing and regression checks.',
       ],
       zh: [
-        '通过 Redis 轮次存活注册、心跳与 TTL 分离跨 Pod 执行状态和本地 SSE 状态，修复运行中会话误判，并补充前后端恢复回归用例。',
+        '通过 Redis 轮次存活注册、心跳与 TTL 分离跨 Pod 执行状态和本地 SSE 状态，并补齐跨 Pod RPC 的会话归属注入，补充模块装配与恢复回归用例。',
         '将状态序列化与写入纳入同一临界区，修复取消与保存竞态并补充并发回归测试；按模型能力完善推理与工具调用的 Responses 路由。',
         '实现沙箱快照保留周期配置与独立权限；开发环境验证确认配置作用于新快照到期时间，既有快照时间保持不变。',
-        '将 Agent 技术用于菜单数据处理与 Local SEO 自动化，覆盖数据采集、结构化处理和结果评估。',
+        '将智能体工作流与技能编排落地于结构化数据采集、自动化审计与评估流程，补齐端到端执行追踪与质量回归检查。',
       ],
     },
   },

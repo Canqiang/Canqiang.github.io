@@ -39,7 +39,7 @@ const [kaggle, bilibili] = publicAchievements;
     <div>
       <p>{copy.updated} <time datetime={resumeUpdatedOn}>{resumeUpdatedOn}</time></p>
       <nav class="resume-variants" aria-label={copy.variants}>
-        {variantKeys.map((key) => <a href={resumePath(key)} aria-current={key === variant ? 'page' : undefined}>{key === 'systems' ? (locale === 'en' ? 'AI systems' : 'AI 系统研发') : (locale === 'en' ? 'Algorithm R&D' : '算法研发')}</a>)}
+        {variantKeys.map((key) => <a href={resumePath(key)} aria-current={key === variant ? 'page' : undefined}>{key === 'systems' ? (locale === 'en' ? 'AI systems' : 'AI 系统研发') : (locale === 'en' ? 'Reasoning, Eval & ML' : '推理、评测与算法')}</a>)}
       </nav>
     </div>
     <div class="resume-actions">

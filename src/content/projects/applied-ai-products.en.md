@@ -33,7 +33,7 @@ I integrated ASR, LLM interaction, and TTS into conversational voice pipelines, 
 
 ## Application experience
 
-I also applied agent workflows to menu data processing and Local SEO research, content generation, and evaluation.
+I also built agent workflows and skill pipelines for structured data ingestion, automated auditing, content generation, and evaluation, with end-to-end execution tracing and regression checks.
 
 ## Scope
 

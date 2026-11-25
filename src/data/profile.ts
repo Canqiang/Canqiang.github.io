@@ -35,8 +35,8 @@ export const publicAchievements: PublicAchievement[] = [
     title: { en: 'Kaggle Notebooks Master', zh: 'Kaggle Notebooks Master（代码赛道）' },
     metric: { en: '6 gold · 4 silver notebook medals', zh: '代码奖牌 6 金 · 4 银' },
     detail: {
-      en: 'Competitions Expert, with a further 2 silver and 5 bronze competition medals across modeling and agent challenges.',
-      zh: '竞赛等级为 Competitions Expert，另获 2 银 5 铜竞赛奖牌，覆盖建模与智能体挑战。',
+      en: 'Competitions Expert with 2 silver and 5 bronze medals, including NeuroGolf silver (63/2,963), Orbit Wars silver (112/4,729), AIMO3 and AI Agent Security bronze.',
+      zh: '竞赛等级为 Competitions Expert，另获 2 银 5 铜，含 NeuroGolf 银牌（63/2,963）、Orbit Wars 银牌（112/4,729）、AIMO3 与 AI Agent Security 铜牌。',
     },
     href: 'https://www.kaggle.com/canqiang',
   },

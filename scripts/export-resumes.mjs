@@ -22,7 +22,7 @@ try {
       const renderedVariant = await page.locator('[data-resume-variant]').getAttribute('data-resume-variant');
       if (renderedVariant !== variant) throw new Error(`Unexpected résumé variant at ${route}`);
       const path = resolve(output, `Xander-Xu-AI-${variant}-${locale}.pdf`);
-      const label = variant === 'systems' ? 'AI Systems' : 'Algorithm R&D';
+      const label = variant === 'systems' ? 'AI Systems' : 'Reasoning, Eval & ML';
       await page.pdf({
         path, format: 'A4', printBackground: true, preferCSSPageSize: true,
         displayHeaderFooter: true, headerTemplate: '<span></span>',

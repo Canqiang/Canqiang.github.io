@@ -12,8 +12,8 @@ export const identity = {
     zh: '从算法建模\n到智能体运行时。',
   },
   introduction: {
-    en: 'I develop machine-learning models and AI systems, from image segmentation and probabilistic modeling to tool-augmented LLM inference. As a Core-AI contributor, I work on agent execution, model interfaces, state recovery, and observability.',
-    zh: '我从事机器学习建模与 AI 系统研发，经历覆盖图像分割、概率建模和工具增强大模型推理。作为 Core-AI 核心贡献者，我参与智能体执行、模型接口、状态恢复与可观测性研发。',
+    en: 'I build durable agent runtimes and AI systems, spanning cross-pod state recovery, sandbox lifecycle, model-protocol routing, and reproducible LLM inference and evaluation. Core contributor to the open-source Core-AI framework, with earlier biomedical ML and co-first-author research.',
+    zh: '我专注智能体运行时与 AI 系统研发，覆盖持久化执行、跨 Pod 状态恢复、沙箱生命周期、模型协议路由，以及可复现的大模型推理与评测。作为开源框架 Core-AI 核心贡献者，兼具早期生物医学机器学习与共一论文研究背景。',
   },
   photoAlt: {
     en: 'Xander Xu presenting an AI system at a hackathon',
@@ -87,7 +87,7 @@ export const fieldCards: FieldCard[] = [
     project: 'core-ai',
     projectLabel: { en: 'Core-AI', zh: 'Core-AI' },
     name: { en: 'Agent Systems', zh: '智能体系统' },
-    scope: { en: 'Agent runtimes, model interfaces, durable state, observability.', zh: '智能体运行时、模型接口、状态持久化与可观测性。' },
+    scope: { en: 'Durable execution, cross-pod recovery, sandbox lifecycle, model protocols, observability.', zh: '持久化执行、跨 Pod 恢复、沙箱生命周期、模型协议与可观测性。' },
     startYear: 2025,
     orgs: { en: 'ChanceTop · Core-AI', zh: '畅拓 / Core-AI' },
   },
