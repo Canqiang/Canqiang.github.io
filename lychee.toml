@@ -15,5 +15,5 @@ remap = [
 ]
 
 [hosts."github.com"]
-concurrency = 2
-request_interval = "500ms"
+concurrency = 1
+request_interval = "750ms"

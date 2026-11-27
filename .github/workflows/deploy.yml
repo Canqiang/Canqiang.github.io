@@ -47,17 +47,76 @@ jobs:
         run: npm run build
 
       - name: Check links
+        id: lychee
         uses: lycheeverse/lychee-action@e7477775783ea5526144ba13e8db5eec57747ce8 # v2.9.0
         with:
           args: >-
             --config lychee.toml
+            --cache
+            --cache-exclude-status 408,429,500..=599
             --root-dir '${{ github.workspace }}/dist'
             --remap 'https://canqiang.github.io/ file://${{ github.workspace }}/dist/'
             'dist/**/*.html'
-          fail: true
+          fail: false
           failIfEmpty: true
           lycheeVersion: v0.24.2
           token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Retry transient link-check 503/504 errors
+        if: steps.lychee.outputs.exit_code != '0'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          report="lychee/out.md"
+          if [[ ! -f "$report" ]]; then
+            echo "Link check failed with exit code ${{ steps.lychee.outputs.exit_code }} and no report file."
+            exit 1
+          fi
+
+          only_transient_503_504() {
+            local errors
+            errors="$(grep -E '^[-*] (\[ \] )?\[' "$1" || true)"
+            [[ -n "$errors" ]] && ! grep -qvE '^[-*] (\[ \] )?\[(503|504)\]' <<< "$errors"
+          }
+
+          if ! only_transient_503_504 "$report"; then
+            echo "Non-transient link errors detected; failing without retry."
+            rm -f .lycheecache
+            exit 1
+          fi
+
+          for attempt in 1 2 3; do
+            delay=$((attempt * 5))
+            echo "Transient 503/504 detected (lychee v0.24.2 lacks PR #2324 5xx retries). Retrying uncached links in ${delay}s (attempt ${attempt}/3)..."
+            sleep "$delay"
+            set +e
+            lychee \
+              --config lychee.toml \
+              --cache \
+              --cache-exclude-status 408,429,500..=599 \
+              --format markdown \
+              --output "$report" \
+              --root-dir "${GITHUB_WORKSPACE}/dist" \
+              --remap "https://canqiang.github.io/ file://${GITHUB_WORKSPACE}/dist/" \
+              'dist/**/*.html'
+            rc=$?
+            set -e
+            cat "$report"
+            if [[ "$rc" -eq 0 ]]; then
+              rm -f .lycheecache
+              exit 0
+            fi
+            if ! only_transient_503_504 "$report"; then
+              echo "Non-transient link error detected on retry."
+              rm -f .lycheecache
+              exit "$rc"
+            fi
+          done
+
+          rm -f .lycheecache
+          echo "Transient 503/504 errors persisted after 3 retries."
+          exit 1
 
       - name: Run Lighthouse CI
         run: npx --no-install lhci autorun
