@@ -15,3 +15,9 @@ This update sharpens the portfolio and bilingual résumés around AI Systems Eng
 - **Application workflow framing**: described applied agent workflows as structured data ingestion, automated auditing, and evaluation with execution tracing and regression checks, avoiding operational/customer details.
 - **Contact**: kept `canqiangxu@yeah.net` and omitted LinkedIn from the résumé header per owner preference.
 - **Secondary résumé track**: reframed display titles and metadata to `AI Reasoning, Evaluation & ML R&D` / `AI 推理、评测与算法研发` while keeping `/resume/algorithms/` and `/zh/resume/algorithms/` URLs and PDF filenames stable.
+
+## 2026-11-27 refinement
+
+- Ordered primary languages as `Python, Java, TypeScript` across both résumé variants so Python (primary strength across modeling, data analysis, inference, and agent harnesses) leads instead of implying a Java-only backend track.
+- Surfaced data-driven trace/failure analysis alongside paired evaluation in the skills bar and home introduction, matching existing Core-AI trace diagnosis and Kaggle paired-evaluation evidence.
+

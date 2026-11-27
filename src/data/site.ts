@@ -12,8 +12,8 @@ export const identity = {
     zh: '从算法建模\n到智能体运行时。',
   },
   introduction: {
-    en: 'I build durable agent runtimes and AI systems, spanning cross-pod state recovery, sandbox lifecycle, model-protocol routing, and reproducible LLM inference and evaluation. Core contributor to the open-source Core-AI framework, with earlier biomedical ML and co-first-author research.',
-    zh: '我专注智能体运行时与 AI 系统研发，覆盖持久化执行、跨 Pod 状态恢复、沙箱生命周期、模型协议路由，以及可复现的大模型推理与评测。作为开源框架 Core-AI 核心贡献者，兼具早期生物医学机器学习与共一论文研究背景。',
+    en: 'I build durable agent runtimes and AI systems, spanning cross-pod state recovery, sandbox lifecycle, model-protocol routing, and data-driven LLM inference and evaluation. Core contributor to the open-source Core-AI framework, with earlier biomedical ML and co-first-author research.',
+    zh: '我专注智能体运行时与 AI 系统研发，覆盖持久化执行、跨 Pod 状态恢复、沙箱生命周期、模型协议路由，以及数据驱动的大模型推理与评测。作为开源框架 Core-AI 核心贡献者，兼具早期生物医学机器学习与共一论文研究背景。',
   },
   photoAlt: {
     en: 'Xander Xu presenting an AI system at a hackathon',

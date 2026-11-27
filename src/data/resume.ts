@@ -1,7 +1,7 @@
 import type { Locale } from '../i18n/config';
 import type { Localized } from './site';
 
-export const resumeUpdatedOn = '2026-11-25';
+export const resumeUpdatedOn = '2026-11-27';
 
 export type ResumeVariant = 'systems' | 'algorithms';
 type LocalizedList = Record<Locale, string[]>;
@@ -83,13 +83,13 @@ export const resumeVariants: Record<ResumeVariant, ResumeContent> = {
   systems: {
     title: { en: 'AI Systems R&D', zh: 'AI 系统研发' },
     summary: {
-      en: 'AI systems engineer and Core-AI open-source contributor focused on durable agent execution, cross-pod recovery, sandbox lifecycle, and model-protocol routing, pairing backend concurrency and observability with LLM inference and evaluation rigor.',
-      zh: 'AI 系统研发工程师、Core-AI 开源贡献者，专注智能体持久化执行、跨 Pod 状态恢复、沙箱生命周期与模型协议路由，兼具分布式并发、可观测工程与大模型推理评测实践。',
+      en: 'AI systems engineer and Core-AI contributor focused on durable agent execution, cross-pod recovery, sandbox lifecycle, and model-protocol routing, pairing Python and data-driven evaluation rigor with concurrency and observability.',
+      zh: 'AI 系统研发工程师、Core-AI 开源贡献者，专注智能体持久化执行、跨 Pod 状态恢复、沙箱生命周期与模型协议路由，兼具 Python 工程、数据分析归因与大模型推理评测实践。',
     },
     skills: [
-      { label: { en: 'Runtime & infra', zh: '运行时与设施' }, detail: { en: 'Java, Python, TypeScript; durable workflows, pause/resume, concurrency, sandbox lifecycle, Kubernetes', zh: 'Java、Python、TypeScript；智能体持久化工作流、暂停恢复、并发控制、沙箱生命周期、Kubernetes' } },
+      { label: { en: 'Runtime & infra', zh: '运行时与设施' }, detail: { en: 'Python, Java, TypeScript; durable workflows, pause/resume, concurrency, sandbox lifecycle, Kubernetes', zh: 'Python、Java、TypeScript；智能体持久化工作流、暂停恢复、并发控制、沙箱生命周期、Kubernetes' } },
       { label: { en: 'Protocols & state', zh: '协议与可观测' }, detail: { en: 'OpenAI-compatible / Responses APIs, MCP; MongoDB, Redis, PostgreSQL, OpenTelemetry tracing', zh: 'OpenAI 兼容接口、Responses API、MCP；MongoDB、Redis、PostgreSQL、OpenTelemetry 执行追踪' } },
-      { label: { en: 'Inference & eval', zh: '推理与评测' }, detail: { en: 'vLLM, PyTorch, NumPy; tool-augmented reasoning, parallel sampling, paired evaluation, policy deployment', zh: 'vLLM、PyTorch、NumPy；工具增强推理、并行采样、配对评测门禁与策略部署' } },
+      { label: { en: 'Eval & inference', zh: '评测与推理' }, detail: { en: 'vLLM, PyTorch, NumPy; tool-augmented reasoning, trace/failure analysis, paired eval, deployment', zh: 'vLLM、PyTorch、NumPy；工具增强推理、轨迹数据分析与失败归因、配对评测门禁与策略部署' } },
     ],
     experienceBullets: {
       ...earlyExperience,
@@ -144,9 +144,9 @@ export const resumeVariants: Record<ResumeVariant, ResumeContent> = {
       zh: '应用算法与 AI 研发工程师，连接工具增强大模型推理、自博弈策略评测与生物医学机器学习（两篇共一论文、PCT 专利申请）。注重配对评测门禁、智能体运行时可靠性与可复现实验工程。',
     },
     skills: [
-      { label: { en: 'LLM & eval', zh: '推理与评测' }, detail: { en: 'vLLM, Python; tool-augmented reasoning, self-consistency, weighted aggregation, paired-seed eval gates', zh: 'vLLM、Python；工具增强推理、自洽采样、加权聚合、配对种子评测门禁' } },
+      { label: { en: 'LLM & eval', zh: '推理与评测' }, detail: { en: 'Python, vLLM; tool-augmented reasoning, trace/failure analysis, weighted voting, paired-seed eval', zh: 'Python、vLLM；工具增强推理、数据分析与失败归因、加权聚合、配对种子评测门禁' } },
       { label: { en: 'Policy & ML', zh: '策略与建模' }, detail: { en: 'PyTorch, JAX, NumPy; BC/PPO self-play, U-Net, CNNs, GMM, feature selection, RAG & LoRA adaptation', zh: 'PyTorch、JAX、NumPy；BC/PPO 自博弈、U-Net、卷积特征、GMM、特征选择、RAG 与 LoRA 适配' } },
-      { label: { en: 'Agent systems', zh: '智能体系统' }, detail: { en: 'Java, TypeScript; durable workflows, cross-pod recovery, OpenAI/Responses APIs, MCP, sandbox lifecycle, PostgreSQL, Redis', zh: 'Java、TypeScript；持久化工作流、跨 Pod 恢复、OpenAI/Responses API、MCP、沙箱生命周期、PostgreSQL、Redis' } },
+      { label: { en: 'Agent systems', zh: '智能体系统' }, detail: { en: 'Python, Java, TypeScript; durable workflows, cross-pod recovery, Responses API, MCP, sandbox, Redis', zh: 'Python、Java、TypeScript；持久化工作流、跨 Pod 恢复、Responses API、MCP、沙箱生命周期、PostgreSQL、Redis' } },
     ],
     experienceBullets: {
       ...earlyExperience,
