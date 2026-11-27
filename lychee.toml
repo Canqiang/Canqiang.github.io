@@ -10,6 +10,9 @@ exclude = [
   '^mailto:',
   '^https://www\.linkedin\.com/in/canqiang-xu-8510531b3/?$',
 ]
+remap = [
+  '^https://github\.com/([^/]+)/([^/]+)/blob/([^/]+)/([^#?]+)$ https://raw.githubusercontent.com/$1/$2/$3/$4',
+]
 
 [hosts."github.com"]
 concurrency = 2
