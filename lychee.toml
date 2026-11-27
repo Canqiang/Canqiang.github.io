@@ -1,11 +1,16 @@
 root_dir = "dist"
 index_files = ["index.html"]
 accept = ["200", "204", "301", "302", "307", "308"]
-max_retries = 2
-timeout = 20
+max_retries = 4
+retry_wait_time = 2
+timeout = 30
 no_progress = true
 include_fragments = "anchor-only"
 exclude = [
   '^mailto:',
   '^https://www\.linkedin\.com/in/canqiang-xu-8510531b3/?$',
 ]
+
+[hosts."github.com"]
+concurrency = 2
+request_interval = "500ms"
